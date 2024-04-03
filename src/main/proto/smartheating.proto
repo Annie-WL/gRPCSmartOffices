@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+//package smart_office;
+option java_multiple_files = true;
+option java_package = "com.example.grpc.smartoffices";
+option java_outer_classname = "SmartHeatingServiceImpl";
+package SmartOffices;
+
+
+
+
+
+service SmartHeating {
+  // Simple RPC
+  rpc TurnOn (TurnOnRequest) returns (TurnOnResponse) {}
+  rpc TurnOff (TurnOffRequest) returns (TurnOffResponse) {}
+
+  // Client-side streaming RPC
+  rpc SetTemperature (stream SetTemperatureRequest) returns (SetTemperatureResponse) {}
+
+  // Server-side streaming RPC
+  rpc GetStatus (GetStatusRequest) returns (stream GetStatusResponse) {}
+}
+
+message TurnOnRequest {
+  string location = 1;
+  string room = 2;
+}
+message TurnOnResponse {}
+
+message TurnOffRequest {
+  string location = 1;
+  string room = 2;
+}
+message TurnOffResponse {}
+
+message SetTemperatureRequest {
+  string location = 1;
+  string room = 2;
+  int32 temperature = 3;
+}
+message SetTemperatureResponse {}
+
+message GetStatusRequest {
+  string location = 1;
+  string room = 2;
+}
+message GetStatusResponse {
+  bool on = 1;
+  int32 temperature = 2;
+}

@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+//package smart_office;
+option java_multiple_files = true;
+option java_package = "com.example.grpc.smartoffices";
+option java_outer_classname = "SmartWindowBlindsServiceImpl";
+
+package SmartOffices;
+
+
+service SmartLight {
+  // Simple RPC
+  rpc TurnOn (TurnOnRequest) returns (TurnOnResponse) {}
+  rpc TurnOff (TurnOffRequest) returns (TurnOffResponse) {}
+
+  // Client-side streaming RPC
+  rpc ChangeColor (stream ChangeColorRequest) returns (ChangeColorResponse) {}
+
+  // Server-side streaming RPC
+  rpc GetStatus (GetStatusRequest) returns (stream GetStatusResponse) {}
+}
+
+message TurnOnRequest {
+  string location = 1;
+  string room = 2;
+}
+message TurnOnResponse {}
+
+message TurnOffRequest {
+  string location = 1;
+  string room = 2;
+}
+message TurnOffResponse {}
+
+message ChangeColorRequest {
+  string location = 1;
+  string room = 2;
+  int32 red = 3;
+  int32 green = 4;
+  int32 blue = 5;
+}
+message ChangeColorResponse {}
+
+message GetStatusRequest {
+  string location = 1;
+  string room = 2;
+}
+message GetStatusResponse {
+  bool on = 1;
+  int32 red = 2;
+  int32 green = 3;
+  int32 blue = 4;
+}

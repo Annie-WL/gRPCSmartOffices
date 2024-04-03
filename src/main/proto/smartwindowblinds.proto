@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+//package smart_office;
+option java_multiple_files = true;
+option java_package = "com.example.grpc.smartoffices";
+option java_outer_classname = "SmartLightServiceImpl";
+package SmartOffices;
+
+service SmartWindowBlinds {
+  // Simple RPC
+  rpc Open (OpenRequest) returns (OpenResponse) {}
+  rpc Close (CloseRequest) returns (CloseResponse) {}
+
+  // Client-side streaming RPC
+  rpc AdjustBlinds (stream AdjustBlindsRequest) returns (AdjustBlindsResponse) {}
+
+  // Server-side streaming RPC
+  rpc GetStatus (GetStatusRequest) returns (stream GetStatusResponse) {}
+
+  // Bidirectional streaming RPC
+  rpc SimulateDay (stream SimulateDayRequest) returns (stream SimulateDayResponse) {}
+}
+
+message OpenRequest {
+  string location = 1;
+  string room = 2;
+}
+message OpenResponse {}
+
+message CloseRequest {
+  string location = 1;
+  string room = 2;
+}
+message CloseResponse {}
+
+message AdjustBlindsRequest {
+  string location = 1;
+  string room = 2;
+  int32 position = 3; // 0-100
+}
+message AdjustBlindsResponse {}
+
+message GetStatusRequest {
+  string location = 1;
+  string room = 2;
+}
+message GetStatusResponse {
+  bool open = 1;
+  int32 position = 2; // 0-100
+}
+
+message SimulateDayRequest {
+  string location = 1;
+  string room = 2;
+  int32 time = 3; // hour of the day
+}
+message SimulateDayResponse {
+  int32 position = 1; // 0-100
+}
