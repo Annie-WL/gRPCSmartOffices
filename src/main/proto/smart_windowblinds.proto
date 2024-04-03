@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+service SmartBlinds {
+  rpc OpenBlinds (BlindsRequest) returns (BlindsResponse) {}
+  rpc CloseBlinds (BlindsRequest) returns (BlindsResponse) {}
+  // Add more RPCs for controlling window blinds
+}
+
+message BlindsRequest {
+  int32 floor = 1;
+  int32 room = 2;
+  // Add any additional fields here
+}
+
+message BlindsResponse {
+  string status_message = 1;
+}
