@@ -1,45 +1,55 @@
 syntax = "proto3";
 
-//package smart_office;
 option java_multiple_files = true;
 option java_package = "com.example.grpc.smartoffices";
-option java_outer_classname = "SmartWindowBlindsServiceImpl";
-
+option java_outer_classname = "SmartLightServiceImpl";
 package SmartOffices;
-
 
 service SmartLight {
   // Simple RPC
   rpc TurnOn (TurnOnRequest) returns (TurnOnResponse) {}
   rpc TurnOff (TurnOffRequest) returns (TurnOffResponse) {}
-
-  // Client-side streaming RPC
-  rpc ChangeColor (stream ChangeColorRequest) returns (ChangeColorResponse) {}
+  rpc BrightnessUp (BrightnessUpRequest) returns (BrightnessUpResponse) {}
+  rpc BrightnessDown (BrightnessDownRequest) returns (BrightnessDownResponse) {}
 
   // Server-side streaming RPC
   rpc GetStatus (GetStatusRequest) returns (stream GetStatusResponse) {}
+
+  // New: Client-side streaming RPC
+  rpc MonitorMotion (stream MonitorMotionRequest) returns (MonitorMotionResponse) {}
 }
 
 message TurnOnRequest {
   string location = 1;
   string room = 2;
 }
-message TurnOnResponse {}
+message TurnOnResponse {
+  bool success = 1;
+}
 
 message TurnOffRequest {
   string location = 1;
   string room = 2;
 }
-message TurnOffResponse {}
+message TurnOffResponse {
+  bool success = 1;
+}
 
-message ChangeColorRequest {
+message BrightnessUpRequest {
   string location = 1;
   string room = 2;
-  int32 red = 3;
-  int32 green = 4;
-  int32 blue = 5;
 }
-message ChangeColorResponse {}
+message BrightnessUpResponse {
+  bool success = 1;
+}
+
+message BrightnessDownRequest {
+  string location = 1;
+  string room = 2;
+}
+message BrightnessDownResponse {
+  bool success = 1;
+}
 
 message GetStatusRequest {
   string location = 1;
@@ -47,7 +57,15 @@ message GetStatusRequest {
 }
 message GetStatusResponse {
   bool on = 1;
-  int32 red = 2;
-  int32 green = 3;
-  int32 blue = 4;
+  int32 brightness = 2;
+}
+
+// New: MonitorMotionRequest
+message MonitorMotionRequest {
+  string location = 1;
+  string room = 2;
+  bool motion_detected = 3;
+}
+message MonitorMotionResponse {
+  bool turn_on = 1;
 }
