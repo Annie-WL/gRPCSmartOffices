@@ -5,7 +5,7 @@ package com.example.grpc.smartoffices;
 
 /**
  * <pre>
- * TurnOffLightResponse message definition
+ * TurnOffLightResponse
  * </pre>
  *
  * Protobuf type {@code SmartOffices.TurnOffLightResponse}
@@ -252,7 +252,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * TurnOffLightResponse message definition
+   * TurnOffLightResponse
    * </pre>
    *
    * Protobuf type {@code SmartOffices.TurnOffLightResponse}

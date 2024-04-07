@@ -5,7 +5,7 @@ package com.example.grpc.smartoffices;
 
 /**
  * <pre>
- * TurnOnLightRequest message definition
+ * TurnOnLightRequest
  * </pre>
  *
  * Protobuf type {@code SmartOffices.TurnOnLightRequest}
@@ -276,7 +276,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * TurnOnLightRequest message definition
+   * TurnOnLightRequest
    * </pre>
    *
    * Protobuf type {@code SmartOffices.TurnOnLightRequest}

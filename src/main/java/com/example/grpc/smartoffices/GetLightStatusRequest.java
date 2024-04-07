@@ -5,7 +5,7 @@ package com.example.grpc.smartoffices;
 
 /**
  * <pre>
- * GetLightStatusRequest message definition
+ * GetLightStatusRequest
  * </pre>
  *
  * Protobuf type {@code SmartOffices.GetLightStatusRequest}
@@ -276,7 +276,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * GetLightStatusRequest message definition
+   * GetLightStatusRequest
    * </pre>
    *
    * Protobuf type {@code SmartOffices.GetLightStatusRequest}

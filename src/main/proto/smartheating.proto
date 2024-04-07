@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option java_multiple_files = true;
 option java_package = "com.example.grpc.smartoffices";
-option java_outer_classname = "SmartLightServiceImpl";
+option java_outer_classname = "SmartHeatingServiceImpl";
 package SmartOffices;
 
 

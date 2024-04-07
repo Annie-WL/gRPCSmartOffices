@@ -5,7 +5,7 @@ package com.example.grpc.smartoffices;
 
 /**
  * <pre>
- * AdjustLightBrightnessResponse message definition
+ * AdjustLightBrightnessResponse
  * </pre>
  *
  * Protobuf type {@code SmartOffices.AdjustLightBrightnessResponse}
@@ -252,7 +252,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * AdjustLightBrightnessResponse message definition
+   * AdjustLightBrightnessResponse
    * </pre>
    *
    * Protobuf type {@code SmartOffices.AdjustLightBrightnessResponse}
