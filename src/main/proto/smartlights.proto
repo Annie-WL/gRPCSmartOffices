@@ -24,54 +24,54 @@ service SmartLightService {
   rpc AdjustLightBrightness (stream AdjustLightBrightnessRequest) returns (stream AdjustLightBrightnessResponse) {}
 }
 
-// TurnOnLightRequest message definition
+// TurnOnLightRequest
 message TurnOnLightRequest {
   string area = 1;
 }
 
-// TurnOnLightResponse message definition
+// TurnOnLightResponse
 message TurnOnLightResponse {
   bool success = 1;
 }
 
-// TurnOffLightRequest message definition
+// TurnOffLightRequest
 message TurnOffLightRequest {
   string area = 1;
 }
 
-// TurnOffLightResponse message definition
+// TurnOffLightResponse
 message TurnOffLightResponse {
   bool success = 1;
 }
 
-// GetLightStatusRequest message definition
+// GetLightStatusRequest
 message GetLightStatusRequest {
   string area = 1;
 }
 
-// GetLightStatusResponse message definition
+// GetLightStatusResponse
 message GetLightStatusResponse {
   bool status = 1;
 }
 
-// SetLightStatusRequest message definition
+// SetLightStatusRequest
 message SetLightStatusRequest {
   string area = 1;
   bool status = 2;
 }
 
-// SetLightStatusResponse message definition
+// SetLightStatusResponse
 message SetLightStatusResponse {
   bool success = 1;
 }
 
-// AdjustLightBrightnessRequest message definition
+// AdjustLightBrightnessRequest
 message AdjustLightBrightnessRequest {
   string area = 1;
   int32 brightness = 2;
 }
 
-// AdjustLightBrightnessResponse message definition
+// AdjustLightBrightnessResponse
 message AdjustLightBrightnessResponse {
   bool success = 1;
 }

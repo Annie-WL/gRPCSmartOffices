@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.grpc.smartoffices";
+option java_outer_classname = "SmartLightServiceImpl";
+package SmartOffices;
+
+
+// Smart Heating Service
+service SmartHeatingService {
+  // Simple RPC to turn on the heating
+  rpc TurnOnHeating (TurnOnHeatingRequest) returns (TurnOnHeatingResponse) {}
+
+  // Simple RPC to turn off the heating
+  rpc TurnOffHeating (TurnOffHeatingRequest) returns (TurnOffHeatingResponse) {}
+
+  // Server-side streaming RPC to get the heating status
+  rpc GetHeatingStatus (GetHeatingStatusRequest) returns (stream GetHeatingStatusResponse) {}
+
+  // Client-side streaming RPC to set the heating status
+  rpc SetHeatingStatus (stream SetHeatingStatusRequest) returns (SetHeatingStatusResponse) {}
+
+  // Bidirectional streaming RPC to adjust the heating temperature
+  rpc AdjustHeatingTemperature (stream AdjustHeatingTemperatureRequest) returns (stream AdjustHeatingTemperatureResponse) {}
+}
+
+// TurnOnHeatingRequest
+message TurnOnHeatingRequest {
+  string area = 1;
+}
+
+// TurnOnHeatingResponse
+message TurnOnHeatingResponse {
+  bool success = 1;
+}
+
+// TurnOffHeatingRequest
+message TurnOffHeatingRequest {
+  string area = 1;
+}
+
+// TurnOffHeatingResponse
+message TurnOffHeatingResponse {
+  bool success = 1;
+}
+
+// GetHeatingStatusRequest
+message GetHeatingStatusRequest {
+  string area = 1;
+}
+
+// GetHeatingStatusResponse
+message GetHeatingStatusResponse {
+  float temperature = 1;
+}
+
+// SetHeatingStatusRequest
+message SetHeatingStatusRequest {
+  string area = 1;
+  bool status = 2;
+}
+
+// SetHeatingStatusResponse
+message SetHeatingStatusResponse {
+  bool success = 1;
+}
+
+// AdjustHeatingTemperatureRequest
+message AdjustHeatingTemperatureRequest {
+  string area = 1;
+  float temperature = 2;
+}
+
+// AdjustHeatingTemperatureResponse
+message AdjustHeatingTemperatureResponse {
+  bool success = 1;
+}
