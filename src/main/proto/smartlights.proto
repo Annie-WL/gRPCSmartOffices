@@ -5,67 +5,73 @@ option java_package = "com.example.grpc.smartoffices";
 option java_outer_classname = "SmartLightServiceImpl";
 package SmartOffices;
 
-service SmartLight {
-  // Simple RPC
-  rpc TurnOn (TurnOnRequest) returns (TurnOnResponse) {}
-  rpc TurnOff (TurnOffRequest) returns (TurnOffResponse) {}
-  rpc BrightnessUp (BrightnessUpRequest) returns (BrightnessUpResponse) {}
-  rpc BrightnessDown (BrightnessDownRequest) returns (BrightnessDownResponse) {}
 
-  // Server-side streaming RPC
-  rpc GetStatus (GetStatusRequest) returns (stream GetStatusResponse) {}
+// Smart Light Service
+service SmartLightService {
+  // Simple RPC to turn on the light
+  rpc TurnOnLight (TurnOnLightRequest) returns (TurnOnLightResponse) {}
 
-  // New: Client-side streaming RPC
-  rpc MonitorMotion (stream MonitorMotionRequest) returns (MonitorMotionResponse) {}
+  // Simple RPC to turn off the light
+  rpc TurnOffLight (TurnOffLightRequest) returns (TurnOffLightResponse) {}
+
+  // Server-side streaming RPC to get the light status
+  rpc GetLightStatus (GetLightStatusRequest) returns (stream GetLightStatusResponse) {}
+
+  // Client-side streaming RPC to set the light status
+  rpc SetLightStatus (stream SetLightStatusRequest) returns (SetLightStatusResponse) {}
+
+  // Bidirectional streaming RPC to adjust the light brightness
+  rpc AdjustLightBrightness (stream AdjustLightBrightnessRequest) returns (stream AdjustLightBrightnessResponse) {}
 }
 
-message TurnOnRequest {
-  string location = 1;
-  string room = 2;
+// TurnOnLightRequest message definition
+message TurnOnLightRequest {
+  string area = 1;
 }
-message TurnOnResponse {
+
+// TurnOnLightResponse message definition
+message TurnOnLightResponse {
   bool success = 1;
 }
 
-message TurnOffRequest {
-  string location = 1;
-  string room = 2;
+// TurnOffLightRequest message definition
+message TurnOffLightRequest {
+  string area = 1;
 }
-message TurnOffResponse {
+
+// TurnOffLightResponse message definition
+message TurnOffLightResponse {
   bool success = 1;
 }
 
-message BrightnessUpRequest {
-  string location = 1;
-  string room = 2;
+// GetLightStatusRequest message definition
+message GetLightStatusRequest {
+  string area = 1;
 }
-message BrightnessUpResponse {
+
+// GetLightStatusResponse message definition
+message GetLightStatusResponse {
+  bool status = 1;
+}
+
+// SetLightStatusRequest message definition
+message SetLightStatusRequest {
+  string area = 1;
+  bool status = 2;
+}
+
+// SetLightStatusResponse message definition
+message SetLightStatusResponse {
   bool success = 1;
 }
 
-message BrightnessDownRequest {
-  string location = 1;
-  string room = 2;
-}
-message BrightnessDownResponse {
-  bool success = 1;
-}
-
-message GetStatusRequest {
-  string location = 1;
-  string room = 2;
-}
-message GetStatusResponse {
-  bool on = 1;
+// AdjustLightBrightnessRequest message definition
+message AdjustLightBrightnessRequest {
+  string area = 1;
   int32 brightness = 2;
 }
 
-// New: MonitorMotionRequest
-message MonitorMotionRequest {
-  string location = 1;
-  string room = 2;
-  bool motion_detected = 3;
-}
-message MonitorMotionResponse {
-  bool turn_on = 1;
+// AdjustLightBrightnessResponse message definition
+message AdjustLightBrightnessResponse {
+  bool success = 1;
 }
