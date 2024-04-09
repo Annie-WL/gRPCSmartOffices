@@ -8,11 +8,11 @@ CLI
 =========================================
 
 Todo: 
-1. re-write protos
+1. update protos -- room temp. change
 2. mvn clean install
 3. mvn clean compile
-4. 写service
-5. 写client
+4. 1 server
+5. 3 clients
 
 Details：
 1. lights - 根据时间 - 节能模式 - 8:00AM - 8:00PM 为上班模式，其余时间为节能模式
@@ -29,11 +29,18 @@ Details update:
 2. Smart Heating - Temperature Sensor 
 - check if the temp. is lower than 19 degree Celsius,
 - if < 19, then, turn on the heating device.
+- maintain the temp. around 19
 
 3. Smart Windows - Wind Sensor 
 - detect: Wind Direction(?), Wind speed, Wind Temperature
 - if temp. < 10 degree Celsius, OR, speed > 4.8 km/h
 - then, auto close the window.
+
+3. main controller - SmartOfficeController (SmartOfficeApp)
+Menu: 
+choose the Area(Office area-1 && Meeting Room-2);
+choose the device (lights, heating, windows);
+choose the operation (turn on/off, brightness -/+, temp. -/+, open/close, tint darker/lighter)
 
 
 the outline is on the .pdf
