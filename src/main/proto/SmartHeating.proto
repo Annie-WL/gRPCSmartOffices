@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.grpc.smartoffices.heating";
+option java_outer_classname = "SmartHeatingServiceImpl";
+package SmartOffices;
+
+
+// Service for managing smart heating systems based on temperature.
+service SmartHeating {
+  // Client-side Streaming RPC: Stream temperature data from the sensor
+  rpc MonitorTemperature (stream TemperatureSettingRequest) returns (TemperatureResponse);
+
+  // Simple RPC: Set high temperature
+  rpc SetTemperatureHigh (TemperatureSettingRequest) returns (TemperatureResponse);
+
+  // Simple RPC: Set low temperature
+  rpc SetTemperatureLow (TemperatureSettingRequest) returns (TemperatureResponse);
+
+  // Simple RPC: Turn heating on
+  rpc TurnHeatingOn (TemperatureSettingRequest) returns (TemperatureResponse);
+
+  // Simple RPC: Turn heating off
+  rpc TurnHeatingOff (TemperatureSettingRequest) returns (TemperatureResponse);
+}
+
+message TemperatureSettingRequest {
+  string area = 1;
+}
+
+message TemperatureResponse {
+  string message = 1;  // Status message such as "Heating turned on" or "Set temperature to high"
+}
+
+
