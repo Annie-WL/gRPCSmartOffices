@@ -14,12 +14,6 @@ Todo:
 4. 1 server
 5. 3 clients
 
-Details：
-1. lights - 根据时间 - 节能模式 - 8:00AM - 8:00PM 为上班模式，其余时间为节能模式
-2. Heating - 同样根据时间 - 节能模式 && 查找冬天and夏天，办公室人体最舒适空调温度(reference!)
-3. Window Blinds - 根据天气:
-- if 阴天，打开窗帘 && if 晴天，拉上窗帘/only遮阳板，需要透光 - 不怎么开灯 - 节能
-
 
 Details update:
 1. Smart Lights - Occupancy Sensor
@@ -37,8 +31,8 @@ Details update:
 - then, auto close the window.
 
 3. main controller - SmartOfficeController (SmartOfficeApp)
-Menu: 
-choose the Area(Office area-1 && Meeting Room-2);
+Menu: (CLI / GUI)
+choose the Area(Office1 area-1 && Office2 area-2 && Meeting Room-3);
 choose the device (lights, heating, windows);
 choose the operation (turn on/off, brightness -/+, temp. -/+, open/close, tint darker/lighter)
 

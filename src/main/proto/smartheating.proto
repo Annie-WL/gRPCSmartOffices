@@ -1,77 +1,35 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.example.grpc.smartoffices";
+option java_package = "com.example.grpc.smartoffices.heating";
 option java_outer_classname = "SmartHeatingServiceImpl";
 package SmartOffices;
 
 
-// Smart Heating Service
-service SmartHeatingService {
-  // Simple RPC to turn on the heating
-  rpc TurnOnHeating (TurnOnHeatingRequest) returns (TurnOnHeatingResponse) {}
+// Service for managing smart heating systems based on temperature readings.
+service SmartHeating {
+  // Client-side Streaming RPC: Receives a stream of temperature data from a client sensor.
+  rpc MonitorTemperature (stream TemperatureRequest) returns (HeatingResponse);
 
-  // Simple RPC to turn off the heating
-  rpc TurnOffHeating (TurnOffHeatingRequest) returns (TurnOffHeatingResponse) {}
-
-  // Server-side streaming RPC to get the heating status
-  rpc GetHeatingStatus (GetHeatingStatusRequest) returns (stream GetHeatingStatusResponse) {}
-
-  // Client-side streaming RPC to set the heating status
-  rpc SetHeatingStatus (stream SetHeatingStatusRequest) returns (SetHeatingStatusResponse) {}
-
-  // Bidirectional streaming RPC to adjust the heating temperature
-  rpc AdjustHeatingTemperature (stream AdjustHeatingTemperatureRequest) returns (stream AdjustHeatingTemperatureResponse) {}
+  // Server-side Streaming RPC: Sends continuous updates about the heating status.
+  rpc StreamHeatingUpdates (TemperatureRequest) returns (stream HeatingUpdate);
 }
 
-// TurnOnHeatingRequest
-message TurnOnHeatingRequest {
+// Streamed request message containing temperature data for an area.
+message TemperatureRequest {
+  string area = 1; // Identifier for the area
+  double temperature = 2; // Current temperature in Celsius
+}
+
+// Single response for client-side streaming.
+message HeatingResponse {
   string area = 1;
+  string status = 2; // Immediate status of the heating system (e.g., "Heating turned on", "Heating turned off")
 }
 
-// TurnOnHeatingResponse
-message TurnOnHeatingResponse {
-  bool success = 1;
-}
-
-// TurnOffHeatingRequest
-message TurnOffHeatingRequest {
+// Streamed response for server-side streaming.
+message HeatingUpdate {
   string area = 1;
+  string status = 2; // Continuous status updates (e.g., "Heating still on", "Temperature stabilized")
 }
 
-// TurnOffHeatingResponse
-message TurnOffHeatingResponse {
-  bool success = 1;
-}
-
-// GetHeatingStatusRequest
-message GetHeatingStatusRequest {
-  string area = 1;
-}
-
-// GetHeatingStatusResponse
-message GetHeatingStatusResponse {
-  float temperature = 1;
-}
-
-// SetHeatingStatusRequest
-message SetHeatingStatusRequest {
-  string area = 1;
-  bool status = 2;
-}
-
-// SetHeatingStatusResponse
-message SetHeatingStatusResponse {
-  bool success = 1;
-}
-
-// AdjustHeatingTemperatureRequest
-message AdjustHeatingTemperatureRequest {
-  string area = 1;
-  float temperature = 2;
-}
-
-// AdjustHeatingTemperatureResponse
-message AdjustHeatingTemperatureResponse {
-  bool success = 1;
-}
