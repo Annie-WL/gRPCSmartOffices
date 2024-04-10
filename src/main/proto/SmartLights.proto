@@ -8,18 +8,28 @@ package SmartOffices;
 
 
 // Service for controlling smart light systems based on occupancy.
+// Service for controlling smart light systems.
 service SmartLights {
-  // Simple RPC: Immediate light control based on room occupancy.
-  rpc ControlLights (OccupancyRequest) returns (LightResponse);
+  // Simple RPC: Turn lights on
+  rpc TurnOn (LightRequest) returns (LightResponse);
+
+  // Simple RPC: Turn lights off
+  rpc TurnOff (LightRequest) returns (LightResponse);
+
+  // Simple RPC: Increase brightness
+  rpc BrightnessUp (LightRequest) returns (LightResponse);
+
+  // Simple RPC: Decrease brightness
+  rpc BrightnessDown (LightRequest) returns (LightResponse);
+
+  // Server-side Streaming RPC: Stream light status updates
+  rpc StreamLightStatus (LightRequest) returns (stream LightResponse);
 }
 
-// Request message containing the area and occupancy status.
-message OccupancyRequest {
-  string area = 1; // Identifier for the area (e.g., office 1, office 2, meeting room)
-  bool isOccupied = 2; // Occupancy status: true if occupied, false otherwise.
+message LightRequest {
+  string area = 1;
 }
 
-// Response message with the result of the light control action.
 message LightResponse {
-  string message = 1; // Result message (e.g., "Lights turned on", "Lights turned off")
+  string message = 1;  // Result message such as "Lights turned on" or "Brightness increased"
 }
