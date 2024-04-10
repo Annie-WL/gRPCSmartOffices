@@ -6,6 +6,7 @@ option java_outer_classname = "SmartWindowServiceImpl";
 package SmartOffices;
 
 
+
 // Service for controlling smart window systems.
 service SmartWindow {
   // Simple RPC: Open windows
