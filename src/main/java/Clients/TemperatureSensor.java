@@ -1,10 +1,12 @@
-package com.example.grpc.smartoffices.heating;
+package Clients;
 
 
+import com.example.grpc.smartoffices.heating.SmartHeatingGrpc;
+import com.example.grpc.smartoffices.heating.TemperatureResponse;
+import com.example.grpc.smartoffices.heating.TemperatureSettingRequest;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
-import com.example.grpc.smartoffices.heating.SmartHeatingServiceImpl.*;
 
 public class TemperatureSensor {
     private final ManagedChannel channel;
