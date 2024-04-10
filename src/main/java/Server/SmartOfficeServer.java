@@ -13,8 +13,10 @@ import com.example.grpc.smartoffices.light.SmartLightsGrpc;
 import com.example.grpc.smartoffices.light.LightRequest;
 import com.example.grpc.smartoffices.light.LightResponse;
 
-
 import com.example.grpc.smartoffices.window.SmartWindowGrpc;
+import com.example.grpc.smartoffices.window.WindowControlRequest;
+import com.example.grpc.smartoffices.window.WindowResponse;
+import com.example.grpc.smartoffices.window.WindowRequest;
 
 
 
@@ -164,6 +166,65 @@ public class SmartOfficeServer {
 
     static class SmartWindowServiceImpl extends SmartWindowGrpc.SmartWindowImplBase {
         // Implement service methods
+        @Override
+        public void openWindow(WindowRequest request, StreamObserver<WindowResponse> responseObserver) {
+            WindowResponse response = WindowResponse.newBuilder()
+                    .setMessage("Window opened in area: " + request.getArea())
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+
+        @Override
+        public void closeWindow(WindowRequest request, StreamObserver<WindowResponse> responseObserver) {
+            WindowResponse response = WindowResponse.newBuilder()
+                    .setMessage("Window closed in area: " + request.getArea())
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+
+        @Override
+        public void tintLighter(WindowRequest request, StreamObserver<WindowResponse> responseObserver) {
+            WindowResponse response = WindowResponse.newBuilder()
+                    .setMessage("Window tint made lighter in area: " + request.getArea())
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+
+        @Override
+        public void tintDarker(WindowRequest request, StreamObserver<WindowResponse> responseObserver) {
+            WindowResponse response = WindowResponse.newBuilder()
+                    .setMessage("Window tint made darker in area: " + request.getArea())
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
+        }
+
+        @Override
+        public StreamObserver<WindowControlRequest> interactiveWindowControl(StreamObserver<WindowResponse> responseObserver) {
+            return new StreamObserver<WindowControlRequest>() {
+                @Override
+                public void onNext(WindowControlRequest request) {
+                    String message = "Processed command '" + request.getCommand() + "' for area: " + request.getArea();
+                    WindowResponse response = WindowResponse.newBuilder()
+                            .setMessage(message)
+                            .build();
+                    responseObserver.onNext(response);
+                }
+
+                @Override
+                public void onError(Throwable t) {
+                    System.err.println("Interactive Window Control failed: " + t.getMessage());
+                }
+
+                @Override
+                public void onCompleted() {
+                    responseObserver.onCompleted();
+                }
+            };
+        }
     }
 
 }
