@@ -18,9 +18,15 @@ import com.example.grpc.smartoffices.window.WindowControlRequest;
 import com.example.grpc.smartoffices.window.WindowResponse;
 import com.example.grpc.smartoffices.window.WindowRequest;
 
-
-
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+
+
 
 public class SmartOfficeServer {
     private Server server;
@@ -63,10 +69,43 @@ public class SmartOfficeServer {
     // Placeholder class implementations for each service
         // Implement service methods
     static class SmartHeatingServiceImpl extends SmartHeatingGrpc.SmartHeatingImplBase {
+//        @Override
+//        public void monitorTemperature(StreamObserver<TemperatureResponse> responseObserver) {
+//            // This method is left blank intentionally for example purposes.
+//            // You would implement your logic here to handle the incoming stream of temperature data.
+//        }
         @Override
         public void monitorTemperature(StreamObserver<TemperatureResponse> responseObserver) {
-            // This method is left blank intentionally for example purposes.
-            // You would implement your logic here to handle the incoming stream of temperature data.
+            ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+            executor.scheduleAtFixedRate(() -> {
+                String line;
+                String csvFile = "path/to/your/temperature.csv"; // Path to the CSV file
+                try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+                    while ((line = br.readLine()) != null) {
+                        String[] data = line.split(","); // Assuming CSV has no header and contains temperatures in a single column
+                        double temperature = Double.parseDouble(data[0]); // Parsing the temperature
+                        checkAndRespond(temperature, responseObserver);
+                    }
+                } catch (IOException | NumberFormatException e) {
+                    System.err.println("Error reading or parsing the CSV file: " + e.getMessage());
+                    responseObserver.onError(io.grpc.Status.INTERNAL.withDescription("Error processing temperature data").asRuntimeException());
+                }
+            }, 0, 1, TimeUnit.MINUTES); // Adjust the period according to your requirements
+        }
+
+        private void checkAndRespond(double temperature, StreamObserver<TemperatureResponse> responseObserver) {
+            String status;
+            if (temperature < 19.0) { // Threshold temperature
+                status = "Heating turned on for temperature: " + temperature;
+                // Here you might also interact with hardware/systems to physically turn on the heating
+            } else {
+                status = "Heating turned off for temperature: " + temperature;
+                // Similarly, interact with hardware/systems to turn off the heating
+            }
+            TemperatureResponse response = TemperatureResponse.newBuilder()
+                    .setMessage(status)
+                    .build();
+            responseObserver.onNext(response); // Send response to the client
         }
 
         @Override
