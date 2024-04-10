@@ -6,7 +6,7 @@ option java_outer_classname = "SmartHeatingServiceImpl";
 package SmartOffices;
 
 
-// Service for managing smart heating systems based on temperature readings.
+// Service for managing smart heating systems based on temperature.
 service SmartHeating {
   // Client-side Streaming RPC: Stream temperature data from the sensor
   rpc MonitorTemperature (stream TemperatureSettingRequest) returns (TemperatureResponse);
