@@ -62,7 +62,7 @@ public class WindSensor {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        WindSensor client = new WindSensor("localhost", 50051);
+        WindSensor client = new WindSensor("localhost", 50053);
         try {
             client.sendCommands("Main Lobby");
         } finally {

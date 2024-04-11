@@ -58,7 +58,7 @@ public class TemperatureSensor {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        TemperatureSensor client = new TemperatureSensor("localhost", 50051);
+        TemperatureSensor client = new TemperatureSensor("localhost", 50052);
         try {
             client.sendTemperatureData("Office 1");
         } finally {
