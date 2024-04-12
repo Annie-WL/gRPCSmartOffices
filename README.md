@@ -8,6 +8,8 @@ CLI
 =========================================
 
 Todo: 
+# /////
+*** make the consul open running!!!
 1. update protos -
 - delete the (Area) -- only one room! (multi rooms - one room)
 - change the sensor -- from temp sensor to environment sensor
@@ -21,9 +23,9 @@ Todo:
 
 Design update:
 1. Smart Light - Occupancy Sensor
+- detect occupancy - use "0" OR "1" to stored in the .csv file
 - detect how many people are in the office.
-- detect when the people entered the office
-- if > 0, auto turn on the light, if == 0, auto turn off the light
+- if the number of people ("NumPeople") > 0, auto turn on the light, if == 0, auto turn off the light
 
 ***
 - if check there is people, the occupancy sensor, environment sensor, and wind sensor will stream the data to the server, 
