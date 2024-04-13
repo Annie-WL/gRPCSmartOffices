@@ -16,7 +16,9 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private WindowRequest() {
-    area_ = "";
+    windDirection_ = "";
+    windSpeed_ = 0D;
+    windTemperature_ = 0D;
   }
 
   @java.lang.Override
@@ -46,7 +48,17 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            area_ = s;
+            windDirection_ = s;
+            break;
+          }
+          case 17: {
+
+            windSpeed_ = input.readDouble();
+            break;
+          }
+          case 25: {
+
+            windTemperature_ = input.readDouble();
             break;
           }
           default: {
@@ -81,38 +93,56 @@ private static final long serialVersionUID = 0L;
             com.example.grpc.smartoffices.window.WindowRequest.class, com.example.grpc.smartoffices.window.WindowRequest.Builder.class);
   }
 
-  public static final int AREA_FIELD_NUMBER = 1;
-  private volatile java.lang.Object area_;
+  public static final int WINDDIRECTION_FIELD_NUMBER = 1;
+  private volatile java.lang.Object windDirection_;
   /**
-   * <code>string area = 1;</code>
+   * <code>string windDirection = 1;</code>
    */
-  public java.lang.String getArea() {
-    java.lang.Object ref = area_;
+  public java.lang.String getWindDirection() {
+    java.lang.Object ref = windDirection_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      area_ = s;
+      windDirection_ = s;
       return s;
     }
   }
   /**
-   * <code>string area = 1;</code>
+   * <code>string windDirection = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getAreaBytes() {
-    java.lang.Object ref = area_;
+      getWindDirectionBytes() {
+    java.lang.Object ref = windDirection_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      area_ = b;
+      windDirection_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
+  }
+
+  public static final int WINDSPEED_FIELD_NUMBER = 2;
+  private double windSpeed_;
+  /**
+   * <code>double windSpeed = 2;</code>
+   */
+  public double getWindSpeed() {
+    return windSpeed_;
+  }
+
+  public static final int WINDTEMPERATURE_FIELD_NUMBER = 3;
+  private double windTemperature_;
+  /**
+   * <code>double windTemperature = 3;</code>
+   */
+  public double getWindTemperature() {
+    return windTemperature_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -129,8 +159,14 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getAreaBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, area_);
+    if (!getWindDirectionBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, windDirection_);
+    }
+    if (windSpeed_ != 0D) {
+      output.writeDouble(2, windSpeed_);
+    }
+    if (windTemperature_ != 0D) {
+      output.writeDouble(3, windTemperature_);
     }
     unknownFields.writeTo(output);
   }
@@ -141,8 +177,16 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getAreaBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, area_);
+    if (!getWindDirectionBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, windDirection_);
+    }
+    if (windSpeed_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(2, windSpeed_);
+    }
+    if (windTemperature_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(3, windTemperature_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -160,8 +204,16 @@ private static final long serialVersionUID = 0L;
     com.example.grpc.smartoffices.window.WindowRequest other = (com.example.grpc.smartoffices.window.WindowRequest) obj;
 
     boolean result = true;
-    result = result && getArea()
-        .equals(other.getArea());
+    result = result && getWindDirection()
+        .equals(other.getWindDirection());
+    result = result && (
+        java.lang.Double.doubleToLongBits(getWindSpeed())
+        == java.lang.Double.doubleToLongBits(
+            other.getWindSpeed()));
+    result = result && (
+        java.lang.Double.doubleToLongBits(getWindTemperature())
+        == java.lang.Double.doubleToLongBits(
+            other.getWindTemperature()));
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -173,8 +225,14 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + AREA_FIELD_NUMBER;
-    hash = (53 * hash) + getArea().hashCode();
+    hash = (37 * hash) + WINDDIRECTION_FIELD_NUMBER;
+    hash = (53 * hash) + getWindDirection().hashCode();
+    hash = (37 * hash) + WINDSPEED_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getWindSpeed()));
+    hash = (37 * hash) + WINDTEMPERATURE_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getWindTemperature()));
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -308,7 +366,11 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      area_ = "";
+      windDirection_ = "";
+
+      windSpeed_ = 0D;
+
+      windTemperature_ = 0D;
 
       return this;
     }
@@ -336,7 +398,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.example.grpc.smartoffices.window.WindowRequest buildPartial() {
       com.example.grpc.smartoffices.window.WindowRequest result = new com.example.grpc.smartoffices.window.WindowRequest(this);
-      result.area_ = area_;
+      result.windDirection_ = windDirection_;
+      result.windSpeed_ = windSpeed_;
+      result.windTemperature_ = windTemperature_;
       onBuilt();
       return result;
     }
@@ -385,9 +449,15 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(com.example.grpc.smartoffices.window.WindowRequest other) {
       if (other == com.example.grpc.smartoffices.window.WindowRequest.getDefaultInstance()) return this;
-      if (!other.getArea().isEmpty()) {
-        area_ = other.area_;
+      if (!other.getWindDirection().isEmpty()) {
+        windDirection_ = other.windDirection_;
         onChanged();
+      }
+      if (other.getWindSpeed() != 0D) {
+        setWindSpeed(other.getWindSpeed());
+      }
+      if (other.getWindTemperature() != 0D) {
+        setWindTemperature(other.getWindTemperature());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -418,71 +488,123 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object area_ = "";
+    private java.lang.Object windDirection_ = "";
     /**
-     * <code>string area = 1;</code>
+     * <code>string windDirection = 1;</code>
      */
-    public java.lang.String getArea() {
-      java.lang.Object ref = area_;
+    public java.lang.String getWindDirection() {
+      java.lang.Object ref = windDirection_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        area_ = s;
+        windDirection_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string area = 1;</code>
+     * <code>string windDirection = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getAreaBytes() {
-      java.lang.Object ref = area_;
+        getWindDirectionBytes() {
+      java.lang.Object ref = windDirection_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        area_ = b;
+        windDirection_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string area = 1;</code>
+     * <code>string windDirection = 1;</code>
      */
-    public Builder setArea(
+    public Builder setWindDirection(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      area_ = value;
+      windDirection_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string area = 1;</code>
+     * <code>string windDirection = 1;</code>
      */
-    public Builder clearArea() {
+    public Builder clearWindDirection() {
       
-      area_ = getDefaultInstance().getArea();
+      windDirection_ = getDefaultInstance().getWindDirection();
       onChanged();
       return this;
     }
     /**
-     * <code>string area = 1;</code>
+     * <code>string windDirection = 1;</code>
      */
-    public Builder setAreaBytes(
+    public Builder setWindDirectionBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      area_ = value;
+      windDirection_ = value;
+      onChanged();
+      return this;
+    }
+
+    private double windSpeed_ ;
+    /**
+     * <code>double windSpeed = 2;</code>
+     */
+    public double getWindSpeed() {
+      return windSpeed_;
+    }
+    /**
+     * <code>double windSpeed = 2;</code>
+     */
+    public Builder setWindSpeed(double value) {
+      
+      windSpeed_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>double windSpeed = 2;</code>
+     */
+    public Builder clearWindSpeed() {
+      
+      windSpeed_ = 0D;
+      onChanged();
+      return this;
+    }
+
+    private double windTemperature_ ;
+    /**
+     * <code>double windTemperature = 3;</code>
+     */
+    public double getWindTemperature() {
+      return windTemperature_;
+    }
+    /**
+     * <code>double windTemperature = 3;</code>
+     */
+    public Builder setWindTemperature(double value) {
+      
+      windTemperature_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>double windTemperature = 3;</code>
+     */
+    public Builder clearWindTemperature() {
+      
+      windTemperature_ = 0D;
       onChanged();
       return this;
     }

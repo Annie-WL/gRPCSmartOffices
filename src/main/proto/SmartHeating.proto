@@ -6,30 +6,22 @@ option java_outer_classname = "SmartHeatingServiceImpl";
 package SmartOffices;
 
 
-// Service for managing smart heating systems based on temperature.
 service SmartHeating {
-  // Client-side Streaming RPC: Stream temperature data from the sensor
-  rpc MonitorTemperature (stream TemperatureSettingRequest) returns (TemperatureResponse);
+  // Simple RPC: A single request-response for updating settings.
+  rpc UpdateSettings(HeatingRequest) returns (HeatingResponse);
 
-  // Simple RPC: Set high temperature
-  rpc SetTemperatureHigh (TemperatureSettingRequest) returns (TemperatureResponse);
-
-  // Simple RPC: Set low temperature
-  rpc SetTemperatureLow (TemperatureSettingRequest) returns (TemperatureResponse);
-
-  // Simple RPC: Turn heating on
-  rpc TurnHeatingOn (TemperatureSettingRequest) returns (TemperatureResponse);
-
-  // Simple RPC: Turn heating off
-  rpc TurnHeatingOff (TemperatureSettingRequest) returns (TemperatureResponse);
+  // Server-side streaming RPC: Client sends a request, server responds with a stream of updates.
+  rpc MonitorTemperature(HeatingRequest) returns (stream HeatingResponse);
 }
 
-message TemperatureSettingRequest {
-  string area = 1;
+message HeatingRequest {
+  double temperature = 1;
+  double humidity = 2;
+  double airPollution = 3; // PM2.5 level
 }
 
-message TemperatureResponse {
-  string message = 1;  // Status message such as "Heating turned on" or "Set temperature to high"
+message HeatingResponse {
+  bool heatingStatus = 1; // True if heating is on, False if off
 }
 
 

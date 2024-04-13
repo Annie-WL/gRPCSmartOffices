@@ -15,15 +15,15 @@ public final class SmartHeatingServiceImpl {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_SmartOffices_TemperatureSettingRequest_descriptor;
+    internal_static_SmartOffices_HeatingRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_SmartOffices_TemperatureSettingRequest_fieldAccessorTable;
+      internal_static_SmartOffices_HeatingRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_SmartOffices_TemperatureResponse_descriptor;
+    internal_static_SmartOffices_HeatingResponse_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_SmartOffices_TemperatureResponse_fieldAccessorTable;
+      internal_static_SmartOffices_HeatingResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -33,22 +33,15 @@ public final class SmartHeatingServiceImpl {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\022SmartHeating.proto\022\014SmartOffices\")\n\031Te" +
-      "mperatureSettingRequest\022\014\n\004area\030\001 \001(\t\"&\n" +
-      "\023TemperatureResponse\022\017\n\007message\030\001 \001(\t2\360\003" +
-      "\n\014SmartHeating\022b\n\022MonitorTemperature\022\'.S" +
-      "martOffices.TemperatureSettingRequest\032!." +
-      "SmartOffices.TemperatureResponse(\001\022`\n\022Se" +
-      "tTemperatureHigh\022\'.SmartOffices.Temperat" +
-      "ureSettingRequest\032!.SmartOffices.Tempera" +
-      "tureResponse\022_\n\021SetTemperatureLow\022\'.Smar" +
-      "tOffices.TemperatureSettingRequest\032!.Sma" +
-      "rtOffices.TemperatureResponse\022[\n\rTurnHea" +
-      "tingOn\022\'.SmartOffices.TemperatureSetting" +
-      "Request\032!.SmartOffices.TemperatureRespon" +
-      "se\022\\\n\016TurnHeatingOff\022\'.SmartOffices.Temp" +
-      "eratureSettingRequest\032!.SmartOffices.Tem" +
-      "peratureResponseBB\n%com.example.grpc.sma" +
+      "\n\022SmartHeating.proto\022\014SmartOffices\"M\n\016He" +
+      "atingRequest\022\023\n\013temperature\030\001 \001(\001\022\020\n\010hum" +
+      "idity\030\002 \001(\001\022\024\n\014airPollution\030\003 \001(\001\"(\n\017Hea" +
+      "tingResponse\022\025\n\rheatingStatus\030\001 \001(\0102\262\001\n\014" +
+      "SmartHeating\022M\n\016UpdateSettings\022\034.SmartOf" +
+      "fices.HeatingRequest\032\035.SmartOffices.Heat" +
+      "ingResponse\022S\n\022MonitorTemperature\022\034.Smar" +
+      "tOffices.HeatingRequest\032\035.SmartOffices.H" +
+      "eatingResponse0\001BB\n%com.example.grpc.sma" +
       "rtoffices.heatingB\027SmartHeatingServiceIm" +
       "plP\001b\006proto3"
     };
@@ -64,18 +57,18 @@ public final class SmartHeatingServiceImpl {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_SmartOffices_TemperatureSettingRequest_descriptor =
+    internal_static_SmartOffices_HeatingRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_SmartOffices_TemperatureSettingRequest_fieldAccessorTable = new
+    internal_static_SmartOffices_HeatingRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_SmartOffices_TemperatureSettingRequest_descriptor,
-        new java.lang.String[] { "Area", });
-    internal_static_SmartOffices_TemperatureResponse_descriptor =
+        internal_static_SmartOffices_HeatingRequest_descriptor,
+        new java.lang.String[] { "Temperature", "Humidity", "AirPollution", });
+    internal_static_SmartOffices_HeatingResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_SmartOffices_TemperatureResponse_fieldAccessorTable = new
+    internal_static_SmartOffices_HeatingResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_SmartOffices_TemperatureResponse_descriptor,
-        new java.lang.String[] { "Message", });
+        internal_static_SmartOffices_HeatingResponse_descriptor,
+        new java.lang.String[] { "HeatingStatus", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

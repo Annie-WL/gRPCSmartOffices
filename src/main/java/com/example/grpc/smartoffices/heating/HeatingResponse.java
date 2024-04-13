@@ -4,19 +4,19 @@
 package com.example.grpc.smartoffices.heating;
 
 /**
- * Protobuf type {@code SmartOffices.TemperatureSettingRequest}
+ * Protobuf type {@code SmartOffices.HeatingResponse}
  */
-public  final class TemperatureSettingRequest extends
+public  final class HeatingResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:SmartOffices.TemperatureSettingRequest)
-    TemperatureSettingRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:SmartOffices.HeatingResponse)
+    HeatingResponseOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use TemperatureSettingRequest.newBuilder() to construct.
-  private TemperatureSettingRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use HeatingResponse.newBuilder() to construct.
+  private HeatingResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private TemperatureSettingRequest() {
-    area_ = "";
+  private HeatingResponse() {
+    heatingStatus_ = false;
   }
 
   @java.lang.Override
@@ -24,7 +24,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private TemperatureSettingRequest(
+  private HeatingResponse(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -43,10 +43,9 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 8: {
 
-            area_ = s;
+            heatingStatus_ = input.readBool();
             break;
           }
           default: {
@@ -70,49 +69,28 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.example.grpc.smartoffices.heating.SmartHeatingServiceImpl.internal_static_SmartOffices_TemperatureSettingRequest_descriptor;
+    return com.example.grpc.smartoffices.heating.SmartHeatingServiceImpl.internal_static_SmartOffices_HeatingResponse_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.example.grpc.smartoffices.heating.SmartHeatingServiceImpl.internal_static_SmartOffices_TemperatureSettingRequest_fieldAccessorTable
+    return com.example.grpc.smartoffices.heating.SmartHeatingServiceImpl.internal_static_SmartOffices_HeatingResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.example.grpc.smartoffices.heating.TemperatureSettingRequest.class, com.example.grpc.smartoffices.heating.TemperatureSettingRequest.Builder.class);
+            com.example.grpc.smartoffices.heating.HeatingResponse.class, com.example.grpc.smartoffices.heating.HeatingResponse.Builder.class);
   }
 
-  public static final int AREA_FIELD_NUMBER = 1;
-  private volatile java.lang.Object area_;
+  public static final int HEATINGSTATUS_FIELD_NUMBER = 1;
+  private boolean heatingStatus_;
   /**
-   * <code>string area = 1;</code>
+   * <pre>
+   * True if heating is on, False if off
+   * </pre>
+   *
+   * <code>bool heatingStatus = 1;</code>
    */
-  public java.lang.String getArea() {
-    java.lang.Object ref = area_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      area_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string area = 1;</code>
-   */
-  public com.google.protobuf.ByteString
-      getAreaBytes() {
-    java.lang.Object ref = area_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      area_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public boolean getHeatingStatus() {
+    return heatingStatus_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -129,8 +107,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getAreaBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, area_);
+    if (heatingStatus_ != false) {
+      output.writeBool(1, heatingStatus_);
     }
     unknownFields.writeTo(output);
   }
@@ -141,8 +119,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getAreaBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, area_);
+    if (heatingStatus_ != false) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBoolSize(1, heatingStatus_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -154,14 +133,14 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.example.grpc.smartoffices.heating.TemperatureSettingRequest)) {
+    if (!(obj instanceof com.example.grpc.smartoffices.heating.HeatingResponse)) {
       return super.equals(obj);
     }
-    com.example.grpc.smartoffices.heating.TemperatureSettingRequest other = (com.example.grpc.smartoffices.heating.TemperatureSettingRequest) obj;
+    com.example.grpc.smartoffices.heating.HeatingResponse other = (com.example.grpc.smartoffices.heating.HeatingResponse) obj;
 
     boolean result = true;
-    result = result && getArea()
-        .equals(other.getArea());
+    result = result && (getHeatingStatus()
+        == other.getHeatingStatus());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -173,76 +152,77 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + AREA_FIELD_NUMBER;
-    hash = (53 * hash) + getArea().hashCode();
+    hash = (37 * hash) + HEATINGSTATUS_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+        getHeatingStatus());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest parseFrom(
+  public static com.example.grpc.smartoffices.heating.HeatingResponse parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest parseFrom(
+  public static com.example.grpc.smartoffices.heating.HeatingResponse parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest parseFrom(
+  public static com.example.grpc.smartoffices.heating.HeatingResponse parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest parseFrom(
+  public static com.example.grpc.smartoffices.heating.HeatingResponse parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest parseFrom(byte[] data)
+  public static com.example.grpc.smartoffices.heating.HeatingResponse parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest parseFrom(
+  public static com.example.grpc.smartoffices.heating.HeatingResponse parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest parseFrom(java.io.InputStream input)
+  public static com.example.grpc.smartoffices.heating.HeatingResponse parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest parseFrom(
+  public static com.example.grpc.smartoffices.heating.HeatingResponse parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest parseDelimitedFrom(java.io.InputStream input)
+  public static com.example.grpc.smartoffices.heating.HeatingResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest parseDelimitedFrom(
+  public static com.example.grpc.smartoffices.heating.HeatingResponse parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest parseFrom(
+  public static com.example.grpc.smartoffices.heating.HeatingResponse parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest parseFrom(
+  public static com.example.grpc.smartoffices.heating.HeatingResponse parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -255,7 +235,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.example.grpc.smartoffices.heating.TemperatureSettingRequest prototype) {
+  public static Builder newBuilder(com.example.grpc.smartoffices.heating.HeatingResponse prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -271,26 +251,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code SmartOffices.TemperatureSettingRequest}
+   * Protobuf type {@code SmartOffices.HeatingResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:SmartOffices.TemperatureSettingRequest)
-      com.example.grpc.smartoffices.heating.TemperatureSettingRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:SmartOffices.HeatingResponse)
+      com.example.grpc.smartoffices.heating.HeatingResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.example.grpc.smartoffices.heating.SmartHeatingServiceImpl.internal_static_SmartOffices_TemperatureSettingRequest_descriptor;
+      return com.example.grpc.smartoffices.heating.SmartHeatingServiceImpl.internal_static_SmartOffices_HeatingResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.example.grpc.smartoffices.heating.SmartHeatingServiceImpl.internal_static_SmartOffices_TemperatureSettingRequest_fieldAccessorTable
+      return com.example.grpc.smartoffices.heating.SmartHeatingServiceImpl.internal_static_SmartOffices_HeatingResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.example.grpc.smartoffices.heating.TemperatureSettingRequest.class, com.example.grpc.smartoffices.heating.TemperatureSettingRequest.Builder.class);
+              com.example.grpc.smartoffices.heating.HeatingResponse.class, com.example.grpc.smartoffices.heating.HeatingResponse.Builder.class);
     }
 
-    // Construct using com.example.grpc.smartoffices.heating.TemperatureSettingRequest.newBuilder()
+    // Construct using com.example.grpc.smartoffices.heating.HeatingResponse.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -308,7 +288,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      area_ = "";
+      heatingStatus_ = false;
 
       return this;
     }
@@ -316,17 +296,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.example.grpc.smartoffices.heating.SmartHeatingServiceImpl.internal_static_SmartOffices_TemperatureSettingRequest_descriptor;
+      return com.example.grpc.smartoffices.heating.SmartHeatingServiceImpl.internal_static_SmartOffices_HeatingResponse_descriptor;
     }
 
     @java.lang.Override
-    public com.example.grpc.smartoffices.heating.TemperatureSettingRequest getDefaultInstanceForType() {
-      return com.example.grpc.smartoffices.heating.TemperatureSettingRequest.getDefaultInstance();
+    public com.example.grpc.smartoffices.heating.HeatingResponse getDefaultInstanceForType() {
+      return com.example.grpc.smartoffices.heating.HeatingResponse.getDefaultInstance();
     }
 
     @java.lang.Override
-    public com.example.grpc.smartoffices.heating.TemperatureSettingRequest build() {
-      com.example.grpc.smartoffices.heating.TemperatureSettingRequest result = buildPartial();
+    public com.example.grpc.smartoffices.heating.HeatingResponse build() {
+      com.example.grpc.smartoffices.heating.HeatingResponse result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -334,9 +314,9 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public com.example.grpc.smartoffices.heating.TemperatureSettingRequest buildPartial() {
-      com.example.grpc.smartoffices.heating.TemperatureSettingRequest result = new com.example.grpc.smartoffices.heating.TemperatureSettingRequest(this);
-      result.area_ = area_;
+    public com.example.grpc.smartoffices.heating.HeatingResponse buildPartial() {
+      com.example.grpc.smartoffices.heating.HeatingResponse result = new com.example.grpc.smartoffices.heating.HeatingResponse(this);
+      result.heatingStatus_ = heatingStatus_;
       onBuilt();
       return result;
     }
@@ -375,19 +355,18 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.example.grpc.smartoffices.heating.TemperatureSettingRequest) {
-        return mergeFrom((com.example.grpc.smartoffices.heating.TemperatureSettingRequest)other);
+      if (other instanceof com.example.grpc.smartoffices.heating.HeatingResponse) {
+        return mergeFrom((com.example.grpc.smartoffices.heating.HeatingResponse)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.example.grpc.smartoffices.heating.TemperatureSettingRequest other) {
-      if (other == com.example.grpc.smartoffices.heating.TemperatureSettingRequest.getDefaultInstance()) return this;
-      if (!other.getArea().isEmpty()) {
-        area_ = other.area_;
-        onChanged();
+    public Builder mergeFrom(com.example.grpc.smartoffices.heating.HeatingResponse other) {
+      if (other == com.example.grpc.smartoffices.heating.HeatingResponse.getDefaultInstance()) return this;
+      if (other.getHeatingStatus() != false) {
+        setHeatingStatus(other.getHeatingStatus());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -404,11 +383,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.example.grpc.smartoffices.heating.TemperatureSettingRequest parsedMessage = null;
+      com.example.grpc.smartoffices.heating.HeatingResponse parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.example.grpc.smartoffices.heating.TemperatureSettingRequest) e.getUnfinishedMessage();
+        parsedMessage = (com.example.grpc.smartoffices.heating.HeatingResponse) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -418,71 +397,40 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object area_ = "";
+    private boolean heatingStatus_ ;
     /**
-     * <code>string area = 1;</code>
+     * <pre>
+     * True if heating is on, False if off
+     * </pre>
+     *
+     * <code>bool heatingStatus = 1;</code>
      */
-    public java.lang.String getArea() {
-      java.lang.Object ref = area_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        area_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public boolean getHeatingStatus() {
+      return heatingStatus_;
     }
     /**
-     * <code>string area = 1;</code>
+     * <pre>
+     * True if heating is on, False if off
+     * </pre>
+     *
+     * <code>bool heatingStatus = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getAreaBytes() {
-      java.lang.Object ref = area_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        area_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string area = 1;</code>
-     */
-    public Builder setArea(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      area_ = value;
+    public Builder setHeatingStatus(boolean value) {
+      
+      heatingStatus_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string area = 1;</code>
+     * <pre>
+     * True if heating is on, False if off
+     * </pre>
+     *
+     * <code>bool heatingStatus = 1;</code>
      */
-    public Builder clearArea() {
+    public Builder clearHeatingStatus() {
       
-      area_ = getDefaultInstance().getArea();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string area = 1;</code>
-     */
-    public Builder setAreaBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      area_ = value;
+      heatingStatus_ = false;
       onChanged();
       return this;
     }
@@ -499,41 +447,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:SmartOffices.TemperatureSettingRequest)
+    // @@protoc_insertion_point(builder_scope:SmartOffices.HeatingResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:SmartOffices.TemperatureSettingRequest)
-  private static final com.example.grpc.smartoffices.heating.TemperatureSettingRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:SmartOffices.HeatingResponse)
+  private static final com.example.grpc.smartoffices.heating.HeatingResponse DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.example.grpc.smartoffices.heating.TemperatureSettingRequest();
+    DEFAULT_INSTANCE = new com.example.grpc.smartoffices.heating.HeatingResponse();
   }
 
-  public static com.example.grpc.smartoffices.heating.TemperatureSettingRequest getDefaultInstance() {
+  public static com.example.grpc.smartoffices.heating.HeatingResponse getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<TemperatureSettingRequest>
-      PARSER = new com.google.protobuf.AbstractParser<TemperatureSettingRequest>() {
+  private static final com.google.protobuf.Parser<HeatingResponse>
+      PARSER = new com.google.protobuf.AbstractParser<HeatingResponse>() {
     @java.lang.Override
-    public TemperatureSettingRequest parsePartialFrom(
+    public HeatingResponse parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new TemperatureSettingRequest(input, extensionRegistry);
+      return new HeatingResponse(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<TemperatureSettingRequest> parser() {
+  public static com.google.protobuf.Parser<HeatingResponse> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<TemperatureSettingRequest> getParserForType() {
+  public com.google.protobuf.Parser<HeatingResponse> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.example.grpc.smartoffices.heating.TemperatureSettingRequest getDefaultInstanceForType() {
+  public com.example.grpc.smartoffices.heating.HeatingResponse getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

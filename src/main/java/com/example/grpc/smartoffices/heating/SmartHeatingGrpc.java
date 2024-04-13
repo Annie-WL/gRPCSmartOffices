@@ -3,9 +3,6 @@ package com.example.grpc.smartoffices.heating;
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
- * <pre>
- * Service for managing smart heating systems based on temperature readings.
- * </pre>
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.61.1)",
@@ -18,159 +15,66 @@ public final class SmartHeatingGrpc {
   public static final java.lang.String SERVICE_NAME = "SmartOffices.SmartHeating";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-      com.example.grpc.smartoffices.heating.TemperatureResponse> getMonitorTemperatureMethod;
+  private static volatile io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.HeatingRequest,
+      com.example.grpc.smartoffices.heating.HeatingResponse> getUpdateSettingsMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "UpdateSettings",
+      requestType = com.example.grpc.smartoffices.heating.HeatingRequest.class,
+      responseType = com.example.grpc.smartoffices.heating.HeatingResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.HeatingRequest,
+      com.example.grpc.smartoffices.heating.HeatingResponse> getUpdateSettingsMethod() {
+    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.HeatingRequest, com.example.grpc.smartoffices.heating.HeatingResponse> getUpdateSettingsMethod;
+    if ((getUpdateSettingsMethod = SmartHeatingGrpc.getUpdateSettingsMethod) == null) {
+      synchronized (SmartHeatingGrpc.class) {
+        if ((getUpdateSettingsMethod = SmartHeatingGrpc.getUpdateSettingsMethod) == null) {
+          SmartHeatingGrpc.getUpdateSettingsMethod = getUpdateSettingsMethod =
+              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.heating.HeatingRequest, com.example.grpc.smartoffices.heating.HeatingResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "UpdateSettings"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.example.grpc.smartoffices.heating.HeatingRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.example.grpc.smartoffices.heating.HeatingResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new SmartHeatingMethodDescriptorSupplier("UpdateSettings"))
+              .build();
+        }
+      }
+    }
+    return getUpdateSettingsMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.HeatingRequest,
+      com.example.grpc.smartoffices.heating.HeatingResponse> getMonitorTemperatureMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "MonitorTemperature",
-      requestType = com.example.grpc.smartoffices.heating.TemperatureSettingRequest.class,
-      responseType = com.example.grpc.smartoffices.heating.TemperatureResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
-  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-      com.example.grpc.smartoffices.heating.TemperatureResponse> getMonitorTemperatureMethod() {
-    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest, com.example.grpc.smartoffices.heating.TemperatureResponse> getMonitorTemperatureMethod;
+      requestType = com.example.grpc.smartoffices.heating.HeatingRequest.class,
+      responseType = com.example.grpc.smartoffices.heating.HeatingResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.HeatingRequest,
+      com.example.grpc.smartoffices.heating.HeatingResponse> getMonitorTemperatureMethod() {
+    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.HeatingRequest, com.example.grpc.smartoffices.heating.HeatingResponse> getMonitorTemperatureMethod;
     if ((getMonitorTemperatureMethod = SmartHeatingGrpc.getMonitorTemperatureMethod) == null) {
       synchronized (SmartHeatingGrpc.class) {
         if ((getMonitorTemperatureMethod = SmartHeatingGrpc.getMonitorTemperatureMethod) == null) {
           SmartHeatingGrpc.getMonitorTemperatureMethod = getMonitorTemperatureMethod =
-              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.heating.TemperatureSettingRequest, com.example.grpc.smartoffices.heating.TemperatureResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.heating.HeatingRequest, com.example.grpc.smartoffices.heating.HeatingResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "MonitorTemperature"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.heating.TemperatureSettingRequest.getDefaultInstance()))
+                  com.example.grpc.smartoffices.heating.HeatingRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.heating.TemperatureResponse.getDefaultInstance()))
+                  com.example.grpc.smartoffices.heating.HeatingResponse.getDefaultInstance()))
               .setSchemaDescriptor(new SmartHeatingMethodDescriptorSupplier("MonitorTemperature"))
               .build();
         }
       }
     }
     return getMonitorTemperatureMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-      com.example.grpc.smartoffices.heating.TemperatureResponse> getSetTemperatureHighMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "SetTemperatureHigh",
-      requestType = com.example.grpc.smartoffices.heating.TemperatureSettingRequest.class,
-      responseType = com.example.grpc.smartoffices.heating.TemperatureResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-      com.example.grpc.smartoffices.heating.TemperatureResponse> getSetTemperatureHighMethod() {
-    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest, com.example.grpc.smartoffices.heating.TemperatureResponse> getSetTemperatureHighMethod;
-    if ((getSetTemperatureHighMethod = SmartHeatingGrpc.getSetTemperatureHighMethod) == null) {
-      synchronized (SmartHeatingGrpc.class) {
-        if ((getSetTemperatureHighMethod = SmartHeatingGrpc.getSetTemperatureHighMethod) == null) {
-          SmartHeatingGrpc.getSetTemperatureHighMethod = getSetTemperatureHighMethod =
-              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.heating.TemperatureSettingRequest, com.example.grpc.smartoffices.heating.TemperatureResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SetTemperatureHigh"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.heating.TemperatureSettingRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.heating.TemperatureResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new SmartHeatingMethodDescriptorSupplier("SetTemperatureHigh"))
-              .build();
-        }
-      }
-    }
-    return getSetTemperatureHighMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-      com.example.grpc.smartoffices.heating.TemperatureResponse> getSetTemperatureLowMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "SetTemperatureLow",
-      requestType = com.example.grpc.smartoffices.heating.TemperatureSettingRequest.class,
-      responseType = com.example.grpc.smartoffices.heating.TemperatureResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-      com.example.grpc.smartoffices.heating.TemperatureResponse> getSetTemperatureLowMethod() {
-    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest, com.example.grpc.smartoffices.heating.TemperatureResponse> getSetTemperatureLowMethod;
-    if ((getSetTemperatureLowMethod = SmartHeatingGrpc.getSetTemperatureLowMethod) == null) {
-      synchronized (SmartHeatingGrpc.class) {
-        if ((getSetTemperatureLowMethod = SmartHeatingGrpc.getSetTemperatureLowMethod) == null) {
-          SmartHeatingGrpc.getSetTemperatureLowMethod = getSetTemperatureLowMethod =
-              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.heating.TemperatureSettingRequest, com.example.grpc.smartoffices.heating.TemperatureResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SetTemperatureLow"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.heating.TemperatureSettingRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.heating.TemperatureResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new SmartHeatingMethodDescriptorSupplier("SetTemperatureLow"))
-              .build();
-        }
-      }
-    }
-    return getSetTemperatureLowMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-      com.example.grpc.smartoffices.heating.TemperatureResponse> getTurnHeatingOnMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "TurnHeatingOn",
-      requestType = com.example.grpc.smartoffices.heating.TemperatureSettingRequest.class,
-      responseType = com.example.grpc.smartoffices.heating.TemperatureResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-      com.example.grpc.smartoffices.heating.TemperatureResponse> getTurnHeatingOnMethod() {
-    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest, com.example.grpc.smartoffices.heating.TemperatureResponse> getTurnHeatingOnMethod;
-    if ((getTurnHeatingOnMethod = SmartHeatingGrpc.getTurnHeatingOnMethod) == null) {
-      synchronized (SmartHeatingGrpc.class) {
-        if ((getTurnHeatingOnMethod = SmartHeatingGrpc.getTurnHeatingOnMethod) == null) {
-          SmartHeatingGrpc.getTurnHeatingOnMethod = getTurnHeatingOnMethod =
-              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.heating.TemperatureSettingRequest, com.example.grpc.smartoffices.heating.TemperatureResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "TurnHeatingOn"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.heating.TemperatureSettingRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.heating.TemperatureResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new SmartHeatingMethodDescriptorSupplier("TurnHeatingOn"))
-              .build();
-        }
-      }
-    }
-    return getTurnHeatingOnMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-      com.example.grpc.smartoffices.heating.TemperatureResponse> getTurnHeatingOffMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "TurnHeatingOff",
-      requestType = com.example.grpc.smartoffices.heating.TemperatureSettingRequest.class,
-      responseType = com.example.grpc.smartoffices.heating.TemperatureResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-      com.example.grpc.smartoffices.heating.TemperatureResponse> getTurnHeatingOffMethod() {
-    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.heating.TemperatureSettingRequest, com.example.grpc.smartoffices.heating.TemperatureResponse> getTurnHeatingOffMethod;
-    if ((getTurnHeatingOffMethod = SmartHeatingGrpc.getTurnHeatingOffMethod) == null) {
-      synchronized (SmartHeatingGrpc.class) {
-        if ((getTurnHeatingOffMethod = SmartHeatingGrpc.getTurnHeatingOffMethod) == null) {
-          SmartHeatingGrpc.getTurnHeatingOffMethod = getTurnHeatingOffMethod =
-              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.heating.TemperatureSettingRequest, com.example.grpc.smartoffices.heating.TemperatureResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "TurnHeatingOff"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.heating.TemperatureSettingRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.heating.TemperatureResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new SmartHeatingMethodDescriptorSupplier("TurnHeatingOff"))
-              .build();
-        }
-      }
-    }
-    return getTurnHeatingOffMethod;
   }
 
   /**
@@ -218,68 +122,32 @@ public final class SmartHeatingGrpc {
   }
 
   /**
-   * <pre>
-   * Service for managing smart heating systems based on temperature readings.
-   * </pre>
    */
   public interface AsyncService {
 
     /**
      * <pre>
-     * Client-side Streaming RPC: Stream temperature data from the sensor
+     * Simple RPC: A single request-response for updating settings.
      * </pre>
      */
-    default io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureSettingRequest> monitorTemperature(
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse> responseObserver) {
-      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getMonitorTemperatureMethod(), responseObserver);
+    default void updateSettings(com.example.grpc.smartoffices.heating.HeatingRequest request,
+        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.HeatingResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUpdateSettingsMethod(), responseObserver);
     }
 
     /**
      * <pre>
-     * Simple RPC: Set high temperature
+     * Server-side streaming RPC: Client sends a request, server responds with a stream of updates.
      * </pre>
      */
-    default void setTemperatureHigh(com.example.grpc.smartoffices.heating.TemperatureSettingRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSetTemperatureHighMethod(), responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Set low temperature
-     * </pre>
-     */
-    default void setTemperatureLow(com.example.grpc.smartoffices.heating.TemperatureSettingRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSetTemperatureLowMethod(), responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Turn heating on
-     * </pre>
-     */
-    default void turnHeatingOn(com.example.grpc.smartoffices.heating.TemperatureSettingRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getTurnHeatingOnMethod(), responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Turn heating off
-     * </pre>
-     */
-    default void turnHeatingOff(com.example.grpc.smartoffices.heating.TemperatureSettingRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getTurnHeatingOffMethod(), responseObserver);
+    default void monitorTemperature(com.example.grpc.smartoffices.heating.HeatingRequest request,
+        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.HeatingResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getMonitorTemperatureMethod(), responseObserver);
     }
   }
 
   /**
    * Base class for the server implementation of the service SmartHeating.
-   * <pre>
-   * Service for managing smart heating systems based on temperature readings.
-   * </pre>
    */
   public static abstract class SmartHeatingImplBase
       implements io.grpc.BindableService, AsyncService {
@@ -291,9 +159,6 @@ public final class SmartHeatingGrpc {
 
   /**
    * A stub to allow clients to do asynchronous rpc calls to service SmartHeating.
-   * <pre>
-   * Service for managing smart heating systems based on temperature readings.
-   * </pre>
    */
   public static final class SmartHeatingStub
       extends io.grpc.stub.AbstractAsyncStub<SmartHeatingStub> {
@@ -310,65 +175,29 @@ public final class SmartHeatingGrpc {
 
     /**
      * <pre>
-     * Client-side Streaming RPC: Stream temperature data from the sensor
+     * Simple RPC: A single request-response for updating settings.
      * </pre>
      */
-    public io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureSettingRequest> monitorTemperature(
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse> responseObserver) {
-      return io.grpc.stub.ClientCalls.asyncClientStreamingCall(
-          getChannel().newCall(getMonitorTemperatureMethod(), getCallOptions()), responseObserver);
+    public void updateSettings(com.example.grpc.smartoffices.heating.HeatingRequest request,
+        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.HeatingResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getUpdateSettingsMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      * <pre>
-     * Simple RPC: Set high temperature
+     * Server-side streaming RPC: Client sends a request, server responds with a stream of updates.
      * </pre>
      */
-    public void setTemperatureHigh(com.example.grpc.smartoffices.heating.TemperatureSettingRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getSetTemperatureHighMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Set low temperature
-     * </pre>
-     */
-    public void setTemperatureLow(com.example.grpc.smartoffices.heating.TemperatureSettingRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getSetTemperatureLowMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Turn heating on
-     * </pre>
-     */
-    public void turnHeatingOn(com.example.grpc.smartoffices.heating.TemperatureSettingRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getTurnHeatingOnMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Turn heating off
-     * </pre>
-     */
-    public void turnHeatingOff(com.example.grpc.smartoffices.heating.TemperatureSettingRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getTurnHeatingOffMethod(), getCallOptions()), request, responseObserver);
+    public void monitorTemperature(com.example.grpc.smartoffices.heating.HeatingRequest request,
+        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.HeatingResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
+          getChannel().newCall(getMonitorTemperatureMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service SmartHeating.
-   * <pre>
-   * Service for managing smart heating systems based on temperature readings.
-   * </pre>
    */
   public static final class SmartHeatingBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<SmartHeatingBlockingStub> {
@@ -385,50 +214,28 @@ public final class SmartHeatingGrpc {
 
     /**
      * <pre>
-     * Simple RPC: Set high temperature
+     * Simple RPC: A single request-response for updating settings.
      * </pre>
      */
-    public com.example.grpc.smartoffices.heating.TemperatureResponse setTemperatureHigh(com.example.grpc.smartoffices.heating.TemperatureSettingRequest request) {
+    public com.example.grpc.smartoffices.heating.HeatingResponse updateSettings(com.example.grpc.smartoffices.heating.HeatingRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getSetTemperatureHighMethod(), getCallOptions(), request);
+          getChannel(), getUpdateSettingsMethod(), getCallOptions(), request);
     }
 
     /**
      * <pre>
-     * Simple RPC: Set low temperature
+     * Server-side streaming RPC: Client sends a request, server responds with a stream of updates.
      * </pre>
      */
-    public com.example.grpc.smartoffices.heating.TemperatureResponse setTemperatureLow(com.example.grpc.smartoffices.heating.TemperatureSettingRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getSetTemperatureLowMethod(), getCallOptions(), request);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Turn heating on
-     * </pre>
-     */
-    public com.example.grpc.smartoffices.heating.TemperatureResponse turnHeatingOn(com.example.grpc.smartoffices.heating.TemperatureSettingRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getTurnHeatingOnMethod(), getCallOptions(), request);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Turn heating off
-     * </pre>
-     */
-    public com.example.grpc.smartoffices.heating.TemperatureResponse turnHeatingOff(com.example.grpc.smartoffices.heating.TemperatureSettingRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getTurnHeatingOffMethod(), getCallOptions(), request);
+    public java.util.Iterator<com.example.grpc.smartoffices.heating.HeatingResponse> monitorTemperature(
+        com.example.grpc.smartoffices.heating.HeatingRequest request) {
+      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
+          getChannel(), getMonitorTemperatureMethod(), getCallOptions(), request);
     }
   }
 
   /**
    * A stub to allow clients to do ListenableFuture-style rpc calls to service SmartHeating.
-   * <pre>
-   * Service for managing smart heating systems based on temperature readings.
-   * </pre>
    */
   public static final class SmartHeatingFutureStub
       extends io.grpc.stub.AbstractFutureStub<SmartHeatingFutureStub> {
@@ -445,54 +252,18 @@ public final class SmartHeatingGrpc {
 
     /**
      * <pre>
-     * Simple RPC: Set high temperature
+     * Simple RPC: A single request-response for updating settings.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.example.grpc.smartoffices.heating.TemperatureResponse> setTemperatureHigh(
-        com.example.grpc.smartoffices.heating.TemperatureSettingRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<com.example.grpc.smartoffices.heating.HeatingResponse> updateSettings(
+        com.example.grpc.smartoffices.heating.HeatingRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getSetTemperatureHighMethod(), getCallOptions()), request);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Set low temperature
-     * </pre>
-     */
-    public com.google.common.util.concurrent.ListenableFuture<com.example.grpc.smartoffices.heating.TemperatureResponse> setTemperatureLow(
-        com.example.grpc.smartoffices.heating.TemperatureSettingRequest request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getSetTemperatureLowMethod(), getCallOptions()), request);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Turn heating on
-     * </pre>
-     */
-    public com.google.common.util.concurrent.ListenableFuture<com.example.grpc.smartoffices.heating.TemperatureResponse> turnHeatingOn(
-        com.example.grpc.smartoffices.heating.TemperatureSettingRequest request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getTurnHeatingOnMethod(), getCallOptions()), request);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Turn heating off
-     * </pre>
-     */
-    public com.google.common.util.concurrent.ListenableFuture<com.example.grpc.smartoffices.heating.TemperatureResponse> turnHeatingOff(
-        com.example.grpc.smartoffices.heating.TemperatureSettingRequest request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getTurnHeatingOffMethod(), getCallOptions()), request);
+          getChannel().newCall(getUpdateSettingsMethod(), getCallOptions()), request);
     }
   }
 
-  private static final int METHODID_SET_TEMPERATURE_HIGH = 0;
-  private static final int METHODID_SET_TEMPERATURE_LOW = 1;
-  private static final int METHODID_TURN_HEATING_ON = 2;
-  private static final int METHODID_TURN_HEATING_OFF = 3;
-  private static final int METHODID_MONITOR_TEMPERATURE = 4;
+  private static final int METHODID_UPDATE_SETTINGS = 0;
+  private static final int METHODID_MONITOR_TEMPERATURE = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -511,21 +282,13 @@ public final class SmartHeatingGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_SET_TEMPERATURE_HIGH:
-          serviceImpl.setTemperatureHigh((com.example.grpc.smartoffices.heating.TemperatureSettingRequest) request,
-              (io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse>) responseObserver);
+        case METHODID_UPDATE_SETTINGS:
+          serviceImpl.updateSettings((com.example.grpc.smartoffices.heating.HeatingRequest) request,
+              (io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.HeatingResponse>) responseObserver);
           break;
-        case METHODID_SET_TEMPERATURE_LOW:
-          serviceImpl.setTemperatureLow((com.example.grpc.smartoffices.heating.TemperatureSettingRequest) request,
-              (io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse>) responseObserver);
-          break;
-        case METHODID_TURN_HEATING_ON:
-          serviceImpl.turnHeatingOn((com.example.grpc.smartoffices.heating.TemperatureSettingRequest) request,
-              (io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse>) responseObserver);
-          break;
-        case METHODID_TURN_HEATING_OFF:
-          serviceImpl.turnHeatingOff((com.example.grpc.smartoffices.heating.TemperatureSettingRequest) request,
-              (io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse>) responseObserver);
+        case METHODID_MONITOR_TEMPERATURE:
+          serviceImpl.monitorTemperature((com.example.grpc.smartoffices.heating.HeatingRequest) request,
+              (io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.HeatingResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -537,9 +300,6 @@ public final class SmartHeatingGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_MONITOR_TEMPERATURE:
-          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.monitorTemperature(
-              (io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.heating.TemperatureResponse>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -549,40 +309,19 @@ public final class SmartHeatingGrpc {
   public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
     return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
         .addMethod(
+          getUpdateSettingsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.example.grpc.smartoffices.heating.HeatingRequest,
+              com.example.grpc.smartoffices.heating.HeatingResponse>(
+                service, METHODID_UPDATE_SETTINGS)))
+        .addMethod(
           getMonitorTemperatureMethod(),
-          io.grpc.stub.ServerCalls.asyncClientStreamingCall(
+          io.grpc.stub.ServerCalls.asyncServerStreamingCall(
             new MethodHandlers<
-              com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-              com.example.grpc.smartoffices.heating.TemperatureResponse>(
+              com.example.grpc.smartoffices.heating.HeatingRequest,
+              com.example.grpc.smartoffices.heating.HeatingResponse>(
                 service, METHODID_MONITOR_TEMPERATURE)))
-        .addMethod(
-          getSetTemperatureHighMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-              com.example.grpc.smartoffices.heating.TemperatureResponse>(
-                service, METHODID_SET_TEMPERATURE_HIGH)))
-        .addMethod(
-          getSetTemperatureLowMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-              com.example.grpc.smartoffices.heating.TemperatureResponse>(
-                service, METHODID_SET_TEMPERATURE_LOW)))
-        .addMethod(
-          getTurnHeatingOnMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-              com.example.grpc.smartoffices.heating.TemperatureResponse>(
-                service, METHODID_TURN_HEATING_ON)))
-        .addMethod(
-          getTurnHeatingOffMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.example.grpc.smartoffices.heating.TemperatureSettingRequest,
-              com.example.grpc.smartoffices.heating.TemperatureResponse>(
-                service, METHODID_TURN_HEATING_OFF)))
         .build();
   }
 
@@ -631,11 +370,8 @@ public final class SmartHeatingGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new SmartHeatingFileDescriptorSupplier())
+              .addMethod(getUpdateSettingsMethod())
               .addMethod(getMonitorTemperatureMethod())
-              .addMethod(getSetTemperatureHighMethod())
-              .addMethod(getSetTemperatureLowMethod())
-              .addMethod(getTurnHeatingOnMethod())
-              .addMethod(getTurnHeatingOffMethod())
               .build();
         }
       }

@@ -8,12 +8,22 @@ public interface WindowRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string area = 1;</code>
+   * <code>string windDirection = 1;</code>
    */
-  java.lang.String getArea();
+  java.lang.String getWindDirection();
   /**
-   * <code>string area = 1;</code>
+   * <code>string windDirection = 1;</code>
    */
   com.google.protobuf.ByteString
-      getAreaBytes();
+      getWindDirectionBytes();
+
+  /**
+   * <code>double windSpeed = 2;</code>
+   */
+  double getWindSpeed();
+
+  /**
+   * <code>double windTemperature = 3;</code>
+   */
+  double getWindTemperature();
 }

@@ -16,7 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private WindowResponse() {
-    message_ = "";
+    windowStatus_ = false;
   }
 
   @java.lang.Override
@@ -43,10 +43,9 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 8: {
 
-            message_ = s;
+            windowStatus_ = input.readBool();
             break;
           }
           default: {
@@ -81,46 +80,17 @@ private static final long serialVersionUID = 0L;
             com.example.grpc.smartoffices.window.WindowResponse.class, com.example.grpc.smartoffices.window.WindowResponse.Builder.class);
   }
 
-  public static final int MESSAGE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object message_;
+  public static final int WINDOWSTATUS_FIELD_NUMBER = 1;
+  private boolean windowStatus_;
   /**
    * <pre>
-   * Response message such as "Window opened" or "Tint adjusted"
+   * True if window is closed, False if open
    * </pre>
    *
-   * <code>string message = 1;</code>
+   * <code>bool windowStatus = 1;</code>
    */
-  public java.lang.String getMessage() {
-    java.lang.Object ref = message_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      message_ = s;
-      return s;
-    }
-  }
-  /**
-   * <pre>
-   * Response message such as "Window opened" or "Tint adjusted"
-   * </pre>
-   *
-   * <code>string message = 1;</code>
-   */
-  public com.google.protobuf.ByteString
-      getMessageBytes() {
-    java.lang.Object ref = message_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      message_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public boolean getWindowStatus() {
+    return windowStatus_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -137,8 +107,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getMessageBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, message_);
+    if (windowStatus_ != false) {
+      output.writeBool(1, windowStatus_);
     }
     unknownFields.writeTo(output);
   }
@@ -149,8 +119,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getMessageBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, message_);
+    if (windowStatus_ != false) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBoolSize(1, windowStatus_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -168,8 +139,8 @@ private static final long serialVersionUID = 0L;
     com.example.grpc.smartoffices.window.WindowResponse other = (com.example.grpc.smartoffices.window.WindowResponse) obj;
 
     boolean result = true;
-    result = result && getMessage()
-        .equals(other.getMessage());
+    result = result && (getWindowStatus()
+        == other.getWindowStatus());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -181,8 +152,9 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
-    hash = (53 * hash) + getMessage().hashCode();
+    hash = (37 * hash) + WINDOWSTATUS_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+        getWindowStatus());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -316,7 +288,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      message_ = "";
+      windowStatus_ = false;
 
       return this;
     }
@@ -344,7 +316,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.example.grpc.smartoffices.window.WindowResponse buildPartial() {
       com.example.grpc.smartoffices.window.WindowResponse result = new com.example.grpc.smartoffices.window.WindowResponse(this);
-      result.message_ = message_;
+      result.windowStatus_ = windowStatus_;
       onBuilt();
       return result;
     }
@@ -393,9 +365,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(com.example.grpc.smartoffices.window.WindowResponse other) {
       if (other == com.example.grpc.smartoffices.window.WindowResponse.getDefaultInstance()) return this;
-      if (!other.getMessage().isEmpty()) {
-        message_ = other.message_;
-        onChanged();
+      if (other.getWindowStatus() != false) {
+        setWindowStatus(other.getWindowStatus());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -426,91 +397,40 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object message_ = "";
+    private boolean windowStatus_ ;
     /**
      * <pre>
-     * Response message such as "Window opened" or "Tint adjusted"
+     * True if window is closed, False if open
      * </pre>
      *
-     * <code>string message = 1;</code>
+     * <code>bool windowStatus = 1;</code>
      */
-    public java.lang.String getMessage() {
-      java.lang.Object ref = message_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        message_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public boolean getWindowStatus() {
+      return windowStatus_;
     }
     /**
      * <pre>
-     * Response message such as "Window opened" or "Tint adjusted"
+     * True if window is closed, False if open
      * </pre>
      *
-     * <code>string message = 1;</code>
+     * <code>bool windowStatus = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getMessageBytes() {
-      java.lang.Object ref = message_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        message_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <pre>
-     * Response message such as "Window opened" or "Tint adjusted"
-     * </pre>
-     *
-     * <code>string message = 1;</code>
-     */
-    public Builder setMessage(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      message_ = value;
+    public Builder setWindowStatus(boolean value) {
+      
+      windowStatus_ = value;
       onChanged();
       return this;
     }
     /**
      * <pre>
-     * Response message such as "Window opened" or "Tint adjusted"
+     * True if window is closed, False if open
      * </pre>
      *
-     * <code>string message = 1;</code>
+     * <code>bool windowStatus = 1;</code>
      */
-    public Builder clearMessage() {
+    public Builder clearWindowStatus() {
       
-      message_ = getDefaultInstance().getMessage();
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     * Response message such as "Window opened" or "Tint adjusted"
-     * </pre>
-     *
-     * <code>string message = 1;</code>
-     */
-    public Builder setMessageBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      message_ = value;
+      windowStatus_ = false;
       onChanged();
       return this;
     }

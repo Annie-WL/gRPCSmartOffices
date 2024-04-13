@@ -9,19 +9,10 @@ public interface WindowResponseOrBuilder extends
 
   /**
    * <pre>
-   * Response message such as "Window opened" or "Tint adjusted"
+   * True if window is closed, False if open
    * </pre>
    *
-   * <code>string message = 1;</code>
+   * <code>bool windowStatus = 1;</code>
    */
-  java.lang.String getMessage();
-  /**
-   * <pre>
-   * Response message such as "Window opened" or "Tint adjusted"
-   * </pre>
-   *
-   * <code>string message = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getMessageBytes();
+  boolean getWindowStatus();
 }

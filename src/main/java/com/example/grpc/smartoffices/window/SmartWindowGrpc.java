@@ -3,9 +3,6 @@ package com.example.grpc.smartoffices.window;
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
- * <pre>
- * Service for controlling smart window systems.
- * </pre>
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.61.1)",
@@ -19,158 +16,34 @@ public final class SmartWindowGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest,
-      com.example.grpc.smartoffices.window.WindowResponse> getOpenWindowMethod;
+      com.example.grpc.smartoffices.window.WindowResponse> getControlWindowsMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "OpenWindow",
+      fullMethodName = SERVICE_NAME + '/' + "ControlWindows",
       requestType = com.example.grpc.smartoffices.window.WindowRequest.class,
-      responseType = com.example.grpc.smartoffices.window.WindowResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest,
-      com.example.grpc.smartoffices.window.WindowResponse> getOpenWindowMethod() {
-    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest, com.example.grpc.smartoffices.window.WindowResponse> getOpenWindowMethod;
-    if ((getOpenWindowMethod = SmartWindowGrpc.getOpenWindowMethod) == null) {
-      synchronized (SmartWindowGrpc.class) {
-        if ((getOpenWindowMethod = SmartWindowGrpc.getOpenWindowMethod) == null) {
-          SmartWindowGrpc.getOpenWindowMethod = getOpenWindowMethod =
-              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.window.WindowRequest, com.example.grpc.smartoffices.window.WindowResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "OpenWindow"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.window.WindowRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.window.WindowResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new SmartWindowMethodDescriptorSupplier("OpenWindow"))
-              .build();
-        }
-      }
-    }
-    return getOpenWindowMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest,
-      com.example.grpc.smartoffices.window.WindowResponse> getCloseWindowMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "CloseWindow",
-      requestType = com.example.grpc.smartoffices.window.WindowRequest.class,
-      responseType = com.example.grpc.smartoffices.window.WindowResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest,
-      com.example.grpc.smartoffices.window.WindowResponse> getCloseWindowMethod() {
-    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest, com.example.grpc.smartoffices.window.WindowResponse> getCloseWindowMethod;
-    if ((getCloseWindowMethod = SmartWindowGrpc.getCloseWindowMethod) == null) {
-      synchronized (SmartWindowGrpc.class) {
-        if ((getCloseWindowMethod = SmartWindowGrpc.getCloseWindowMethod) == null) {
-          SmartWindowGrpc.getCloseWindowMethod = getCloseWindowMethod =
-              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.window.WindowRequest, com.example.grpc.smartoffices.window.WindowResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "CloseWindow"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.window.WindowRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.window.WindowResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new SmartWindowMethodDescriptorSupplier("CloseWindow"))
-              .build();
-        }
-      }
-    }
-    return getCloseWindowMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest,
-      com.example.grpc.smartoffices.window.WindowResponse> getTintLighterMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "TintLighter",
-      requestType = com.example.grpc.smartoffices.window.WindowRequest.class,
-      responseType = com.example.grpc.smartoffices.window.WindowResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest,
-      com.example.grpc.smartoffices.window.WindowResponse> getTintLighterMethod() {
-    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest, com.example.grpc.smartoffices.window.WindowResponse> getTintLighterMethod;
-    if ((getTintLighterMethod = SmartWindowGrpc.getTintLighterMethod) == null) {
-      synchronized (SmartWindowGrpc.class) {
-        if ((getTintLighterMethod = SmartWindowGrpc.getTintLighterMethod) == null) {
-          SmartWindowGrpc.getTintLighterMethod = getTintLighterMethod =
-              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.window.WindowRequest, com.example.grpc.smartoffices.window.WindowResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "TintLighter"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.window.WindowRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.window.WindowResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new SmartWindowMethodDescriptorSupplier("TintLighter"))
-              .build();
-        }
-      }
-    }
-    return getTintLighterMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest,
-      com.example.grpc.smartoffices.window.WindowResponse> getTintDarkerMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "TintDarker",
-      requestType = com.example.grpc.smartoffices.window.WindowRequest.class,
-      responseType = com.example.grpc.smartoffices.window.WindowResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest,
-      com.example.grpc.smartoffices.window.WindowResponse> getTintDarkerMethod() {
-    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest, com.example.grpc.smartoffices.window.WindowResponse> getTintDarkerMethod;
-    if ((getTintDarkerMethod = SmartWindowGrpc.getTintDarkerMethod) == null) {
-      synchronized (SmartWindowGrpc.class) {
-        if ((getTintDarkerMethod = SmartWindowGrpc.getTintDarkerMethod) == null) {
-          SmartWindowGrpc.getTintDarkerMethod = getTintDarkerMethod =
-              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.window.WindowRequest, com.example.grpc.smartoffices.window.WindowResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "TintDarker"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.window.WindowRequest.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.window.WindowResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new SmartWindowMethodDescriptorSupplier("TintDarker"))
-              .build();
-        }
-      }
-    }
-    return getTintDarkerMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowControlRequest,
-      com.example.grpc.smartoffices.window.WindowResponse> getInteractiveWindowControlMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "InteractiveWindowControl",
-      requestType = com.example.grpc.smartoffices.window.WindowControlRequest.class,
       responseType = com.example.grpc.smartoffices.window.WindowResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
-  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowControlRequest,
-      com.example.grpc.smartoffices.window.WindowResponse> getInteractiveWindowControlMethod() {
-    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowControlRequest, com.example.grpc.smartoffices.window.WindowResponse> getInteractiveWindowControlMethod;
-    if ((getInteractiveWindowControlMethod = SmartWindowGrpc.getInteractiveWindowControlMethod) == null) {
+  public static io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest,
+      com.example.grpc.smartoffices.window.WindowResponse> getControlWindowsMethod() {
+    io.grpc.MethodDescriptor<com.example.grpc.smartoffices.window.WindowRequest, com.example.grpc.smartoffices.window.WindowResponse> getControlWindowsMethod;
+    if ((getControlWindowsMethod = SmartWindowGrpc.getControlWindowsMethod) == null) {
       synchronized (SmartWindowGrpc.class) {
-        if ((getInteractiveWindowControlMethod = SmartWindowGrpc.getInteractiveWindowControlMethod) == null) {
-          SmartWindowGrpc.getInteractiveWindowControlMethod = getInteractiveWindowControlMethod =
-              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.window.WindowControlRequest, com.example.grpc.smartoffices.window.WindowResponse>newBuilder()
+        if ((getControlWindowsMethod = SmartWindowGrpc.getControlWindowsMethod) == null) {
+          SmartWindowGrpc.getControlWindowsMethod = getControlWindowsMethod =
+              io.grpc.MethodDescriptor.<com.example.grpc.smartoffices.window.WindowRequest, com.example.grpc.smartoffices.window.WindowResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "InteractiveWindowControl"))
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ControlWindows"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.example.grpc.smartoffices.window.WindowControlRequest.getDefaultInstance()))
+                  com.example.grpc.smartoffices.window.WindowRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   com.example.grpc.smartoffices.window.WindowResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new SmartWindowMethodDescriptorSupplier("InteractiveWindowControl"))
+              .setSchemaDescriptor(new SmartWindowMethodDescriptorSupplier("ControlWindows"))
               .build();
         }
       }
     }
-    return getInteractiveWindowControlMethod;
+    return getControlWindowsMethod;
   }
 
   /**
@@ -218,68 +91,22 @@ public final class SmartWindowGrpc {
   }
 
   /**
-   * <pre>
-   * Service for controlling smart window systems.
-   * </pre>
    */
   public interface AsyncService {
 
     /**
      * <pre>
-     * Simple RPC: Open windows
+     * Bidirectional streaming RPC: Both client and server send and receive a stream of messages concurrently.
      * </pre>
      */
-    default void openWindow(com.example.grpc.smartoffices.window.WindowRequest request,
+    default io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowRequest> controlWindows(
         io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getOpenWindowMethod(), responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Close windows
-     * </pre>
-     */
-    default void closeWindow(com.example.grpc.smartoffices.window.WindowRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCloseWindowMethod(), responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Make window tint lighter
-     * </pre>
-     */
-    default void tintLighter(com.example.grpc.smartoffices.window.WindowRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getTintLighterMethod(), responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Make window tint darker
-     * </pre>
-     */
-    default void tintDarker(com.example.grpc.smartoffices.window.WindowRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getTintDarkerMethod(), responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Bidirectional Streaming RPC: Interactive window control based on environmental data
-     * </pre>
-     */
-    default io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowControlRequest> interactiveWindowControl(
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse> responseObserver) {
-      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getInteractiveWindowControlMethod(), responseObserver);
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getControlWindowsMethod(), responseObserver);
     }
   }
 
   /**
    * Base class for the server implementation of the service SmartWindow.
-   * <pre>
-   * Service for controlling smart window systems.
-   * </pre>
    */
   public static abstract class SmartWindowImplBase
       implements io.grpc.BindableService, AsyncService {
@@ -291,9 +118,6 @@ public final class SmartWindowGrpc {
 
   /**
    * A stub to allow clients to do asynchronous rpc calls to service SmartWindow.
-   * <pre>
-   * Service for controlling smart window systems.
-   * </pre>
    */
   public static final class SmartWindowStub
       extends io.grpc.stub.AbstractAsyncStub<SmartWindowStub> {
@@ -310,65 +134,18 @@ public final class SmartWindowGrpc {
 
     /**
      * <pre>
-     * Simple RPC: Open windows
+     * Bidirectional streaming RPC: Both client and server send and receive a stream of messages concurrently.
      * </pre>
      */
-    public void openWindow(com.example.grpc.smartoffices.window.WindowRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getOpenWindowMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Close windows
-     * </pre>
-     */
-    public void closeWindow(com.example.grpc.smartoffices.window.WindowRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getCloseWindowMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Make window tint lighter
-     * </pre>
-     */
-    public void tintLighter(com.example.grpc.smartoffices.window.WindowRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getTintLighterMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Make window tint darker
-     * </pre>
-     */
-    public void tintDarker(com.example.grpc.smartoffices.window.WindowRequest request,
-        io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getTintDarkerMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     * <pre>
-     * Bidirectional Streaming RPC: Interactive window control based on environmental data
-     * </pre>
-     */
-    public io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowControlRequest> interactiveWindowControl(
+    public io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowRequest> controlWindows(
         io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse> responseObserver) {
       return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
-          getChannel().newCall(getInteractiveWindowControlMethod(), getCallOptions()), responseObserver);
+          getChannel().newCall(getControlWindowsMethod(), getCallOptions()), responseObserver);
     }
   }
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service SmartWindow.
-   * <pre>
-   * Service for controlling smart window systems.
-   * </pre>
    */
   public static final class SmartWindowBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<SmartWindowBlockingStub> {
@@ -382,53 +159,10 @@ public final class SmartWindowGrpc {
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new SmartWindowBlockingStub(channel, callOptions);
     }
-
-    /**
-     * <pre>
-     * Simple RPC: Open windows
-     * </pre>
-     */
-    public com.example.grpc.smartoffices.window.WindowResponse openWindow(com.example.grpc.smartoffices.window.WindowRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getOpenWindowMethod(), getCallOptions(), request);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Close windows
-     * </pre>
-     */
-    public com.example.grpc.smartoffices.window.WindowResponse closeWindow(com.example.grpc.smartoffices.window.WindowRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getCloseWindowMethod(), getCallOptions(), request);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Make window tint lighter
-     * </pre>
-     */
-    public com.example.grpc.smartoffices.window.WindowResponse tintLighter(com.example.grpc.smartoffices.window.WindowRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getTintLighterMethod(), getCallOptions(), request);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Make window tint darker
-     * </pre>
-     */
-    public com.example.grpc.smartoffices.window.WindowResponse tintDarker(com.example.grpc.smartoffices.window.WindowRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getTintDarkerMethod(), getCallOptions(), request);
-    }
   }
 
   /**
    * A stub to allow clients to do ListenableFuture-style rpc calls to service SmartWindow.
-   * <pre>
-   * Service for controlling smart window systems.
-   * </pre>
    */
   public static final class SmartWindowFutureStub
       extends io.grpc.stub.AbstractFutureStub<SmartWindowFutureStub> {
@@ -442,57 +176,9 @@ public final class SmartWindowGrpc {
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new SmartWindowFutureStub(channel, callOptions);
     }
-
-    /**
-     * <pre>
-     * Simple RPC: Open windows
-     * </pre>
-     */
-    public com.google.common.util.concurrent.ListenableFuture<com.example.grpc.smartoffices.window.WindowResponse> openWindow(
-        com.example.grpc.smartoffices.window.WindowRequest request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getOpenWindowMethod(), getCallOptions()), request);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Close windows
-     * </pre>
-     */
-    public com.google.common.util.concurrent.ListenableFuture<com.example.grpc.smartoffices.window.WindowResponse> closeWindow(
-        com.example.grpc.smartoffices.window.WindowRequest request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getCloseWindowMethod(), getCallOptions()), request);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Make window tint lighter
-     * </pre>
-     */
-    public com.google.common.util.concurrent.ListenableFuture<com.example.grpc.smartoffices.window.WindowResponse> tintLighter(
-        com.example.grpc.smartoffices.window.WindowRequest request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getTintLighterMethod(), getCallOptions()), request);
-    }
-
-    /**
-     * <pre>
-     * Simple RPC: Make window tint darker
-     * </pre>
-     */
-    public com.google.common.util.concurrent.ListenableFuture<com.example.grpc.smartoffices.window.WindowResponse> tintDarker(
-        com.example.grpc.smartoffices.window.WindowRequest request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getTintDarkerMethod(), getCallOptions()), request);
-    }
   }
 
-  private static final int METHODID_OPEN_WINDOW = 0;
-  private static final int METHODID_CLOSE_WINDOW = 1;
-  private static final int METHODID_TINT_LIGHTER = 2;
-  private static final int METHODID_TINT_DARKER = 3;
-  private static final int METHODID_INTERACTIVE_WINDOW_CONTROL = 4;
+  private static final int METHODID_CONTROL_WINDOWS = 0;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -511,22 +197,6 @@ public final class SmartWindowGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_OPEN_WINDOW:
-          serviceImpl.openWindow((com.example.grpc.smartoffices.window.WindowRequest) request,
-              (io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse>) responseObserver);
-          break;
-        case METHODID_CLOSE_WINDOW:
-          serviceImpl.closeWindow((com.example.grpc.smartoffices.window.WindowRequest) request,
-              (io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse>) responseObserver);
-          break;
-        case METHODID_TINT_LIGHTER:
-          serviceImpl.tintLighter((com.example.grpc.smartoffices.window.WindowRequest) request,
-              (io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse>) responseObserver);
-          break;
-        case METHODID_TINT_DARKER:
-          serviceImpl.tintDarker((com.example.grpc.smartoffices.window.WindowRequest) request,
-              (io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse>) responseObserver);
-          break;
         default:
           throw new AssertionError();
       }
@@ -537,8 +207,8 @@ public final class SmartWindowGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_INTERACTIVE_WINDOW_CONTROL:
-          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.interactiveWindowControl(
+        case METHODID_CONTROL_WINDOWS:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.controlWindows(
               (io.grpc.stub.StreamObserver<com.example.grpc.smartoffices.window.WindowResponse>) responseObserver);
         default:
           throw new AssertionError();
@@ -549,40 +219,12 @@ public final class SmartWindowGrpc {
   public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
     return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
         .addMethod(
-          getOpenWindowMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.example.grpc.smartoffices.window.WindowRequest,
-              com.example.grpc.smartoffices.window.WindowResponse>(
-                service, METHODID_OPEN_WINDOW)))
-        .addMethod(
-          getCloseWindowMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.example.grpc.smartoffices.window.WindowRequest,
-              com.example.grpc.smartoffices.window.WindowResponse>(
-                service, METHODID_CLOSE_WINDOW)))
-        .addMethod(
-          getTintLighterMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.example.grpc.smartoffices.window.WindowRequest,
-              com.example.grpc.smartoffices.window.WindowResponse>(
-                service, METHODID_TINT_LIGHTER)))
-        .addMethod(
-          getTintDarkerMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              com.example.grpc.smartoffices.window.WindowRequest,
-              com.example.grpc.smartoffices.window.WindowResponse>(
-                service, METHODID_TINT_DARKER)))
-        .addMethod(
-          getInteractiveWindowControlMethod(),
+          getControlWindowsMethod(),
           io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
             new MethodHandlers<
-              com.example.grpc.smartoffices.window.WindowControlRequest,
+              com.example.grpc.smartoffices.window.WindowRequest,
               com.example.grpc.smartoffices.window.WindowResponse>(
-                service, METHODID_INTERACTIVE_WINDOW_CONTROL)))
+                service, METHODID_CONTROL_WINDOWS)))
         .build();
   }
 
@@ -631,11 +273,7 @@ public final class SmartWindowGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new SmartWindowFileDescriptorSupplier())
-              .addMethod(getOpenWindowMethod())
-              .addMethod(getCloseWindowMethod())
-              .addMethod(getTintLighterMethod())
-              .addMethod(getTintDarkerMethod())
-              .addMethod(getInteractiveWindowControlMethod())
+              .addMethod(getControlWindowsMethod())
               .build();
         }
       }
