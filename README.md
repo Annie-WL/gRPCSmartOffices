@@ -21,17 +21,18 @@ Todo:
 6. 3 services (serviceImpl)
 
 
-Design update:
+Design details:
 1. Smart Light - Occupancy Sensor
 - detect occupancy - use "0" OR "1" to stored in the .csv file
 - detect how many people are in the office.
-- if the number of people ("NumPeople") > 0, auto turn on the light, if == 0, auto turn off the light
+- if the number of people ("NumPeople") > 0, auto turn on the light, 
+- if NumPeople == 0, auto turn off the light after 30 seconds
 
 ***
 - if check there is people, the occupancy sensor, environment sensor, and wind sensor will stream the data to the server, 
 - so that the server can turn ON/OFF the device.
-- if check, there is no people in the office, stop streaming the data. 
-- (this means, if there is no people in the room, the lights, heating, and windows will not auto-turn on or off)
+- if check there is no people in the office, stop streaming the data. 
+- (this means, if there is no people in the room, the lights, heating, and windows will not auto-turn on or turn off)
 
 
 2. Smart Heating - Environment Sensor 
@@ -39,6 +40,7 @@ Design update:
 - check if the temp. is lower than 19 degree Celsius.
 - if < 19 degree Celsius, then, turn on the heating device.
 - if the temp is > 23 degree Celsius, then auto turn off the heating device.
+- (keep the room temp. between 19-23)
 
 
 3. Smart Window - Wind Sensor 
