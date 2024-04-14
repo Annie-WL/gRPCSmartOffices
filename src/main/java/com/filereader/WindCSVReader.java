@@ -18,7 +18,8 @@ public class WindCSVReader {
         scheduleTimer();
     }
 
-    private static void loadWindData() {
+    public static ArrayList<WindReading> loadWindData() {
+        ArrayList<WindReading> windReadings = new ArrayList<>(); // Create a list to hold the WindReading objects
         try (InputStream inputStream = WindCSVReader.class.getClassLoader().getResourceAsStream("WindData.csv")) {
             if (inputStream != null) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -32,15 +33,19 @@ public class WindCSVReader {
                     double windTemperature = Double.parseDouble(parts[2]);
 
                     WindReading windReading = new WindReading(windDirection, windSpeed, windTemperature);
-                    windReadings.add(windReading);
+                    windReadings.add(windReading); // Add the new WindReading to the list
                 }
             } else {
                 System.err.println("Failed to load wind data file.");
+                return null; // Return null if the file could not be loaded
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return null; // Return null if an IOException occurs
         }
+        return windReadings; // Return the list of WindReading objects
     }
+
 
     private static void scheduleTimer() {
         timer = new Timer();

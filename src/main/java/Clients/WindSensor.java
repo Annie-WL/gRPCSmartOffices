@@ -5,19 +5,24 @@ import com.ecwid.consul.v1.health.model.HealthService;
 import com.example.grpc.smartoffices.window.SmartWindowGrpc;
 import com.example.grpc.smartoffices.window.WindowRequest;
 import com.example.grpc.smartoffices.window.WindowResponse;
+import com.filereader.WindReading;
+import com.filereader.WindCSVReader;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class WindSensor {
     private final ConsulClient consulClient;
     private final String consulServiceName;
+    private final ArrayList<WindReading> windReadings;
 
     public WindSensor(String consulHost, int consulPort, String consulServiceName) {
         this.consulClient = new ConsulClient(consulHost, consulPort);
         this.consulServiceName = consulServiceName;
+        this.windReadings = WindCSVReader.loadWindData(); // load wind data from the CSV
     }
 
     public void controlWindow() {
@@ -52,25 +57,20 @@ public class WindSensor {
             }
         };
 
-        // Assuming we have a method that provides wind data
-        // For the sake of this example, let's simulate some wind data
-        double windSpeed = 5.0; // km/h
-        double windTemperature = 9.0; // Celsius
-        String windDirection = "North";
-
         StreamObserver<WindowRequest> requestObserver = stub.controlWindows(responseObserver);
-        try {
+
+        // Loop through the wind readings and send them to the server
+        for (WindReading reading : windReadings) {
             WindowRequest request = WindowRequest.newBuilder()
-                    .setWindSpeed(windSpeed)
-                    .setWindTemperature(windTemperature)
-                    .setWindDirection(windDirection)
+                    .setWindSpeed(reading.getWindSpeed())
+                    .setWindTemperature(reading.getWindTemperature())
+                    .setWindDirection(reading.getWindDirection())
                     .build();
             requestObserver.onNext(request);
-        } catch (RuntimeException e) {
-            // Cancel RPC
-            requestObserver.onError(e);
-            throw e;
+            // To simulate real-time data, you might want to wait between sends
+            // Thread.sleep(1000); // For example, wait for 1 second
         }
+
         // Mark the end of requests
         requestObserver.onCompleted();
     }
@@ -84,4 +84,3 @@ public class WindSensor {
         client.controlWindow();
     }
 }
-
