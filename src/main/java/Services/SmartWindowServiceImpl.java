@@ -48,7 +48,7 @@ public class SmartWindowServiceImpl extends SmartWindowImplBase {
             @Override
             public void onNext(WindowRequest request) {
                 // Logic to determine if the window should be closed
-                windowClosed = request.getWindSpeed() > 4.8 || request.getWindTemperature() < 10.0;
+                windowClosed = request.getWindSpeed() > 64.0 || request.getWindTemperature() < 9.0;
                 WindowResponse response = WindowResponse.newBuilder()
                         .setWindowStatus(windowClosed)
                         .build();

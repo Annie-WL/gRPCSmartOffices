@@ -45,7 +45,7 @@ Design details:
 
 3. Smart Window - Wind Sensor 
 - detect: Wind Direction, Wind speed, Wind Temperature
-- if temp. < 10 degree Celsius, OR, speed > 4.8 km/h, auto close the window
+- if temp. < 9 degree Celsius, OR, speed > 64 km/h, auto close the window
 
 
 3. main controller - SmartOfficeController (SmartOfficeApp)
