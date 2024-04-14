@@ -17,7 +17,7 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
     private Server server;
 
     private void start() throws IOException {
-        int port = 50053; // Unique port for the Heating service
+        int port = 55053; // Unique port for the Heating service
         server = ServerBuilder.forPort(port)
                 .addService(this)
                 .build()

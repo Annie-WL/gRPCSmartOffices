@@ -17,7 +17,7 @@ public class SmartLightServiceImpl extends SmartLightImplBase {
     private Server server;
 
     private void start() throws IOException {
-        int port = 50052; // Ensure different port for each service
+        int port = 55052; // Ensure different port for each service
         server = ServerBuilder.forPort(port)
                 .addService(this)
                 .build()

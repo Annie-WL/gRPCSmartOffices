@@ -18,7 +18,7 @@ public class SmartWindowServiceImpl extends SmartWindowImplBase {
     private Server server;
 
     private void start() throws IOException {
-        int port = 50054; // Unique port for the Window service
+        int port = 55054; // Unique port for the Window service
         server = ServerBuilder.forPort(port)
                 .addService(this)
                 .build()
