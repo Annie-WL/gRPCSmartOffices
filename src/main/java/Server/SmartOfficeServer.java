@@ -16,19 +16,19 @@ public class SmartOfficeServer {
 
     private void start() throws IOException {
         // Start SmartLight service on its own port
-        smartLightServer = ServerBuilder.forPort(55052)
+        smartLightServer = ServerBuilder.forPort(55082)
                 .addService(new SmartLightServiceImpl())
                 .build()
                 .start();
 
         // Start SmartHeating service on its own port
-        smartHeatingServer = ServerBuilder.forPort(55053)
+        smartHeatingServer = ServerBuilder.forPort(55083)
                 .addService(new SmartHeatingServiceImpl())
                 .build()
                 .start();
 
         // Start SmartWindow service on its own port
-        smartWindowServer = ServerBuilder.forPort(55054)
+        smartWindowServer = ServerBuilder.forPort(55084)
                 .addService(new SmartWindowServiceImpl())
                 .build()
                 .start();
