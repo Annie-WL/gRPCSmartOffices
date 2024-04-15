@@ -102,11 +102,11 @@ public class SmartLightServiceImpl extends SmartLightImplBase {
         }
 
         // Extract Consul configuration properties
-        String consulHost = props.getProperty("smart-light.host");
-        int consulPort = Integer.parseInt(props.getProperty("smart-light.port"));
-        String serviceName = props.getProperty("smart-light.service.name");
-        int servicePort = Integer.parseInt(props.getProperty("smart-light.service.port"));
-        String healthCheckInterval = props.getProperty("smart-light.service.healthCheckInterval");
+        String consulHost = props.getProperty("consul.host");
+        int consulPort = Integer.parseInt(props.getProperty("consul.port"));
+        String serviceName = props.getProperty("consul.service.name");
+        int servicePort = Integer.parseInt(props.getProperty("consul.service.port"));
+        String healthCheckInterval = props.getProperty("consul.service.healthCheckInterval");
 
         // Get host address
         String hostAddress;

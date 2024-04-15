@@ -100,11 +100,11 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
         }
 
         // Extract Consul configuration properties
-        String consulHost = props.getProperty("smart-heating.host");
-        int consulPort = Integer.parseInt(props.getProperty("smart-heating.port"));
-        String serviceName = props.getProperty("smart-heating.service.name");
-        int servicePort = Integer.parseInt(props.getProperty("smart-heating.service.port"));
-        String healthCheckInterval = props.getProperty("smart-heating.service.healthCheckInterval");
+        String consulHost = props.getProperty("consul.host");
+        int consulPort = Integer.parseInt(props.getProperty("consul.port"));
+        String serviceName = props.getProperty("consul.service.name");
+        int servicePort = Integer.parseInt(props.getProperty("consul.service.port"));
+        String healthCheckInterval = props.getProperty("consul.service.healthCheckInterval");
 
         // Get host address
         String hostAddress;
