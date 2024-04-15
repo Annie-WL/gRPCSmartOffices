@@ -18,7 +18,8 @@ public class EnvironmentCSVReader {
         scheduleTimer();
     }
 
-    private static void loadEnvironmentData() {
+    public static ArrayList<EnvironmentReading> loadEnvironmentData() {
+        ArrayList<EnvironmentReading> environmentReadings = new ArrayList<>();
         try (InputStream inputStream = EnvironmentCSVReader.class.getClassLoader().getResourceAsStream("EnvironmentData.csv")) {
             if (inputStream != null) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -36,10 +37,13 @@ public class EnvironmentCSVReader {
                 }
             } else {
                 System.err.println("Failed to load environment data file.");
+                return null; // Return null if the file could not be loaded
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return null; // Return null if an IOException occurs
         }
+        return environmentReadings; // Return the list of EnvironmentReading objects
     }
 
     private static void scheduleTimer() {

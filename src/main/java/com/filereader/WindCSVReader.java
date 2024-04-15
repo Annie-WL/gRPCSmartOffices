@@ -35,6 +35,8 @@ public class WindCSVReader {
                     WindReading windReading = new WindReading(windDirection, windSpeed, windTemperature);
                     windReadings.add(windReading); // Add the new WindReading to the list
                 }
+
+
             } else {
                 System.err.println("Failed to load wind data file.");
                 return null; // Return null if the file could not be loaded
