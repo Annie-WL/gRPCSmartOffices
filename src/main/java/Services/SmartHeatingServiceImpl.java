@@ -16,11 +16,14 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Properties;
 
+
 public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
     private Server server;
+    private boolean isHeatingOn = false;//Track heating state
 
     private void start() throws IOException {
         int port = 50083; // Unique port for the Heating service
+
         server = ServerBuilder.forPort(port)
                 .addService(this)
                 .build()
@@ -39,14 +42,27 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
     private void stop() {
         if (server != null) {
             server.shutdown();
+//            System.err.println("*** server shut down");
         }
     }
 
     @Override
     public void updateSettings(HeatingRequest req, StreamObserver<HeatingResponse> responseObserver) {
-        // Logic to process the request
+//        // Logic to process the request
+//        HeatingResponse response = HeatingResponse.newBuilder()
+//                .setHeatingStatus(req.getTemperature() < 19.0) // Simplified example logic
+//                .build();
+//        responseObserver.onNext(response);
+//        responseObserver.onCompleted();
+        double temp = req.getTemperature();
+        boolean shouldHeat = temp < 19;
+        boolean shouldStop = temp > 23;
+
+        if (shouldHeat) isHeatingOn = true;
+        if (shouldStop) isHeatingOn = false;
+
         HeatingResponse response = HeatingResponse.newBuilder()
-                .setHeatingStatus(req.getTemperature() < 19.0) // Simplified example logic
+                .setHeatingStatus(isHeatingOn)
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -54,40 +70,29 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
 
     @Override
     public void monitorTemperature(HeatingRequest req, StreamObserver<HeatingResponse> responseObserver) {
-        // Logic to process the request and stream responses
-        // For example purposes, we're just sending one response
-        HeatingResponse response = HeatingResponse.newBuilder()
-                .setHeatingStatus(req.getTemperature() < 19.0 || req.getTemperature() > 23.0)
-                .build();
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
+//        // Logic to process the request and stream responses
+//        // For example purposes, we're just sending one response
+//        HeatingResponse response = HeatingResponse.newBuilder()
+//                .setHeatingStatus(req.getTemperature() < 19.0 || req.getTemperature() > 23.0)
+//                .build();
+//        responseObserver.onNext(response);
+//        responseObserver.onCompleted();
+        try {
+            for (int i = 0; i < 10; i++) { // Simulate continuous monitoring
+                updateSettings(req, responseObserver);
+                Thread.sleep(5000); // Simulate delay
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            responseObserver.onError(e);
+        } finally {
+            responseObserver.onCompleted();
+        }
+
     }
 
-//    private void registerToConsul(String serviceName, int servicePort, String healthCheckInterval) {
-//        try {
-//            String hostAddress = InetAddress.getLocalHost().getHostAddress();
-//            ConsulClient consulClient = new ConsulClient("localhost", 8500);
-//
-//            NewService newService = new NewService();
-//            newService.setId(serviceName + "-" + servicePort);
-//            newService.setName(serviceName);
-//            newService.setPort(servicePort);
-//            newService.setAddress(hostAddress);
-//
-//            NewService.Check serviceCheck = new NewService.Check();
-//            serviceCheck.setHttp("http://" + hostAddress + ":" + servicePort + "/health");
-//            serviceCheck.setInterval(healthCheckInterval);
-//            newService.setCheck(serviceCheck);
-//
-//            consulClient.agentServiceRegister(newService);
-//            System.out.println("Service registered with Consul. Service name: " + serviceName + ", Port: " + servicePort);
-//        } catch (Exception e) {
-//            System.err.println("Could not register service with Consul: " + e.getMessage());
-//            e.printStackTrace();
-//        }
-//    }
-
     private void registerToConsul() {
+
         System.out.println("Registering server to Consul...");
 
         // Load Consul configuration from smart-heating.properties file
@@ -124,12 +129,20 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
         newService.setPort(servicePort);
         newService.setAddress(hostAddress); // Set host address
 
+//        // Set up HTTP check pointing to the HealthCheckServer
+//        NewService.Check serviceCheck = new NewService.Check();
+//        serviceCheck.setHttp("http://" + hostAddress + ":" + healthPort + "/health");
+//        serviceCheck.setInterval(healthCheckInterval);
+//        newService.setCheck(serviceCheck);
+
         // Register service with Consul
         consulClient.agentServiceRegister(newService);
 
         // Print registration success message
         System.out.println("Server registered to Consul successfully. Host: " + hostAddress);
     }
+
+
 
     public static void main(String[] args) throws IOException, InterruptedException {
         final SmartHeatingServiceImpl server = new SmartHeatingServiceImpl();

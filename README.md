@@ -45,12 +45,11 @@ Design details:
 
 3. Smart Window - Wind Sensor 
 - detect: Wind Direction, Wind speed, Wind Temperature
-- if temp. < 9 degree Celsius, OR, speed > 64 km/h, auto close the window
+- if temp. < 9 degree Celsius, OR, speed > 40 km/h, auto close the window
 
 
 3. main controller - SmartOfficeController (SmartOfficeApp)
 Menu: (CLI / GUI)
-# choose the Area(Office1 area-1 && Office2 area-2 && Meeting Room-3); --- only one room left!
 choose the device (lights, heating, windows);
 choose the operation (turn on/off, brightness -/+, temp. -/+, open/close, tint darker/lighter)
 

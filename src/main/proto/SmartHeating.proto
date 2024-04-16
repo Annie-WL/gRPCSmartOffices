@@ -12,6 +12,7 @@ service SmartHeating {
 
   // Server-side streaming RPC: Client sends a request, server responds with a stream of updates.
   rpc MonitorTemperature(HeatingRequest) returns (stream HeatingResponse);
+
 }
 
 message HeatingRequest {
@@ -23,5 +24,6 @@ message HeatingRequest {
 message HeatingResponse {
   bool heatingStatus = 1; // True if heating is on, False if off
 }
+
 
 
