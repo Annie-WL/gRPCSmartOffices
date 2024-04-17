@@ -2,7 +2,7 @@ package Server;
 
 import Services.SmartLightServiceImpl;
 import Services.SmartHeatingServiceImpl;
-//import Services.SmartWindowServiceImpl;
+import Services.SmartWindowServiceImpl;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
@@ -12,7 +12,7 @@ public class SmartOfficeServer {
 
     private Server smartLightServer;
     private Server smartHeatingServer;
-//    private Server smartWindowServer;
+    private Server smartWindowServer;
 
     private void start() throws IOException {
         // Start SmartLight service on its own port
@@ -28,10 +28,10 @@ public class SmartOfficeServer {
                 .start();
 
         // Start SmartWindow service on its own port
-//        smartWindowServer = ServerBuilder.forPort(50084)
-//                .addService(new SmartWindowServiceImpl())
-//                .build()
-//                .start();
+        smartWindowServer = ServerBuilder.forPort(50084)
+                .addService(new SmartWindowServiceImpl())
+                .build()
+                .start();
 
         System.out.println("SmartOffice Services started on their respective ports.");
 
@@ -50,9 +50,9 @@ public class SmartOfficeServer {
         if (smartHeatingServer != null) {
             smartHeatingServer.shutdown();
         }
-//        if (smartWindowServer != null) {
-//            smartWindowServer.shutdown();
-//        }
+        if (smartWindowServer != null) {
+            smartWindowServer.shutdown();
+        }
     }
 
     private void blockUntilShutdown() throws InterruptedException {
@@ -62,9 +62,9 @@ public class SmartOfficeServer {
         if (smartHeatingServer != null) {
             smartHeatingServer.awaitTermination();
         }
-//        if (smartWindowServer != null) {
-//            smartWindowServer.awaitTermination();
-//        }
+        if (smartWindowServer != null) {
+            smartWindowServer.awaitTermination();
+        }
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
