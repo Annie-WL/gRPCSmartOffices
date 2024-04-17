@@ -20,31 +20,34 @@ public class WindCSVReader {
 
     public static ArrayList<WindReading> loadWindData() {
         ArrayList<WindReading> windReadings = new ArrayList<>();
-        try (InputStream inputStream = WindCSVReader.class.getClassLoader().getResourceAsStream("WindData.csv")) {
-            if (inputStream != null) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-                // Skip header line if present
-                reader.readLine();
-                while ((line = reader.readLine()) != null) {
-                    String[] parts = line.split(",");
+        // Using try-with-resources to ensure the InputStream and BufferedReader are closed
+        try (InputStream inputStream = WindCSVReader.class.getClassLoader().getResourceAsStream("WindData.csv");
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
 
-                    String windDirection = parts[0];
-                    double windSpeed = Double.parseDouble(parts[1]);
-                    double windTemperature = Double.parseDouble(parts[2]);
-
-                    WindReading windReading = new WindReading(windDirection, windSpeed, windTemperature);
-                    windReadings.add(windReading);
-                }
-            } else {
+            if (inputStream == null) {
                 System.err.println("Failed to load weather data file.");
+                return windReadings;
             }
+
+            String line;
+            // Skip header line if present
+            reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+
+                String windDirection = parts[0];
+                double windSpeed = Double.parseDouble(parts[1]);
+                double windTemperature = Double.parseDouble(parts[2]);
+
+                WindReading windReading = new WindReading(windDirection, windSpeed, windTemperature);
+                windReadings.add(windReading);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         return windReadings;
     }
-
 
     private static void scheduleTimer() {
         timer = new Timer();
@@ -57,8 +60,8 @@ public class WindCSVReader {
         @Override
         public void run() {
             if (index < windReadings.size()) {
-                WindReading weatherReading = windReadings.get(index);
-                System.out.println("Sensor Reading: " + weatherReading);
+                WindReading windReading = windReadings.get(index);
+                System.out.println("Sensor Reading: " + windReading);
                 index++;
             } else {
                 System.out.println("End of sensor readings reached.");

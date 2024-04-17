@@ -2,7 +2,6 @@ package SensorDevice;
 
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.health.model.HealthService;
-import com.example.grpc.smartoffices.heating.SmartHeatingGrpc;
 import com.example.grpc.smartoffices.window.SmartWindowGrpc;
 import com.example.grpc.smartoffices.window.WindowRequest;
 import com.example.grpc.smartoffices.window.WindowResponse;
