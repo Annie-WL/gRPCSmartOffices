@@ -14,33 +14,42 @@ public class SmartOfficeServer {
     private Server smartHeatingServer;
     private Server smartWindowServer;
 
-    private void start() throws IOException {
-        // Start SmartLight service on its own port
-        smartLightServer = ServerBuilder.forPort(50082)
-                .addService(new SmartLightServiceImpl())
-                .build()
-                .start();
+    private void start() {
+        try {
+            // Start SmartLight service on its own port
+            smartLightServer = ServerBuilder.forPort(50082)
+                    .addService(new SmartLightServiceImpl())
+                    .build()
+                    .start();
+            System.out.println("SmartLight Service started on port 50082");
 
-        // Start SmartHeating service on its own port
-        smartHeatingServer = ServerBuilder.forPort(50083)
-                .addService(new SmartHeatingServiceImpl())
-                .build()
-                .start();
+            // Start SmartHeating service on its own port
+            smartHeatingServer = ServerBuilder.forPort(50083)
+                    .addService(new SmartHeatingServiceImpl())
+                    .build()
+                    .start();
+            System.out.println("SmartHeating Service started on port 50083");
 
-        // Start SmartWindow service on its own port
-        smartWindowServer = ServerBuilder.forPort(50084)
-                .addService(new SmartWindowServiceImpl())
-                .build()
-                .start();
+            // Start SmartWindow service on its own port
+            smartWindowServer = ServerBuilder.forPort(50084)
+                    .addService(new SmartWindowServiceImpl())
+                    .build()
+                    .start();
+            System.out.println("SmartWindow Service started on port 50084");
 
-        System.out.println("SmartOffice Services started on their respective ports.");
+            System.out.println("SmartOffice Services started on their respective ports.");
 
-        // Add shutdown hook for each service
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.err.println("*** shutting down gRPC servers since JVM is shutting down");
-            stopServers();
-            System.err.println("*** servers shut down");
-        }));
+            // Add shutdown hook for each service
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                System.err.println("*** shutting down gRPC servers since JVM is shutting down");
+                stopServers();
+                System.err.println("*** servers shut down");
+            }));
+        } catch (IOException e) {
+            System.err.println("Failed to start the services: " + e.getMessage());
+            // Optionally rethrow as unchecked if you can't recover from this error
+            throw new RuntimeException(e);
+        }
     }
 
     private void stopServers() {
@@ -67,7 +76,7 @@ public class SmartOfficeServer {
         }
     }
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         final SmartOfficeServer server = new SmartOfficeServer();
         server.start();
         server.blockUntilShutdown();

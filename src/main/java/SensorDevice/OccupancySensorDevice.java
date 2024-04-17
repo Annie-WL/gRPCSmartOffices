@@ -1,5 +1,7 @@
 package SensorDevice;
 
+import com.dataReader.OccupancyCSVReader;
+import com.dataReader.OccupancyReading;
 import com.example.grpc.smartoffices.light.LightRequest;
 import com.example.grpc.smartoffices.light.LightResponse;
 import com.example.grpc.smartoffices.light.SmartLightGrpc;
@@ -17,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
+
 public class OccupancySensorDevice {
     private final ManagedChannel channel;
     private final SmartLightGrpc.SmartLightStub asyncStub;
@@ -30,7 +33,7 @@ public class OccupancySensorDevice {
 
     // Method to start sending occupancy data
     public void startSendingOccupancyData() {
-        List<String> dataLines = readCsvData("/path/to/resources/OccupancyData.csv"); // Adjust path as necessary
+        List<OccupancyReading> occupancyReadings = OccupancyCSVReader.loadOccupancyData();
         StreamObserver<LightRequest> requestObserver = asyncStub.controlLights(new StreamObserver<LightResponse>() {
             @Override
             public void onNext(LightResponse value) {
@@ -50,34 +53,17 @@ public class OccupancySensorDevice {
             }
         });
 
-        try {
-            for (String line : dataLines) {
-                if (line == null || line.isEmpty()) continue;
-                String[] tokens = line.split(",");
-                if (tokens.length >= 2) {
-                    int numPeople = Integer.parseInt(tokens[1].trim());
-                    System.out.println("Sending data: Number of people detected = " + numPeople);
-                    LightRequest request = LightRequest.newBuilder().setNumPeople(numPeople).build();
-                    requestObserver.onNext(request);
-                    TimeUnit.SECONDS.sleep(15);  // Match the server's read frequency
-                }
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        } finally {
-            requestObserver.onCompleted();  // Complete the stream
+        // Stream occupancy data
+        for (OccupancyReading reading : occupancyReadings) {
+            LightRequest request = LightRequest.newBuilder()
+                    .setNumPeople(reading.getNumPeople())
+                    .build();
+            requestObserver.onNext(request);
+            // Sleep is not necessary here unless you want to mimic real-time streaming
         }
+        requestObserver.onCompleted();  // Complete the stream
     }
 
-    private List<String> readCsvData(String filePath) {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(filePath)))) {
-            return br.lines().skip(1) // Skip header if present
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
-    }
 
     private void shutdownChannel() {
         try {
