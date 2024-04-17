@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.grpc.smartoffices.light";
+option java_outer_classname = "SmartLightServiceImpl";
+package SmartOffices;
+
+
+service SmartLight {
+  // Client-side streaming RPC:
+  // Client sends a stream of occupancy data, server responds once after processing all the data.
+  rpc ControlLights(stream LightRequest) returns (LightResponse);
+}
+
+message LightRequest {
+  int32 numPeople = 1; // Number of people detected
+}
+
+message LightResponse {
+  bool lightStatus = 1; // True if light is on, False if off
+}
+
+

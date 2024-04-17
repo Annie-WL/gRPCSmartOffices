@@ -1,7 +1,4 @@
-package Clients;
-
-import com.ecwid.consul.v1.ConsulClient;
-import com.ecwid.consul.v1.health.model.HealthService;
+package SensorDevice;
 
 import com.example.grpc.smartoffices.heating.*;
 import io.grpc.ManagedChannel;
@@ -10,7 +7,6 @@ import io.grpc.stub.StreamObserver;
 //import com.filereader.EnvironmentReading;
 //import com.filereader.EnvironmentCSVReader;
 
-import java.util.List;
 
 public class EnvironmentSensorDevice {
 

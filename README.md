@@ -1,14 +1,13 @@
 Smart Offices
-Smart devices/services: Lights, Heating, Windows
+Smart devices/services: Light, Heating, Window
 
 gRPC
 
-CLI
+CLI/GUI
 
 =========================================
 
-Todo: 
-# /////
+Todo:
 *** make the consul open running!!!
 1. update protos -
 - delete the (Area) -- only one room! (multi rooms - one room)
@@ -52,7 +51,9 @@ Design details:
 Menu: (CLI / GUI)
 choose the device (lights, heating, windows);
 choose the operation (turn on/off, brightness -/+, temp. -/+, open/close, tint darker/lighter)
-
+- get CurrentTemperature
+- StreamTemperature (call gRPC)(it will give Response every 15 seconds)
+- turn on/off (close the streaming)-(but sensor still store the data to the .csv file)
 
 the outline is on the .pdf
 
