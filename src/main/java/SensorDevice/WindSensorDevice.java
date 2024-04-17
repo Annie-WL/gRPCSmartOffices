@@ -29,29 +29,8 @@ public class WindSensorDevice {
         this.windReadings = WindCSVReader.loadWindData(); // load wind data from the CSV
     }
 
-    public void sendWindData() {
-        StreamObserver<WindowResponse> responseObserver = createResponseObserver();
-        StreamObserver<WindowRequest> requestObserver = asyncStub.controlWindows(responseObserver);
-
-        try {
-            // Send each wind reading as a request to the server
-            for (WindReading reading : windReadings) {
-                WindowRequest request = WindowRequest.newBuilder()
-                        .setWindDirection(reading.getWindDirection())
-                        .setWindSpeed(reading.getWindSpeed())
-                        .setWindTemperature(reading.getWindTemperature())
-                        .build();
-                requestObserver.onNext(request);
-            }
-            requestObserver.onCompleted();
-        } catch (RuntimeException e) {
-            requestObserver.onError(e);
-            throw e;
-        }
-    }
-
-    private StreamObserver<WindowResponse> createResponseObserver() {
-        return new StreamObserver<WindowResponse>() {
+    public void startDataStreaming() {
+        StreamObserver<WindowRequest> requestObserver = asyncStub.controlWindows(new StreamObserver<WindowResponse>() {
             @Override
             public void onNext(WindowResponse response) {
                 System.out.println("Response from server: Window is " + (response.getWindowStatus() ? "closed" : "open"));
@@ -60,27 +39,39 @@ public class WindSensorDevice {
             @Override
             public void onError(Throwable t) {
                 System.err.println("Error from server: " + t.getMessage());
+                channel.shutdownNow();
             }
 
             @Override
             public void onCompleted() {
-                System.out.println("Data stream completed.");
-                try {
-                    channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
-                } catch (InterruptedException e) {
-                    System.err.println("Channel did not terminate correctly.");
-                }
+                System.out.println("Server has completed sending responses.");
+                channel.shutdownNow();
             }
-        };
+        });
+
+        // Sending data to the server
+        try {
+            for (WindReading reading : windReadings) {
+                WindowRequest request = WindowRequest.newBuilder()
+                        .setWindDirection(reading.getWindDirection())
+                        .setWindSpeed(reading.getWindSpeed())
+                        .setWindTemperature(reading.getWindTemperature())
+                        .build();
+                requestObserver.onNext(request);
+                Thread.sleep(1000);  // Simulate time delay between sends
+            }
+            requestObserver.onCompleted(); // Signal completion after all data is sent
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            requestObserver.onError(e);  // Signal error if interrupted
+        }
     }
 
-
-
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) {
         String host = "localhost";
         int port = 50084;
         WindSensorDevice device = new WindSensorDevice(host, port);
-        device.sendWindData(); // Simplified call in main
+        device.startDataStreaming();
     }
 
 }//class
