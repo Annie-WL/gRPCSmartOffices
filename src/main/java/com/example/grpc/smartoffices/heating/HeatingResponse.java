@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private HeatingResponse() {
     heatingStatus_ = false;
+    currentTemperature_ = 0D;
   }
 
   @java.lang.Override
@@ -46,6 +47,11 @@ private static final long serialVersionUID = 0L;
           case 8: {
 
             heatingStatus_ = input.readBool();
+            break;
+          }
+          case 17: {
+
+            currentTemperature_ = input.readDouble();
             break;
           }
           default: {
@@ -93,6 +99,19 @@ private static final long serialVersionUID = 0L;
     return heatingStatus_;
   }
 
+  public static final int CURRENTTEMPERATURE_FIELD_NUMBER = 2;
+  private double currentTemperature_;
+  /**
+   * <pre>
+   * Current temperature
+   * </pre>
+   *
+   * <code>double currentTemperature = 2;</code>
+   */
+  public double getCurrentTemperature() {
+    return currentTemperature_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -110,6 +129,9 @@ private static final long serialVersionUID = 0L;
     if (heatingStatus_ != false) {
       output.writeBool(1, heatingStatus_);
     }
+    if (currentTemperature_ != 0D) {
+      output.writeDouble(2, currentTemperature_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -122,6 +144,10 @@ private static final long serialVersionUID = 0L;
     if (heatingStatus_ != false) {
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(1, heatingStatus_);
+    }
+    if (currentTemperature_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(2, currentTemperature_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -141,6 +167,10 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && (getHeatingStatus()
         == other.getHeatingStatus());
+    result = result && (
+        java.lang.Double.doubleToLongBits(getCurrentTemperature())
+        == java.lang.Double.doubleToLongBits(
+            other.getCurrentTemperature()));
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -155,6 +185,9 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + HEATINGSTATUS_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getHeatingStatus());
+    hash = (37 * hash) + CURRENTTEMPERATURE_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getCurrentTemperature()));
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -290,6 +323,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       heatingStatus_ = false;
 
+      currentTemperature_ = 0D;
+
       return this;
     }
 
@@ -317,6 +352,7 @@ private static final long serialVersionUID = 0L;
     public com.example.grpc.smartoffices.heating.HeatingResponse buildPartial() {
       com.example.grpc.smartoffices.heating.HeatingResponse result = new com.example.grpc.smartoffices.heating.HeatingResponse(this);
       result.heatingStatus_ = heatingStatus_;
+      result.currentTemperature_ = currentTemperature_;
       onBuilt();
       return result;
     }
@@ -367,6 +403,9 @@ private static final long serialVersionUID = 0L;
       if (other == com.example.grpc.smartoffices.heating.HeatingResponse.getDefaultInstance()) return this;
       if (other.getHeatingStatus() != false) {
         setHeatingStatus(other.getHeatingStatus());
+      }
+      if (other.getCurrentTemperature() != 0D) {
+        setCurrentTemperature(other.getCurrentTemperature());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -431,6 +470,44 @@ private static final long serialVersionUID = 0L;
     public Builder clearHeatingStatus() {
       
       heatingStatus_ = false;
+      onChanged();
+      return this;
+    }
+
+    private double currentTemperature_ ;
+    /**
+     * <pre>
+     * Current temperature
+     * </pre>
+     *
+     * <code>double currentTemperature = 2;</code>
+     */
+    public double getCurrentTemperature() {
+      return currentTemperature_;
+    }
+    /**
+     * <pre>
+     * Current temperature
+     * </pre>
+     *
+     * <code>double currentTemperature = 2;</code>
+     */
+    public Builder setCurrentTemperature(double value) {
+      
+      currentTemperature_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Current temperature
+     * </pre>
+     *
+     * <code>double currentTemperature = 2;</code>
+     */
+    public Builder clearCurrentTemperature() {
+      
+      currentTemperature_ = 0D;
       onChanged();
       return this;
     }

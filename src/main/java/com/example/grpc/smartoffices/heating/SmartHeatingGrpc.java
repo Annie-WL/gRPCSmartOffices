@@ -3,6 +3,9 @@ package com.example.grpc.smartoffices.heating;
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
+ * <pre>
+ * The SmartHeating service provides operations for controlling and monitoring heating
+ * </pre>
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.61.1)",
@@ -122,6 +125,9 @@ public final class SmartHeatingGrpc {
   }
 
   /**
+   * <pre>
+   * The SmartHeating service provides operations for controlling and monitoring heating
+   * </pre>
    */
   public interface AsyncService {
 
@@ -148,6 +154,9 @@ public final class SmartHeatingGrpc {
 
   /**
    * Base class for the server implementation of the service SmartHeating.
+   * <pre>
+   * The SmartHeating service provides operations for controlling and monitoring heating
+   * </pre>
    */
   public static abstract class SmartHeatingImplBase
       implements io.grpc.BindableService, AsyncService {
@@ -159,6 +168,9 @@ public final class SmartHeatingGrpc {
 
   /**
    * A stub to allow clients to do asynchronous rpc calls to service SmartHeating.
+   * <pre>
+   * The SmartHeating service provides operations for controlling and monitoring heating
+   * </pre>
    */
   public static final class SmartHeatingStub
       extends io.grpc.stub.AbstractAsyncStub<SmartHeatingStub> {
@@ -198,6 +210,9 @@ public final class SmartHeatingGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service SmartHeating.
+   * <pre>
+   * The SmartHeating service provides operations for controlling and monitoring heating
+   * </pre>
    */
   public static final class SmartHeatingBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<SmartHeatingBlockingStub> {
@@ -236,6 +251,9 @@ public final class SmartHeatingGrpc {
 
   /**
    * A stub to allow clients to do ListenableFuture-style rpc calls to service SmartHeating.
+   * <pre>
+   * The SmartHeating service provides operations for controlling and monitoring heating
+   * </pre>
    */
   public static final class SmartHeatingFutureStub
       extends io.grpc.stub.AbstractFutureStub<SmartHeatingFutureStub> {

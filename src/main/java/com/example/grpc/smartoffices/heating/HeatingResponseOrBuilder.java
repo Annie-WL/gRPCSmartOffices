@@ -15,4 +15,13 @@ public interface HeatingResponseOrBuilder extends
    * <code>bool heatingStatus = 1;</code>
    */
   boolean getHeatingStatus();
+
+  /**
+   * <pre>
+   * Current temperature
+   * </pre>
+   *
+   * <code>double currentTemperature = 2;</code>
+   */
+  double getCurrentTemperature();
 }
