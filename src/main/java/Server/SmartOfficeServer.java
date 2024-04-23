@@ -7,6 +7,7 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class SmartOfficeServer {
 
@@ -62,7 +63,34 @@ public class SmartOfficeServer {
         if (smartWindowServer != null) {
             smartWindowServer.shutdown();
         }
+        try {
+            // Wait for servers to stop, with a timeout to ensure the application eventually terminates
+            if (smartLightServer != null) {
+                smartLightServer.awaitTermination(30, TimeUnit.SECONDS);
+            }
+            if (smartHeatingServer != null) {
+                smartHeatingServer.awaitTermination(30, TimeUnit.SECONDS);
+            }
+            if (smartWindowServer != null) {
+                smartWindowServer.awaitTermination(30, TimeUnit.SECONDS);
+            }
+        } catch (InterruptedException e) {
+            // Log the error and forcibly shutdown servers if interrupted during shutdown
+            System.err.println("Servers interrupted during shutdown: " + e.getMessage());
+            if (smartLightServer != null) {
+                smartLightServer.shutdownNow();
+            }
+            if (smartHeatingServer != null) {
+                smartHeatingServer.shutdownNow();
+            }
+            if (smartWindowServer != null) {
+                smartWindowServer.shutdownNow();
+            }
+            // Restore the interrupted status
+            Thread.currentThread().interrupt();
+        }
     }
+
 
     private void blockUntilShutdown() throws InterruptedException {
         if (smartLightServer != null) {
