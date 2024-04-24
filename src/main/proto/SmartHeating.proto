@@ -1,28 +1,40 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.example.grpc.smartoffices.heating";
+option java_package = "com.project.grpc.smartoffices.heating";
 option java_outer_classname = "SmartHeatingServiceImpl";
 package SmartOffices;
 
-
+// The SmartHeating service provides operations for controlling and monitoring heating
 service SmartHeating {
-  // Simple RPC: A single request-response for updating settings.
-  rpc UpdateSettings(HeatingRequest) returns (HeatingResponse);
+  // Unary RPC: Adjusts the heating based on the environmental sensor data.
+  rpc AdjustHeating(HeatingAdjustmentRequest) returns (HeatingAdjustmentResponse);
 
-  // Server-side streaming RPC: Client sends a request, server responds with a stream of updates.
-  rpc MonitorTemperature(HeatingRequest) returns (stream HeatingResponse);
-
+  // Server-side streaming RPC: Client requests ongoing updates, server streams back temperature and heating status.
+  rpc StreamTemperatureUpdates(TemperatureStreamRequest) returns (stream TemperatureStreamResponse);
 }
 
-message HeatingRequest {
+// Request to adjust heating based on the current environmental conditions
+message HeatingAdjustmentRequest {
   double temperature = 1;
   double humidity = 2;
   double airPollution = 3; // PM2.5 level
 }
 
-message HeatingResponse {
+// Response indicating the new heating status after adjustment
+message HeatingAdjustmentResponse {
   bool heatingStatus = 1; // True if heating is on, False if off
+}
+
+// Request to start receiving streaming updates about the temperature and heating status
+message TemperatureStreamRequest {
+  string clientId = 1; // Identifier for the client requesting the data
+}
+
+// Response providing the current temperature and heating status
+message TemperatureStreamResponse {
+  double currentTemperature = 1; // Current temperature
+  bool heatingStatus = 2; // True if heating is on, False if off
 }
 
 
