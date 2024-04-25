@@ -24,6 +24,7 @@ message HeatingAdjustmentRequest {
 // Response indicating the new heating status after adjustment
 message HeatingAdjustmentResponse {
   bool heatingStatus = 1; // True if heating is on, False if off
+  string message = 2;
 }
 
 // Request to start receiving streaming updates about the temperature and heating status
@@ -35,6 +36,7 @@ message TemperatureStreamRequest {
 message TemperatureStreamResponse {
   double currentTemperature = 1; // Current temperature
   bool heatingStatus = 2; // True if heating is on, False if off
+  string message = 3;
 }
 
 

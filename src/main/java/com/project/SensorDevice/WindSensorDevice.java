@@ -53,7 +53,7 @@ public class WindSensorDevice {
                         .setWindTemperature(reading.getWindTemperature())
                         .build();
                 requestObserver.onNext(request);
-                Thread.sleep(1000);  // Simulate time delay between sends
+                Thread.sleep(15000);  // Simulate time delay between sends
             }
             requestObserver.onCompleted(); // Signal completion after all data is sent
         } catch (InterruptedException e) {
@@ -63,9 +63,9 @@ public class WindSensorDevice {
     }
 
     public static void main(String[] args) {
-        String host = "localhost";
-        int port = 50084;
-        WindSensorDevice device = new WindSensorDevice(host, port);
+        String consulHost = "localhost";
+        int consulPort = 50084;
+        WindSensorDevice device = new WindSensorDevice(consulHost, consulPort);
         device.startDataStreaming();
     }
 

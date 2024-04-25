@@ -10,7 +10,7 @@ import java.util.TimerTask;
 
 public class OccupancyCSVReader {
 
-        private static final ArrayList<OccupancyReading> occupancyReadings = new ArrayList<>();
+        public static final ArrayList<OccupancyReading> occupancyReadings = new ArrayList<>();
         private static Timer timer;
 
         public static void main(String[] args) {

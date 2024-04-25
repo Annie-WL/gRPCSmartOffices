@@ -15,4 +15,14 @@ public interface HeatingAdjustmentResponseOrBuilder extends
    * <code>bool heatingStatus = 1;</code>
    */
   boolean getHeatingStatus();
+
+  /**
+   * <code>string message = 2;</code>
+   */
+  java.lang.String getMessage();
+  /**
+   * <code>string message = 2;</code>
+   */
+  com.google.protobuf.ByteString
+      getMessageBytes();
 }

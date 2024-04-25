@@ -1,98 +1,111 @@
 package com.project.SensorDevice;
 
-import com.example.grpc.smartoffices.heating.HeatingRequest;
-import com.example.grpc.smartoffices.heating.HeatingResponse;
-import com.example.grpc.smartoffices.heating.SmartHeatingGrpc;
+import com.project.grpc.smartoffices.heating.HeatingAdjustmentRequest;
+import com.project.grpc.smartoffices.heating.HeatingAdjustmentResponse;
+import com.project.grpc.smartoffices.heating.TemperatureStreamRequest;
+import com.project.grpc.smartoffices.heating.TemperatureStreamResponse;
+import com.project.grpc.smartoffices.heating.SmartHeatingGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
-import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import com.project.dataReader.EnvironmentCSVReader;
-import com.project.dataReader.EnvironmentReading;
 
 public class EnvironmentSensorDevice {
+        private final ManagedChannel channel;
+        private final SmartHeatingGrpc.SmartHeatingBlockingStub blockingStub;
+        private final SmartHeatingGrpc.SmartHeatingStub asyncStub;
+        private final Random random = new Random();
 
-    private final ManagedChannel channel;
-    private final SmartHeatingGrpc.SmartHeatingStub asyncStub; // For streaming calls
-    private final SmartHeatingGrpc.SmartHeatingBlockingStub blockingStub; // For unary calls
-    private final List<EnvironmentReading> environmentReadings;
+        public EnvironmentSensorDevice(String host, int port) {
+            this.channel = ManagedChannelBuilder.forAddress(host, port)
+                    .usePlaintext()
+                    .build();
+            this.blockingStub = SmartHeatingGrpc.newBlockingStub(channel);
+            this.asyncStub = SmartHeatingGrpc.newStub(channel);
+        }
 
-    public EnvironmentSensorDevice(String consulHost, int consulPort) {
-        int smartHeatingServicePort = 50083;
+        public void shutdown() throws InterruptedException {
+            channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+        }
 
-        this.channel = ManagedChannelBuilder.forAddress(consulHost, consulPort).usePlaintext().build();
-        this.asyncStub = SmartHeatingGrpc.newStub(channel);
-        this.blockingStub = SmartHeatingGrpc.newBlockingStub(channel);
-        this.environmentReadings = EnvironmentCSVReader.loadEnvironmentData();
-    }
+        public void adjustHeating() {
+            double temperature = 10 + 15 * random.nextDouble();
+            double humidity = 40 + 20 * random.nextDouble();
+            double airPollution = 11 * random.nextDouble();
 
-
-////////////////////
-    // Method to send environmental data and start receiving heating updates
-    public void monitorTemperature(EnvironmentReading reading) {
-        HeatingRequest request = HeatingRequest.newBuilder()
-                .setTemperature(reading.getTemperature())
-                .setHumidity(reading.getHumidity())
-                .setAirPollution(reading.getAirPollution())
-                .build();
-
-        StreamObserver<HeatingResponse> responseObserver = new StreamObserver<HeatingResponse>() {
-            @Override
-            public void onNext(HeatingResponse heatingResponse) {
-                System.out.println("Received heating status update: " + (heatingResponse.getHeatingStatus() ? "ON" : "OFF"));
+            HeatingAdjustmentRequest request = HeatingAdjustmentRequest.newBuilder()
+                    .setTemperature(temperature)
+                    .setHumidity(humidity)
+                    .setAirPollution(airPollution)
+                    .build();
+            HeatingAdjustmentResponse response;
+            try {
+                response = blockingStub.adjustHeating(request);
+                System.out.println("Server Response: " + response.getMessage());
+            } catch (Exception e) {
+                System.err.println("RPC failed: " + e.getMessage());
+                return;
             }
+        }
 
-            @Override
-            public void onError(Throwable throwable) {
-                System.err.println("Error in monitoring temperature: " + throwable.getMessage());
+        public void streamTemperatureUpdates() {
+            TemperatureStreamRequest request = TemperatureStreamRequest.newBuilder()
+                    .setClientId("Client01")
+                    .build();
+
+            StreamObserver<TemperatureStreamResponse> responseObserver = new StreamObserver<TemperatureStreamResponse>() {
+                @Override
+                public void onNext(TemperatureStreamResponse response) {
+                    String formattedTemperature = String.format("%.2f", response.getCurrentTemperature());
+
+                    System.out.println("*Stream response: \n Temperature: " + formattedTemperature + "°C, " +
+                            "\n Heating Status: " + response.getHeatingStatus() +
+                            ".\n*Message: " + response.getMessage());
+                }
+
+
+                @Override
+                public void onError(Throwable t) {
+                    System.err.println("Stream failed: " + t.getMessage());
+                }
+
+                @Override
+                public void onCompleted() {
+                    System.out.println("Stream completed.");
+                }
+            };
+
+            asyncStub.streamTemperatureUpdates(request, responseObserver);
+            try {
+                // Await termination of the stream. This blocks forever typically in a real application.
+                Thread.currentThread().join();
+            } catch (InterruptedException e) {
+                System.err.println("Thread interrupted: " + e.getMessage());
             }
-
-            @Override
-            public void onCompleted() {
-                System.out.println("Completed monitoring temperature");
-                channel.shutdownNow(); // Shut down the channel after receiving all responses
-            }
-        };
-
-        // Call the RPC method with the single request and the response observer
-        asyncStub.monitorTemperature(request, responseObserver);
-    }
+            responseObserver.onCompleted(); // Complete the call properly
+        }
+        /////////
 
 
 
 
-    public static void main(String[] args) {
-        // TODO: Replace with actual Consul service details
+    public static void main(String[] args) throws InterruptedException {
         String consulHost = "localhost";
-        int consulPort = 8500;
+        int consulPort = 50083;
         String consulServiceName = "smart-heating-service";
 
-        EnvironmentSensorDevice device = new EnvironmentSensorDevice(consulHost, consulPort);
-        List<EnvironmentReading> readings = EnvironmentCSVReader.loadEnvironmentData();
-
-        // Assuming you want to monitor the temperature based on the first reading for simplicity
-        if (!readings.isEmpty()) {
-            device.monitorTemperature(readings.get(0));
-        }
-
-        // Keep the application running to receive stream updates
-        // Monitor temperature based on all readings
-        for (EnvironmentReading reading : readings) {
-            device.monitorTemperature(reading);
-            try {
-                TimeUnit.SECONDS.sleep(15); // Wait for 15 seconds before sending the next reading
-            } catch (InterruptedException e) {
-                System.err.println("Interrupted while waiting to send the next reading: " + e.getMessage());
-                Thread.currentThread().interrupt();
-                break;
-            }
-        }
+        EnvironmentSensorDevice client = new EnvironmentSensorDevice(consulHost, consulPort);
 
         // Do not to shut down immediately since server-side streaming is asynchronous
         // device.channel.shutdownNow();
-
+        try {
+            client.adjustHeating();
+            client.streamTemperatureUpdates();
+        } finally {
+            client.shutdown();
+        }
 
     }
 }

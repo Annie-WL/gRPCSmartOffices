@@ -1,7 +1,7 @@
 package com.project.Server;
 
 import com.project.Services.SmartLightServiceImpl;
-//import com.project.Services.SmartHeatingServiceImpl;
+import com.project.Services.SmartHeatingServiceImpl;
 import com.project.Services.SmartWindowServiceImpl;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -25,11 +25,11 @@ public class SmartOfficeServer {
             System.out.println("SmartLight Service started on port 50082");
 
             // Start SmartHeating service on its own port
-//            smartHeatingServer = ServerBuilder.forPort(50083)
-//                    .addService(new SmartHeatingServiceImpl())
-//                    .build()
-//                    .start();
-//            System.out.println("SmartHeating Service started on port 50083");
+            smartHeatingServer = ServerBuilder.forPort(50083)
+                    .addService(new SmartHeatingServiceImpl())
+                    .build()
+                    .start();
+            System.out.println("SmartHeating Service started on port 50083");
 
             // Start SmartWindow service on its own port
             smartWindowServer = ServerBuilder.forPort(50084)

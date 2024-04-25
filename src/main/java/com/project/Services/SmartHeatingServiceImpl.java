@@ -3,10 +3,6 @@ package com.project.Services;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import com.example.grpc.smartoffices.heating.HeatingRequest;
-import com.example.grpc.smartoffices.heating.HeatingResponse;
-import com.example.grpc.smartoffices.heating.SmartHeatingGrpc.SmartHeatingImplBase;
-
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.agent.model.NewService;
 
@@ -14,15 +10,27 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.LocalDateTime;
 import java.util.Properties;
 
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.project.grpc.smartoffices.heating.SmartHeatingGrpc.SmartHeatingImplBase;
+import com.project.grpc.smartoffices.heating.HeatingAdjustmentRequest;
+import com.project.grpc.smartoffices.heating.HeatingAdjustmentResponse;
+import com.project.grpc.smartoffices.heating.TemperatureStreamRequest;
+import com.project.grpc.smartoffices.heating.TemperatureStreamResponse;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Stream;
+
 public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
     private Server server;
-    private final AtomicReference<Double> currentTemperature = new AtomicReference<>(20.0);
-    private final AtomicBoolean heatingStatus = new AtomicBoolean(false);
+//    private final AtomicReference<Double> currentTemperature = new AtomicReference<>(20.0);
+    private AtomicBoolean heatingStatus = new AtomicBoolean(false);
 
     private void start() throws IOException {
         int port = 50083; // Unique port for the Heating service
@@ -50,63 +58,53 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
     }
 
     @Override
-    public void updateSettings(HeatingRequest req, StreamObserver<HeatingResponse> responseObserver) {
+    public void adjustHeating(HeatingAdjustmentRequest request, StreamObserver<HeatingAdjustmentResponse> responseObserver) {
         try {
-            double temp = req.getTemperature();
-            boolean shouldTurnOn = shouldTurnHeatingOn(temp, heatingStatus.get());
+            double temperature = request.getTemperature();
+            boolean currentStatus = heatingStatus.get();
+            String message = "Hello! This is a unary response from the server";
 
-            heatingStatus.set(shouldTurnOn);
-            currentTemperature.set(temp); // Update the current temperature
+            if (temperature < 19.0 && !currentStatus) {
+                heatingStatus.set(true); // Turn on the heating
+            } else if (temperature > 23.0 && currentStatus) {
+                heatingStatus.set(false); // Turn off the heating
+            }
 
-            HeatingResponse response = HeatingResponse.newBuilder()
-                    .setHeatingStatus(shouldTurnOn)
-                    .setCurrentTemperature(temp)
+            HeatingAdjustmentResponse response = HeatingAdjustmentResponse.newBuilder()
+                    .setHeatingStatus(heatingStatus.get())
+                    .setMessage(message) // Add the message to the response
                     .build();
+
             responseObserver.onNext(response);
             responseObserver.onCompleted();
         } catch (Exception e) {
             responseObserver.onError(io.grpc.Status.INTERNAL
                     .withDescription("Error processing request")
-                    .withCause(e) // Optionally, you can pass the exception to the client
+                    .withCause(e)
                     .asRuntimeException());
         }
     }
 
-    private boolean shouldTurnHeatingOn(double temperature, boolean isCurrentlyOn) {
-        final double LOWER_THRESHOLD = 19.0;
-        final double UPPER_THRESHOLD = 23.0;
-
-        if (temperature < LOWER_THRESHOLD) {
-            return true; // Turn on heating if below lower threshold
-        } else if (temperature > UPPER_THRESHOLD) {
-            return false; // Turn off heating if above upper threshold
-        }
-        // If the temperature is within the range, maintain current state
-        return isCurrentlyOn;
-    }
-
-    /////////////////////
-
-    //////need to be modified!!改
-    // 看孙哥是频，然后考虑 - 是否需要再proto中增加“double currentTemperature = 2; // Current temperature”
-
-    ////////////////
 
     @Override
-    public void monitorTemperature(HeatingRequest req, StreamObserver<HeatingResponse> responseObserver) {
-        // This would need to be managed carefully to avoid concurrency issues,
-        // especially if 'currentTemperature' and 'heatingStatus' are being updated elsewhere.
+    public void streamTemperatureUpdates(TemperatureStreamRequest request, StreamObserver<TemperatureStreamResponse> responseObserver) {
         try {
             while (!Thread.currentThread().isInterrupted()) {
-                HeatingResponse response = HeatingResponse.newBuilder()
+                double temperature = generateRandomTemperature();
+                double humidity = generateRandomHumidity();
+                double airPollution = generateRandomAirPollution();
+
+                String message = "This is a message from the server. Current time: " + LocalDateTime.now();
+
+                TemperatureStreamResponse response = TemperatureStreamResponse.newBuilder()
+                        .setCurrentTemperature(temperature)
                         .setHeatingStatus(heatingStatus.get())
-                        .setCurrentTemperature(currentTemperature.get())
+                        .setMessage(message)
                         .build();
 
                 responseObserver.onNext(response);
-                Thread.sleep(15000); // Wait for the next update period
+                Thread.sleep(15000); // Simulate data stream delay
             }
-
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             responseObserver.onError(io.grpc.Status.INTERNAL
@@ -117,7 +115,30 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
 
         responseObserver.onCompleted();
     }
+    ////////////////
+    private double generateRandomTemperature() {
+        Random randomTemp = new Random();
+        double low = 10.0;
+        double high = 25.0;
+        double result = low + (high - low) * randomTemp.nextDouble();
+        return result;
+    }
 
+    private double generateRandomHumidity() {
+        Random randomTemp = new Random();
+        double low = 40.0;
+        double high = 60.0;
+        double result = low + (high - low) * randomTemp.nextDouble();
+        return result;
+    }
+
+    private double generateRandomAirPollution() {
+        Random randomTemp = new Random();
+        double low = 0.0;
+        double high = 11.0;
+        double result = low + (high - low) * randomTemp.nextDouble();
+        return result;
+    }
 
 
     ////////////////////

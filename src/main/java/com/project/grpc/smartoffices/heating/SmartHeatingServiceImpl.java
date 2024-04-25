@@ -46,19 +46,19 @@ public final class SmartHeatingServiceImpl {
       "\n\022SmartHeating.proto\022\014SmartOffices\"W\n\030He" +
       "atingAdjustmentRequest\022\023\n\013temperature\030\001 " +
       "\001(\001\022\020\n\010humidity\030\002 \001(\001\022\024\n\014airPollution\030\003 " +
-      "\001(\001\"2\n\031HeatingAdjustmentResponse\022\025\n\rheat" +
-      "ingStatus\030\001 \001(\010\",\n\030TemperatureStreamRequ" +
-      "est\022\020\n\010clientId\030\001 \001(\t\"N\n\031TemperatureStre" +
-      "amResponse\022\032\n\022currentTemperature\030\001 \001(\001\022\025" +
-      "\n\rheatingStatus\030\002 \001(\0102\337\001\n\014SmartHeating\022`" +
-      "\n\rAdjustHeating\022&.SmartOffices.HeatingAd" +
-      "justmentRequest\032\'.SmartOffices.HeatingAd" +
-      "justmentResponse\022m\n\030StreamTemperatureUpd" +
-      "ates\022&.SmartOffices.TemperatureStreamReq" +
-      "uest\032\'.SmartOffices.TemperatureStreamRes" +
-      "ponse0\001BB\n%com.project.grpc.smartoffices" +
-      ".heatingB\027SmartHeatingServiceImplP\001b\006pro" +
-      "to3"
+      "\001(\001\"C\n\031HeatingAdjustmentResponse\022\025\n\rheat" +
+      "ingStatus\030\001 \001(\010\022\017\n\007message\030\002 \001(\t\",\n\030Temp" +
+      "eratureStreamRequest\022\020\n\010clientId\030\001 \001(\t\"_" +
+      "\n\031TemperatureStreamResponse\022\032\n\022currentTe" +
+      "mperature\030\001 \001(\001\022\025\n\rheatingStatus\030\002 \001(\010\022\017" +
+      "\n\007message\030\003 \001(\t2\337\001\n\014SmartHeating\022`\n\rAdju" +
+      "stHeating\022&.SmartOffices.HeatingAdjustme" +
+      "ntRequest\032\'.SmartOffices.HeatingAdjustme" +
+      "ntResponse\022m\n\030StreamTemperatureUpdates\022&" +
+      ".SmartOffices.TemperatureStreamRequest\032\'" +
+      ".SmartOffices.TemperatureStreamResponse0" +
+      "\001BB\n%com.project.grpc.smartoffices.heati" +
+      "ngB\027SmartHeatingServiceImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -83,7 +83,7 @@ public final class SmartHeatingServiceImpl {
     internal_static_SmartOffices_HeatingAdjustmentResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_SmartOffices_HeatingAdjustmentResponse_descriptor,
-        new java.lang.String[] { "HeatingStatus", });
+        new java.lang.String[] { "HeatingStatus", "Message", });
     internal_static_SmartOffices_TemperatureStreamRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_SmartOffices_TemperatureStreamRequest_fieldAccessorTable = new
@@ -95,7 +95,7 @@ public final class SmartHeatingServiceImpl {
     internal_static_SmartOffices_TemperatureStreamResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_SmartOffices_TemperatureStreamResponse_descriptor,
-        new java.lang.String[] { "CurrentTemperature", "HeatingStatus", });
+        new java.lang.String[] { "CurrentTemperature", "HeatingStatus", "Message", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

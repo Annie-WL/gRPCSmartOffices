@@ -9,20 +9,25 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+
+import static com.project.dataReader.OccupancyCSVReader.occupancyReadings;
 
 
 public class OccupancySensorDevice {
     private final ManagedChannel channel;
     private final SmartLightGrpc.SmartLightStub asyncStub;
-
-    private final List<OccupancyReading> occupancyReadings;
+//    private final List<OccupancyReading> occupancyReadings;
 
     public OccupancySensorDevice(String host, int port) {
         this.channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
         this.asyncStub = SmartLightGrpc.newStub(channel);
-        this.occupancyReadings = OccupancyCSVReader.loadOccupancyData(); // load data from the CSV
+        ArrayList<OccupancyReading> occupancyReadings = OccupancyCSVReader.loadOccupancyData();
+//        this.occupancyReadings = OccupancyCSVReader.loadOccupancyData(); // load data from the CSV
     }
 
     // Method to start sending occupancy data
@@ -48,14 +53,28 @@ public class OccupancySensorDevice {
         });
 
         // Stream occupancy data
-        for (OccupancyReading reading : occupancyReadings) {
-            LightRequest request = LightRequest.newBuilder()
-                    .setNumPeople(reading.getNumPeople())
-                    .build();
-            requestObserver.onNext(request);
-            // Sleep is not necessary here unless you want to mimic real-time streaming
+        try {
+            for (OccupancyReading reading : occupancyReadings) {
+                LightRequest request = LightRequest.newBuilder()
+                        .setNumPeople(reading.getNumPeople())
+                        .build();
+                requestObserver.onNext(request);
+                TimeUnit.SECONDS.sleep(5); // Sleep for some time before sending the next reading
+            }
+        } catch (InterruptedException e) {
+            System.err.println("Thread interrupted: " + e.getMessage());
+            Thread.currentThread().interrupt();
+        } finally {
+            requestObserver.onCompleted(); // Ensure to complete the stream
         }
-        requestObserver.onCompleted();  // Complete the stream
+
+//        try {
+//            // Here we're just sleeping for some time to ensure responses can be received
+//            TimeUnit.SECONDS.sleep(30);  // Keep the client alive for some seconds after sending all data
+//        } catch (InterruptedException e) {
+//            System.err.println("Thread interrupted: " + e.getMessage());
+//            Thread.currentThread().interrupt();
+//        }
 
     }//
 
@@ -72,12 +91,24 @@ public class OccupancySensorDevice {
     }
 
     public static void main(String[] args) {
-        // TODO: Replace with actual Consul service details
         String consulHost = "localhost";
-        int consulPort = 8500;
+        int consulPort = 50082;
         String consulServiceName = "smart-light-service";
 
         OccupancySensorDevice device = new OccupancySensorDevice(consulHost, consulPort);
-        device.startSendingOccupancyData(); // Example data
+        device.startSendingOccupancyData();
+
+        ///
+        // Wait for user input to stop
+        System.out.println("Press 'Q' to stop");
+        Scanner scanner = new Scanner(System.in);
+        while (!scanner.nextLine().equalsIgnoreCase("Q")) {
+            // Loop until 'Q' is entered
+        }
+
+        // Shutdown the channel and clean up
+        device.shutdownChannel();
+        scanner.close();
     }
+        ////
 }

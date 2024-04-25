@@ -24,4 +24,14 @@ public interface TemperatureStreamResponseOrBuilder extends
    * <code>bool heatingStatus = 2;</code>
    */
   boolean getHeatingStatus();
+
+  /**
+   * <code>string message = 3;</code>
+   */
+  java.lang.String getMessage();
+  /**
+   * <code>string message = 3;</code>
+   */
+  com.google.protobuf.ByteString
+      getMessageBytes();
 }

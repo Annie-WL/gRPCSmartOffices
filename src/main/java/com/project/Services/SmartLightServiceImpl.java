@@ -1,5 +1,7 @@
 package com.project.Services;
 
+import com.project.dataReader.OccupancyCSVReader;
+import com.project.dataReader.OccupancyReading;
 import com.project.grpc.smartoffices.light.SmartLightGrpc;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -14,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,7 +29,7 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
     private boolean isLightOn = false;
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private ScheduledFuture<?> lightOffTask; // Task for turning off the light
-
+    private final ArrayList<OccupancyReading> occupancyReadings = OccupancyCSVReader.loadOccupancyData();
 
 
     private void start() throws IOException {
@@ -60,6 +63,7 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
         return new StreamObserver<LightRequest>() {
             @Override
             public void onNext(LightRequest request) {
+                System.out.println("Light status updated: " + (isLightOn ? "ON" : "OFF"));
                 boolean hasPeople = request.getNumPeople() > 0;
                 updateLightStatus(hasPeople, responseObserver);
             }
@@ -76,25 +80,10 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
                 responseObserver.onNext(LightResponse.newBuilder().setLightStatus(isLightOn).build());
                 responseObserver.onCompleted();
             }
+
+
         };
     }
-
-
-/////////要改！！
-//    //////////////////
-//    private void updateLightStatus() {
-//        if (isLightOn) {
-//            System.out.println("Turning lights ON");
-//            scheduler.shutdownNow(); // Stop any ongoing off delay
-//        } else {
-//            System.out.println("Setting up to turn lights OFF after 30 seconds");
-//            scheduler.schedule(() -> {
-//                isLightOn = false;
-//                System.out.println("Lights turned OFF after delay");
-//            }, 30, TimeUnit.SECONDS);
-//        }
-//        // Consider writing the state to a CSV file or another persistence method here
-//    }
 
     /**
      * Updates the light status based on the presence of people.
@@ -104,60 +93,79 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
      *
      * @param hasPeople boolean indicating if people are currently detected in the room
      */
-//    private void updateLightStatus(boolean hasPeople) {
+//    private void updateLightStatus(boolean hasPeople, StreamObserver<LightResponse> responseObserver) {
 //        boolean previousStatus = isLightOn;
 //        if (hasPeople) {
+//            // If there are people in the room, turn the lights on.
 //            if (!isLightOn) {
 //                isLightOn = true;
 //                System.out.println("Turning lights ON");
+//                // If there was a task scheduled to turn off the lights, cancel it.
 //                if (lightOffTask != null && !lightOffTask.isDone()) {
 //                    lightOffTask.cancel(false);
 //                }
+//                // Notify the client that the lights are now ON.
+//                responseObserver.onNext(LightResponse.newBuilder().setLightStatus(isLightOn).build());
 //            }
 //        } else {
+//            // If the room is empty, schedule to turn the lights off after 30 seconds.
 //            if (isLightOn && (lightOffTask == null || lightOffTask.isDone() || lightOffTask.isCancelled())) {
 //                System.out.println("Setting up to turn lights OFF after 30 seconds");
 //                lightOffTask = scheduler.schedule(() -> {
 //                    isLightOn = false;
 //                    System.out.println("Lights turned OFF after delay");
-//                }, 30, TimeUnit.SECONDS);
+//                    // Notify the client that the lights are now OFF.
+//                    responseObserver.onNext(LightResponse.newBuilder().setLightStatus(isLightOn).build());
+//                }, 10, TimeUnit.SECONDS);
 //            }
+//        }
+//
+//        // If the light status has changed, send an update to the client.
+//        if (previousStatus != isLightOn) {
+//            responseObserver.onNext(LightResponse.newBuilder().setLightStatus(isLightOn).build());
 //        }
 //    }
 
     private void updateLightStatus(boolean hasPeople, StreamObserver<LightResponse> responseObserver) {
         boolean previousStatus = isLightOn;
-
-        if (hasPeople) {
-            // If there are people in the room, turn the lights on.
-            if (!isLightOn) {
-                isLightOn = true;
-                System.out.println("Turning lights ON");
-                // If there was a task scheduled to turn off the lights, cancel it.
-                if (lightOffTask != null && !lightOffTask.isDone()) {
-                    lightOffTask.cancel(false);
-                }
-                // Notify the client that the lights are now ON.
-                responseObserver.onNext(LightResponse.newBuilder().setLightStatus(isLightOn).build());
-            }
-        } else {
-            // If the room is empty, schedule to turn the lights off after 30 seconds.
-            if (isLightOn && (lightOffTask == null || lightOffTask.isDone() || lightOffTask.isCancelled())) {
-                System.out.println("Setting up to turn lights OFF after 30 seconds");
-                lightOffTask = scheduler.schedule(() -> {
-                    isLightOn = false;
-                    System.out.println("Lights turned OFF after delay");
-                    // Notify the client that the lights are now OFF.
-                    responseObserver.onNext(LightResponse.newBuilder().setLightStatus(isLightOn).build());
-                }, 30, TimeUnit.SECONDS);
+        if (hasPeople && !isLightOn) {
+            isLightOn = true;
+            System.out.println("Turning lights ON");
+            cancelScheduledLightOff();
+            responseObserver.onNext(LightResponse.newBuilder().setLightStatus(isLightOn).build());
+        } else if (!hasPeople && isLightOn) {
+            // If no people are detected and the light is currently on,
+            // schedule to turn the light off after a delay, if not already scheduled.
+            if (lightOffTask == null || lightOffTask.isDone() || lightOffTask.isCancelled()) {
+                scheduleLightOff();
             }
         }
 
-        // If the light status has changed, send an update to the client.
-        if (previousStatus != isLightOn) {
-            responseObserver.onNext(LightResponse.newBuilder().setLightStatus(isLightOn).build());
+        // If the light status has not changed, there's no need to send a response.
+        // This prevents spamming the client with unnecessary messages.
+    }
+
+    private void scheduleLightOff() {
+        if (lightOffTask != null && !lightOffTask.isDone()) {
+            lightOffTask.cancel(true);
+        }
+
+        lightOffTask = scheduler.schedule(() -> {
+            isLightOn = false;
+            System.out.println("Lights turned OFF after delay");
+            // Since this runs in a different thread, we must ensure we're not closing over the responseObserver
+            // from the gRPC thread. If you need to send a response when the light turns off, you'll have to
+            // rethink this logic to make it thread-safe and to not use the responseObserver directly here.
+        }, 5, TimeUnit.SECONDS);
+    }
+
+    private void cancelScheduledLightOff() {
+        if (lightOffTask != null && !lightOffTask.isDone()) {
+            lightOffTask.cancel(false); // May interrupt if running
+            lightOffTask = null; // Reset the future since it's no longer valid
         }
     }
+
 
 
     ////
