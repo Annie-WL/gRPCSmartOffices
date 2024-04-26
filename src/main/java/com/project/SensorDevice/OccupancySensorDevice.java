@@ -36,7 +36,7 @@ public class OccupancySensorDevice {
         StreamObserver<LightRequest> requestObserver = asyncStub.controlLights(new StreamObserver<LightResponse>() {
             @Override
             public void onNext(LightResponse value) {
-                System.out.println("Light status updated: " + (value.getLightStatus() ? "ON" : "OFF"));
+                System.out.println("Light status updated: " + (value.getLightStatus() ? "ON." : "OFF.") + "\nWith " + value.getNumPeople() + " people.");
             }
 
             @Override
@@ -67,17 +67,7 @@ public class OccupancySensorDevice {
         } finally {
             requestObserver.onCompleted(); // Ensure to complete the stream
         }
-
-//        try {
-//            // Here we're just sleeping for some time to ensure responses can be received
-//            TimeUnit.SECONDS.sleep(30);  // Keep the client alive for some seconds after sending all data
-//        } catch (InterruptedException e) {
-//            System.err.println("Thread interrupted: " + e.getMessage());
-//            Thread.currentThread().interrupt();
-//        }
-
     }//
-
 
     private void shutdownChannel() {
         try {

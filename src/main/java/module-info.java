@@ -1,3 +1,5 @@
+//This file is to help run the GUI - SmartOfficeApp
+
 module com.project {
     requires javafx.controls;
     requires javafx.fxml;

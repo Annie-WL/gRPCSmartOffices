@@ -15,4 +15,9 @@ public interface LightResponseOrBuilder extends
    * <code>bool lightStatus = 1;</code>
    */
   boolean getLightStatus();
+
+  /**
+   * <code>int32 numPeople = 2;</code>
+   */
+  int getNumPeople();
 }

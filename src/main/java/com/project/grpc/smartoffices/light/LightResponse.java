@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private LightResponse() {
     lightStatus_ = false;
+    numPeople_ = 0;
   }
 
   @java.lang.Override
@@ -46,6 +47,11 @@ private static final long serialVersionUID = 0L;
           case 8: {
 
             lightStatus_ = input.readBool();
+            break;
+          }
+          case 16: {
+
+            numPeople_ = input.readInt32();
             break;
           }
           default: {
@@ -93,6 +99,15 @@ private static final long serialVersionUID = 0L;
     return lightStatus_;
   }
 
+  public static final int NUMPEOPLE_FIELD_NUMBER = 2;
+  private int numPeople_;
+  /**
+   * <code>int32 numPeople = 2;</code>
+   */
+  public int getNumPeople() {
+    return numPeople_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -110,6 +125,9 @@ private static final long serialVersionUID = 0L;
     if (lightStatus_ != false) {
       output.writeBool(1, lightStatus_);
     }
+    if (numPeople_ != 0) {
+      output.writeInt32(2, numPeople_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -122,6 +140,10 @@ private static final long serialVersionUID = 0L;
     if (lightStatus_ != false) {
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(1, lightStatus_);
+    }
+    if (numPeople_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(2, numPeople_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -141,6 +163,8 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && (getLightStatus()
         == other.getLightStatus());
+    result = result && (getNumPeople()
+        == other.getNumPeople());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -155,6 +179,8 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + LIGHTSTATUS_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getLightStatus());
+    hash = (37 * hash) + NUMPEOPLE_FIELD_NUMBER;
+    hash = (53 * hash) + getNumPeople();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -290,6 +316,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       lightStatus_ = false;
 
+      numPeople_ = 0;
+
       return this;
     }
 
@@ -317,6 +345,7 @@ private static final long serialVersionUID = 0L;
     public com.project.grpc.smartoffices.light.LightResponse buildPartial() {
       com.project.grpc.smartoffices.light.LightResponse result = new com.project.grpc.smartoffices.light.LightResponse(this);
       result.lightStatus_ = lightStatus_;
+      result.numPeople_ = numPeople_;
       onBuilt();
       return result;
     }
@@ -367,6 +396,9 @@ private static final long serialVersionUID = 0L;
       if (other == com.project.grpc.smartoffices.light.LightResponse.getDefaultInstance()) return this;
       if (other.getLightStatus() != false) {
         setLightStatus(other.getLightStatus());
+      }
+      if (other.getNumPeople() != 0) {
+        setNumPeople(other.getNumPeople());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -431,6 +463,32 @@ private static final long serialVersionUID = 0L;
     public Builder clearLightStatus() {
       
       lightStatus_ = false;
+      onChanged();
+      return this;
+    }
+
+    private int numPeople_ ;
+    /**
+     * <code>int32 numPeople = 2;</code>
+     */
+    public int getNumPeople() {
+      return numPeople_;
+    }
+    /**
+     * <code>int32 numPeople = 2;</code>
+     */
+    public Builder setNumPeople(int value) {
+      
+      numPeople_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 numPeople = 2;</code>
+     */
+    public Builder clearNumPeople() {
+      
+      numPeople_ = 0;
       onChanged();
       return this;
     }

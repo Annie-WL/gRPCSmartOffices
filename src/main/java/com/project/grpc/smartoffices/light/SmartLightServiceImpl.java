@@ -34,12 +34,13 @@ public final class SmartLightServiceImpl {
   static {
     java.lang.String[] descriptorData = {
       "\n\020SmartLight.proto\022\014SmartOffices\"!\n\014Ligh" +
-      "tRequest\022\021\n\tnumPeople\030\001 \001(\005\"$\n\rLightResp" +
-      "onse\022\023\n\013lightStatus\030\001 \001(\0102X\n\nSmartLight\022" +
-      "J\n\rControlLights\022\032.SmartOffices.LightReq" +
-      "uest\032\033.SmartOffices.LightResponse(\001B>\n#c" +
-      "om.project.grpc.smartoffices.lightB\025Smar" +
-      "tLightServiceImplP\001b\006proto3"
+      "tRequest\022\021\n\tnumPeople\030\001 \001(\005\"7\n\rLightResp" +
+      "onse\022\023\n\013lightStatus\030\001 \001(\010\022\021\n\tnumPeople\030\002" +
+      " \001(\0052X\n\nSmartLight\022J\n\rControlLights\022\032.Sm" +
+      "artOffices.LightRequest\032\033.SmartOffices.L" +
+      "ightResponse(\001B>\n#com.project.grpc.smart" +
+      "offices.lightB\025SmartLightServiceImplP\001b\006" +
+      "proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -64,7 +65,7 @@ public final class SmartLightServiceImpl {
     internal_static_SmartOffices_LightResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_SmartOffices_LightResponse_descriptor,
-        new java.lang.String[] { "LightStatus", });
+        new java.lang.String[] { "LightStatus", "NumPeople", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

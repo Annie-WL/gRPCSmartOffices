@@ -1,52 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.Controller.SmartOfficeAppController">
     <children>
-
-        <Button fx:id="getCurrentTemperatureButton" layoutX="20.0" layoutY="162.0" onAction="#getCurrentTemperatureButton" text="Get Current Temperature" />
-
-        <Label fx:id="temperatureLabel" layoutX="21.0" layoutY="200.0" text="Temperature: " />
-
-        <Button layoutX="218.0" layoutY="162.0" mnemonicParsing="false" text="Get Number of People" />
-      <Button layoutX="447.0" layoutY="162.0" mnemonicParsing="false" text="Get Wind Speed" />
-      <Group layoutX="73.0" layoutY="14.0">
+<!--        Smart Heating-->
+      <AnchorPane prefHeight="400.0" prefWidth="200.0">
          <children>
-          <Label text="Heating">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf0ed" height="400.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="1.2" width="200.0" />
+      
+                    <Button fx:id="getCurrentTemperatureButton" layoutX="20.0" layoutY="164.0" onAction="#getCurrentTemperatureButton" text="Get Current Temperature" />
+      
+              <Label fx:id="temperatureLabel" layoutX="20.0" layoutY="224.0" text="Temperature: " />
+          <Label layoutX="73.0" layoutY="14.0" text="Heating">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="200.0" text="Light">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="400.0" text="Window">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
+      
+              <ImageView fx:id="heatingStatusImageView" fitHeight="49.0" fitWidth="43.0" layoutX="80.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" />
+      
+      
+              <Label layoutX="21.0" layoutY="61.0" text="Heating Status:" />
          </children>
-      </Group>
-      <Group layoutX="53.0" layoutY="54.0" />
-      <Group layoutX="248.0" layoutY="54.0" />
-      <Group layoutX="459.0" layoutY="54.0" />
-
-        <ImageView fx:id="heatingStatusImageView" fitHeight="49.0" fitWidth="43.0" layoutX="100.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" />
+      </AnchorPane>
 
 
-        <Label layoutX="18.0" layoutY="61.0" text="Heating Status:" />
+<!--    Smart Light    -->
+      <AnchorPane layoutX="203.0" prefHeight="400.0" prefWidth="200.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f3fae8" height="400.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="1.5" width="200.0" x="-2.5" />
 
-      <Label layoutX="218.0" layoutY="61.0" text="Light Status:" />
-      <Label layoutX="447.0" layoutY="61.0" text="Window Status:" />
+
+             <Button fx:id="getNumberOfPeopleButton" layoutX="27.0" layoutY="165.0" onAction="#getNumberOfPeopleButton" text="Get Number of People" />
+
+
+             <Label layoutX="19.0" layoutY="61.0" text="Light Status:" />
+            <Label layoutX="83.0" layoutY="14.0" text="Light">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+             <ImageView fx:id="lightStatusImageView" fitHeight="49.0" fitWidth="43.0" layoutX="76.0" layoutY="94.0" />
+            <Label fx:id="numberOfPeopleLabel" layoutX="29.0" layoutY="224.0" text="Number of People:" />
+         </children>
+      </AnchorPane>
+
+
+
+<!--        Smart Window -->
+      <AnchorPane layoutX="401.0" layoutY="-2.0" prefHeight="400.0" prefWidth="200.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#edf6ff" height="400.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="1.2" width="200.0" />
+      
+      
+            <Button layoutX="45.0" layoutY="166.0" mnemonicParsing="false" text="Get Wind Speed" />
+            <Label layoutX="72.0" layoutY="14.0" text="Window">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="66.0" text="Window Status:" />
+         </children>
+      </AnchorPane>
     </children>
 
 

@@ -23,7 +23,6 @@ public class SmartOfficeApp extends Application {
             e.printStackTrace(); // Prints the stack trace of the IOException
         }
     }
-
     public static void main(String[] args) {
         launch(args);
     }

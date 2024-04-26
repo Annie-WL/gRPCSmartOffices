@@ -1,8 +1,13 @@
 package com.project.Controller;
 
+import com.project.Services.SmartLightServiceImpl;
+import com.project.dataReader.OccupancyReading;
 import com.project.grpc.smartoffices.heating.TemperatureStreamResponse;
+import com.project.grpc.smartoffices.light.LightRequest;
+import com.project.grpc.smartoffices.light.LightResponse;
 import com.project.grpc.smartoffices.light.SmartLightGrpc;
 import com.project.grpc.smartoffices.window.SmartWindowGrpc;
+import io.grpc.StatusRuntimeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -20,7 +25,10 @@ import io.grpc.stub.StreamObserver;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
+import static com.project.dataReader.OccupancyCSVReader.occupancyReadings;
 
 public class SmartOfficeAppController {
 
@@ -28,18 +36,32 @@ public class SmartOfficeAppController {
     private Button getCurrentTemperatureButton;
 
     @FXML
+    private Button getNumberOfPeopleButton;
+
+    @FXML
     private ImageView heatingStatusImageView;
+
+    @FXML
+    private ImageView lightStatusImageView;
+
+    @FXML
+    private Label numberOfPeopleLabel;
 
     @FXML
     private Label temperatureLabel;
 
     private SmartHeatingGrpc.SmartHeatingStub heatingStubAsync;
+    private SmartLightGrpc.SmartLightStub smartLightStubAsync;
+    private StreamObserver<LightRequest> requestObserver;
+
 
     private ManagedChannel heatingChannel, lightChannel, windowChannel;
 
+
+
     public void initialize() {
         setupHeatingService();
-//        setupLightService();
+        setupLightService();
 //        setupWindowService();
     }
 
@@ -51,9 +73,18 @@ public class SmartOfficeAppController {
         heatingStubAsync = SmartHeatingGrpc.newStub(heatingChannel);
     }
 
+    private void setupLightService() {
+        lightChannel = ManagedChannelBuilder.forAddress("localhost", 50082)
+                .usePlaintext()
+                .build();
+        // Initialize the async stub here
+        smartLightStubAsync = SmartLightGrpc.newStub(lightChannel);
+    }
+
 
     //
 
+    //Smart Heating
     @FXML
     private void getCurrentTemperatureButton(ActionEvent event) {
         // Assuming TemperatureStreamRequest gets the current status and temperature
@@ -94,14 +125,54 @@ public class SmartOfficeAppController {
 
 
 
+    //Smart Light
+    @FXML
+    private void getNumberOfPeopleButton(ActionEvent event) {
+        requestObserver = smartLightStubAsync.controlLights(new StreamObserver<LightResponse>() {
+            @Override
+            public void onNext(LightResponse value) {
+                Platform.runLater(() -> {
+                    numberOfPeopleLabel.setText("Number of people in the office:\n" +value.getNumPeople());
+
+                    boolean lightStatus = value.getLightStatus();
+                    Image lightImage = new Image(getClass().getResourceAsStream(lightStatus ? "/GUI/images/light_on.png" : "/GUI/images/light_off.png"));
+                    lightStatusImageView.setImage(lightImage);
+                });
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                Platform.runLater(() -> {
+                    System.err.println("Error receiving light status: " + t);
+                    lightStatusImageView.setImage(null);
+                    numberOfPeopleLabel.setText("Error");
+                });
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("Stream is completed.");
+            }
+        });
+
+        // Send a request to the server
+        LightRequest request = LightRequest.newBuilder().build();
+        requestObserver.onNext(request);
+        // Note: If you're expecting a stream of requests, do not complete it immediately
+        // requestObserver.onCompleted(); // Only call this when you are done sending all requests
+    }
 
 
 
-/////////////////////////////////
+
+
+
+
+    /////////////////////////////////
     public void shutdown() {
         heatingChannel.shutdownNow();
         lightChannel.shutdownNow();
-        windowChannel.shutdownNow();
+//        windowChannel.shutdownNow();
     }
 
 

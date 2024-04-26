@@ -18,6 +18,7 @@ message LightRequest {
 
 message LightResponse {
   bool lightStatus = 1; // True if light is on, False if off
+  int32 numPeople = 2;
 }
 
 

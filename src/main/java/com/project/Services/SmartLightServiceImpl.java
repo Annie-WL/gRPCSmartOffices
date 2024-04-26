@@ -63,9 +63,12 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
         return new StreamObserver<LightRequest>() {
             @Override
             public void onNext(LightRequest request) {
-                System.out.println("Light status updated: " + (isLightOn ? "ON" : "OFF"));
+//                System.out.println("Light status updated: " + (isLightOn ? "ON" : "OFF"));
+//                boolean hasPeople = request.getNumPeople() > 0;
+//                updateLightStatus(hasPeople, responseObserver);
+                System.out.println("Received request with number of people: " + request.getNumPeople());
                 boolean hasPeople = request.getNumPeople() > 0;
-                updateLightStatus(hasPeople, responseObserver);
+                updateLightStatus(hasPeople, request.getNumPeople(), responseObserver);
             }
 
             @Override
@@ -92,41 +95,9 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
      * Cancels any pending off task if people are detected before the delay expires.
      *
      * @param hasPeople boolean indicating if people are currently detected in the room
+     * @param numPeople
      */
-//    private void updateLightStatus(boolean hasPeople, StreamObserver<LightResponse> responseObserver) {
-//        boolean previousStatus = isLightOn;
-//        if (hasPeople) {
-//            // If there are people in the room, turn the lights on.
-//            if (!isLightOn) {
-//                isLightOn = true;
-//                System.out.println("Turning lights ON");
-//                // If there was a task scheduled to turn off the lights, cancel it.
-//                if (lightOffTask != null && !lightOffTask.isDone()) {
-//                    lightOffTask.cancel(false);
-//                }
-//                // Notify the client that the lights are now ON.
-//                responseObserver.onNext(LightResponse.newBuilder().setLightStatus(isLightOn).build());
-//            }
-//        } else {
-//            // If the room is empty, schedule to turn the lights off after 30 seconds.
-//            if (isLightOn && (lightOffTask == null || lightOffTask.isDone() || lightOffTask.isCancelled())) {
-//                System.out.println("Setting up to turn lights OFF after 30 seconds");
-//                lightOffTask = scheduler.schedule(() -> {
-//                    isLightOn = false;
-//                    System.out.println("Lights turned OFF after delay");
-//                    // Notify the client that the lights are now OFF.
-//                    responseObserver.onNext(LightResponse.newBuilder().setLightStatus(isLightOn).build());
-//                }, 10, TimeUnit.SECONDS);
-//            }
-//        }
-//
-//        // If the light status has changed, send an update to the client.
-//        if (previousStatus != isLightOn) {
-//            responseObserver.onNext(LightResponse.newBuilder().setLightStatus(isLightOn).build());
-//        }
-//    }
-
-    private void updateLightStatus(boolean hasPeople, StreamObserver<LightResponse> responseObserver) {
+    private void updateLightStatus(boolean hasPeople, int numPeople, StreamObserver<LightResponse> responseObserver) {
         boolean previousStatus = isLightOn;
         if (hasPeople && !isLightOn) {
             isLightOn = true;
@@ -141,8 +112,13 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
             }
         }
 
-        // If the light status has not changed, there's no need to send a response.
-        // This prevents spamming the client with unnecessary messages.
+        LightResponse response = LightResponse.newBuilder()
+                .setLightStatus(isLightOn)
+                .setNumPeople(numPeople) // Add this line
+                .build();
+
+        responseObserver.onNext(response);
+
     }
 
     private void scheduleLightOff() {
