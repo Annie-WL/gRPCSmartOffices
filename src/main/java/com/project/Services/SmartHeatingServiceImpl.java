@@ -96,6 +96,12 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
 
                 String message = "This is a message from the server. Current time: " + LocalDateTime.now();
 
+                // Decide the heating status based on temperature
+                boolean currentStatus = temperature < 19.0; // Heating is ON if temperature is below 19°C
+
+                // Update the AtomicBoolean heatingStatus
+                heatingStatus.set(currentStatus);
+
                 TemperatureStreamResponse response = TemperatureStreamResponse.newBuilder()
                         .setCurrentTemperature(temperature)
                         .setHeatingStatus(heatingStatus.get())
