@@ -5,20 +5,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.util.Objects;
+import java.io.IOException; // Required import for IOException
 
 public class SmartOfficeApp extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception{
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/resources/GUI/SmartOfficeForm.fxml")));
-        Scene scene = new Scene(parent, 800, 600);
-        stage.setTitle("Smart Office");
-        stage.centerOnScreen();
-        stage.setScene(scene);
-        stage.show();
+    public void start(Stage primaryStage) {
+        try {
+            // Correct the path according to where SmartOfficeForm.fxml is located in your resources folder
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SmartOfficeForm.fxml"));
+            Parent root = loader.load(); // Load the FXML file
+            primaryStage.setTitle("Smart Office");
+            Scene scene = new Scene(root, 800, 600); // Create a Scene with the loaded root
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace(); // Prints the stack trace of the IOException
+        }
     }
+
     public static void main(String[] args) {
         launch(args);
     }

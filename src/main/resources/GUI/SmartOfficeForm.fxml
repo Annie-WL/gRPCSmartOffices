@@ -1,68 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller/SmartOfficeAppController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.project.Controller.SmartOfficeAppController">
     <children>
-    <Label layoutX="73.0" layoutY="14.0" text="Heating">
-         <font>
-            <Font size="14.0" />
-         </font></Label>
-      <Label layoutX="273.0" layoutY="14.0" text="Light">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="473.0" layoutY="14.0" text="Window">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Button layoutX="61.0" layoutY="66.0" mnemonicParsing="false" text="ON " />
-      <Button layoutX="100.0" layoutY="66.0" mnemonicParsing="false" text="OFF" />
-      <Button layoutX="20.0" layoutY="162.0" mnemonicParsing="false" text="Get Current Temperature" />
-      <Button layoutX="251.0" layoutY="66.0" mnemonicParsing="false" text="ON " />
-      <Button layoutX="290.0" layoutY="66.0" mnemonicParsing="false" text="OFF" />
-      <Button layoutX="218.0" layoutY="162.0" mnemonicParsing="false" text="Get Number of People" />
-      <Button layoutX="462.0" layoutY="66.0" mnemonicParsing="false" text="ON " />
-      <Button layoutX="501.0" layoutY="66.0" mnemonicParsing="false" text="OFF" />
+
+        <Button fx:id="getCurrentTemperatureButton" layoutX="20.0" layoutY="162.0" onAction="#getCurrentTemperatureButton" text="Get Current Temperature" />
+
+        <Label fx:id="temperatureLabel" layoutX="21.0" layoutY="200.0" text="Temperature: " />
+
+        <Button layoutX="218.0" layoutY="162.0" mnemonicParsing="false" text="Get Number of People" />
       <Button layoutX="447.0" layoutY="162.0" mnemonicParsing="false" text="Get Wind Speed" />
-      <Label layoutX="20.0" layoutY="124.0" text="HeatingLabel" />
-      <ImageView fitHeight="43.0" fitWidth="56.0" layoutX="20.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@heating_off.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="49.0" fitWidth="43.0" layoutX="75.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@heating_on.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="127.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@light_off.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="181.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@light_on.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="240.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@window_close.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="43.0" fitWidth="43.0" layoutX="288.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@window_open.png" />
-         </image>
-      </ImageView>
+      <Group layoutX="73.0" layoutY="14.0">
+         <children>
+          <Label text="Heating">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="200.0" text="Light">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="400.0" text="Window">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Group>
+      <Group layoutX="53.0" layoutY="54.0" />
+      <Group layoutX="248.0" layoutY="54.0" />
+      <Group layoutX="459.0" layoutY="54.0" />
+
+        <ImageView fx:id="heatingStatusImageView" fitHeight="49.0" fitWidth="43.0" layoutX="100.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true" />
+
+
+        <Label layoutX="18.0" layoutY="61.0" text="Heating Status:" />
+
+      <Label layoutX="218.0" layoutY="61.0" text="Light Status:" />
+      <Label layoutX="447.0" layoutY="61.0" text="Window Status:" />
     </children>
 
 
