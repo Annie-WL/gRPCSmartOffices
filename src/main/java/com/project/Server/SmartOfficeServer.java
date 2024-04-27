@@ -5,7 +5,6 @@ import com.project.Services.SmartHeatingServiceImpl;
 import com.project.Services.SmartWindowServiceImpl;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 

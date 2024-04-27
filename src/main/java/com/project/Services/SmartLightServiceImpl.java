@@ -8,10 +8,8 @@ import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import com.project.grpc.smartoffices.light.LightRequest;
 import com.project.grpc.smartoffices.light.LightResponse;
-
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.agent.model.NewService;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;

@@ -5,27 +5,20 @@ import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.agent.model.NewService;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.Properties;
-
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
-
 import com.project.grpc.smartoffices.heating.SmartHeatingGrpc.SmartHeatingImplBase;
 import com.project.grpc.smartoffices.heating.HeatingAdjustmentRequest;
 import com.project.grpc.smartoffices.heating.HeatingAdjustmentResponse;
 import com.project.grpc.smartoffices.heating.TemperatureStreamRequest;
 import com.project.grpc.smartoffices.heating.TemperatureStreamResponse;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.stream.Stream;
 
 public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
     private Server server;

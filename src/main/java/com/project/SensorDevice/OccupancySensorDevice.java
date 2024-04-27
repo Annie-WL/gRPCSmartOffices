@@ -8,15 +8,10 @@ import com.project.grpc.smartoffices.light.SmartLightGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
-
 import static com.project.dataReader.OccupancyCSVReader.occupancyReadings;
-
 
 public class OccupancySensorDevice {
     private final ManagedChannel channel;

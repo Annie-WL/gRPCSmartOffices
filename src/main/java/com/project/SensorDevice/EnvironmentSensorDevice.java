@@ -8,7 +8,6 @@ import com.project.grpc.smartoffices.heating.SmartHeatingGrpc;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
-
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 

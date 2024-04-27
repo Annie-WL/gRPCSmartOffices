@@ -3,13 +3,11 @@ package com.project.SensorDevice;
 import com.project.grpc.smartoffices.window.SmartWindowGrpc;
 import com.project.grpc.smartoffices.window.WindowRequest;
 import com.project.grpc.smartoffices.window.WindowResponse;
-
 import com.project.dataReader.WindReading;
 import com.project.dataReader.WindCSVReader;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
-
 import java.util.List;
 
 public class WindSensorDevice {

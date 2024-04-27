@@ -1,7 +1,5 @@
 package com.project.Controller;
 
-import com.project.Services.SmartLightServiceImpl;
-import com.project.dataReader.OccupancyReading;
 import com.project.grpc.smartoffices.heating.TemperatureStreamResponse;
 import com.project.grpc.smartoffices.light.LightRequest;
 import com.project.grpc.smartoffices.light.LightResponse;
@@ -9,33 +7,27 @@ import com.project.grpc.smartoffices.light.SmartLightGrpc;
 import com.project.grpc.smartoffices.window.SmartWindowGrpc;
 import com.project.grpc.smartoffices.window.WindowRequest;
 import com.project.grpc.smartoffices.window.WindowResponse;
-import io.grpc.StatusRuntimeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.application.Platform;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import com.project.grpc.smartoffices.heating.SmartHeatingGrpc;
-import com.project.grpc.smartoffices.heating.HeatingAdjustmentRequest;
 import com.project.grpc.smartoffices.heating.TemperatureStreamRequest;
 import io.grpc.stub.StreamObserver;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-
-import static com.project.dataReader.OccupancyCSVReader.occupancyReadings;
 
 public class SmartOfficeAppController {
 
     @FXML
     private Button getCurrentTemperatureButton;
+
+    @FXML
+    private Button getCurrentWindSpeedButton;
 
     @FXML
     private Button getNumberOfPeopleButton;
@@ -56,9 +48,6 @@ public class SmartOfficeAppController {
     private Label windSpeedLabel;
 
     @FXML
-    private Button getCurrentWindSpeedButton;
-
-    @FXML
     private ImageView windowStatusImageView;
 
 
@@ -69,7 +58,6 @@ public class SmartOfficeAppController {
     private ManagedChannel heatingChannel, lightChannel, windowChannel;
     private SmartWindowGrpc.SmartWindowStub smartWindowStubAsync;
     private StreamObserver<WindowRequest> windowRequestObserver;
-
 
 
     public void initialize() {
