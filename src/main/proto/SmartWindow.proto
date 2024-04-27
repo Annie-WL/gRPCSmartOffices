@@ -9,6 +9,9 @@ package SmartOffices;
 service SmartWindow {
   // Bidirectional streaming RPC: Both client and server send and receive a stream of messages concurrently.
   rpc ControlWindows(stream WindowRequest) returns (stream WindowResponse);
+
+  // New server-side streaming RPC for the GUI
+  rpc StreamWindowStatus(WindowRequest) returns (stream WindowResponse);
 }
 
 message WindowRequest {
@@ -19,5 +22,6 @@ message WindowRequest {
 
 message WindowResponse {
   bool windowStatus = 1; // True if window is closed, False if open
+  double windSpeed = 2; // Include wind speed in the response
 }
 

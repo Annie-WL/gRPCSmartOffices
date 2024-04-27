@@ -15,4 +15,13 @@ public interface WindowResponseOrBuilder extends
    * <code>bool windowStatus = 1;</code>
    */
   boolean getWindowStatus();
+
+  /**
+   * <pre>
+   * Include wind speed in the response
+   * </pre>
+   *
+   * <code>double windSpeed = 2;</code>
+   */
+  double getWindSpeed();
 }

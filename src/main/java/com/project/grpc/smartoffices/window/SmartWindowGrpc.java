@@ -46,6 +46,37 @@ public final class SmartWindowGrpc {
     return getControlWindowsMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.project.grpc.smartoffices.window.WindowRequest,
+      com.project.grpc.smartoffices.window.WindowResponse> getStreamWindowStatusMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "StreamWindowStatus",
+      requestType = com.project.grpc.smartoffices.window.WindowRequest.class,
+      responseType = com.project.grpc.smartoffices.window.WindowResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<com.project.grpc.smartoffices.window.WindowRequest,
+      com.project.grpc.smartoffices.window.WindowResponse> getStreamWindowStatusMethod() {
+    io.grpc.MethodDescriptor<com.project.grpc.smartoffices.window.WindowRequest, com.project.grpc.smartoffices.window.WindowResponse> getStreamWindowStatusMethod;
+    if ((getStreamWindowStatusMethod = SmartWindowGrpc.getStreamWindowStatusMethod) == null) {
+      synchronized (SmartWindowGrpc.class) {
+        if ((getStreamWindowStatusMethod = SmartWindowGrpc.getStreamWindowStatusMethod) == null) {
+          SmartWindowGrpc.getStreamWindowStatusMethod = getStreamWindowStatusMethod =
+              io.grpc.MethodDescriptor.<com.project.grpc.smartoffices.window.WindowRequest, com.project.grpc.smartoffices.window.WindowResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "StreamWindowStatus"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.project.grpc.smartoffices.window.WindowRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.project.grpc.smartoffices.window.WindowResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new SmartWindowMethodDescriptorSupplier("StreamWindowStatus"))
+              .build();
+        }
+      }
+    }
+    return getStreamWindowStatusMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -103,6 +134,16 @@ public final class SmartWindowGrpc {
         io.grpc.stub.StreamObserver<com.project.grpc.smartoffices.window.WindowResponse> responseObserver) {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getControlWindowsMethod(), responseObserver);
     }
+
+    /**
+     * <pre>
+     * New server-side streaming RPC for the GUI
+     * </pre>
+     */
+    default void streamWindowStatus(com.project.grpc.smartoffices.window.WindowRequest request,
+        io.grpc.stub.StreamObserver<com.project.grpc.smartoffices.window.WindowResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getStreamWindowStatusMethod(), responseObserver);
+    }
   }
 
   /**
@@ -142,6 +183,17 @@ public final class SmartWindowGrpc {
       return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
           getChannel().newCall(getControlWindowsMethod(), getCallOptions()), responseObserver);
     }
+
+    /**
+     * <pre>
+     * New server-side streaming RPC for the GUI
+     * </pre>
+     */
+    public void streamWindowStatus(com.project.grpc.smartoffices.window.WindowRequest request,
+        io.grpc.stub.StreamObserver<com.project.grpc.smartoffices.window.WindowResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
+          getChannel().newCall(getStreamWindowStatusMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -158,6 +210,17 @@ public final class SmartWindowGrpc {
     protected SmartWindowBlockingStub build(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new SmartWindowBlockingStub(channel, callOptions);
+    }
+
+    /**
+     * <pre>
+     * New server-side streaming RPC for the GUI
+     * </pre>
+     */
+    public java.util.Iterator<com.project.grpc.smartoffices.window.WindowResponse> streamWindowStatus(
+        com.project.grpc.smartoffices.window.WindowRequest request) {
+      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
+          getChannel(), getStreamWindowStatusMethod(), getCallOptions(), request);
     }
   }
 
@@ -178,7 +241,8 @@ public final class SmartWindowGrpc {
     }
   }
 
-  private static final int METHODID_CONTROL_WINDOWS = 0;
+  private static final int METHODID_STREAM_WINDOW_STATUS = 0;
+  private static final int METHODID_CONTROL_WINDOWS = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -197,6 +261,10 @@ public final class SmartWindowGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_STREAM_WINDOW_STATUS:
+          serviceImpl.streamWindowStatus((com.project.grpc.smartoffices.window.WindowRequest) request,
+              (io.grpc.stub.StreamObserver<com.project.grpc.smartoffices.window.WindowResponse>) responseObserver);
+          break;
         default:
           throw new AssertionError();
       }
@@ -225,6 +293,13 @@ public final class SmartWindowGrpc {
               com.project.grpc.smartoffices.window.WindowRequest,
               com.project.grpc.smartoffices.window.WindowResponse>(
                 service, METHODID_CONTROL_WINDOWS)))
+        .addMethod(
+          getStreamWindowStatusMethod(),
+          io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+            new MethodHandlers<
+              com.project.grpc.smartoffices.window.WindowRequest,
+              com.project.grpc.smartoffices.window.WindowResponse>(
+                service, METHODID_STREAM_WINDOW_STATUS)))
         .build();
   }
 
@@ -274,6 +349,7 @@ public final class SmartWindowGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new SmartWindowFileDescriptorSupplier())
               .addMethod(getControlWindowsMethod())
+              .addMethod(getStreamWindowStatusMethod())
               .build();
         }
       }

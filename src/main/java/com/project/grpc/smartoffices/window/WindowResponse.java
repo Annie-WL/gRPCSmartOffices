@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private WindowResponse() {
     windowStatus_ = false;
+    windSpeed_ = 0D;
   }
 
   @java.lang.Override
@@ -46,6 +47,11 @@ private static final long serialVersionUID = 0L;
           case 8: {
 
             windowStatus_ = input.readBool();
+            break;
+          }
+          case 17: {
+
+            windSpeed_ = input.readDouble();
             break;
           }
           default: {
@@ -93,6 +99,19 @@ private static final long serialVersionUID = 0L;
     return windowStatus_;
   }
 
+  public static final int WINDSPEED_FIELD_NUMBER = 2;
+  private double windSpeed_;
+  /**
+   * <pre>
+   * Include wind speed in the response
+   * </pre>
+   *
+   * <code>double windSpeed = 2;</code>
+   */
+  public double getWindSpeed() {
+    return windSpeed_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -110,6 +129,9 @@ private static final long serialVersionUID = 0L;
     if (windowStatus_ != false) {
       output.writeBool(1, windowStatus_);
     }
+    if (windSpeed_ != 0D) {
+      output.writeDouble(2, windSpeed_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -122,6 +144,10 @@ private static final long serialVersionUID = 0L;
     if (windowStatus_ != false) {
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(1, windowStatus_);
+    }
+    if (windSpeed_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(2, windSpeed_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -141,6 +167,10 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && (getWindowStatus()
         == other.getWindowStatus());
+    result = result && (
+        java.lang.Double.doubleToLongBits(getWindSpeed())
+        == java.lang.Double.doubleToLongBits(
+            other.getWindSpeed()));
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -155,6 +185,9 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + WINDOWSTATUS_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getWindowStatus());
+    hash = (37 * hash) + WINDSPEED_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getWindSpeed()));
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -290,6 +323,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       windowStatus_ = false;
 
+      windSpeed_ = 0D;
+
       return this;
     }
 
@@ -317,6 +352,7 @@ private static final long serialVersionUID = 0L;
     public com.project.grpc.smartoffices.window.WindowResponse buildPartial() {
       com.project.grpc.smartoffices.window.WindowResponse result = new com.project.grpc.smartoffices.window.WindowResponse(this);
       result.windowStatus_ = windowStatus_;
+      result.windSpeed_ = windSpeed_;
       onBuilt();
       return result;
     }
@@ -367,6 +403,9 @@ private static final long serialVersionUID = 0L;
       if (other == com.project.grpc.smartoffices.window.WindowResponse.getDefaultInstance()) return this;
       if (other.getWindowStatus() != false) {
         setWindowStatus(other.getWindowStatus());
+      }
+      if (other.getWindSpeed() != 0D) {
+        setWindSpeed(other.getWindSpeed());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -431,6 +470,44 @@ private static final long serialVersionUID = 0L;
     public Builder clearWindowStatus() {
       
       windowStatus_ = false;
+      onChanged();
+      return this;
+    }
+
+    private double windSpeed_ ;
+    /**
+     * <pre>
+     * Include wind speed in the response
+     * </pre>
+     *
+     * <code>double windSpeed = 2;</code>
+     */
+    public double getWindSpeed() {
+      return windSpeed_;
+    }
+    /**
+     * <pre>
+     * Include wind speed in the response
+     * </pre>
+     *
+     * <code>double windSpeed = 2;</code>
+     */
+    public Builder setWindSpeed(double value) {
+      
+      windSpeed_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Include wind speed in the response
+     * </pre>
+     *
+     * <code>double windSpeed = 2;</code>
+     */
+    public Builder clearWindSpeed() {
+      
+      windSpeed_ = 0D;
       onChanged();
       return this;
     }

@@ -28,7 +28,9 @@ public class WindSensorDevice {
         StreamObserver<WindowRequest> requestObserver = asyncStub.controlWindows(new StreamObserver<WindowResponse>() {
             @Override
             public void onNext(WindowResponse response) {
-                System.out.println("Response from server: Window is " + (response.getWindowStatus() ? "closed" : "open"));
+                System.out.println("Response from server: Window is " + (response.getWindowStatus() ? "closed." : "open."));
+                System.out.println("Wind Speed is: " + (response.getWindSpeed()) + " km/h");
+
             }
 
             @Override

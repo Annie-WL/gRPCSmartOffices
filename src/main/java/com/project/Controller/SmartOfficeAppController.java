@@ -7,6 +7,8 @@ import com.project.grpc.smartoffices.light.LightRequest;
 import com.project.grpc.smartoffices.light.LightResponse;
 import com.project.grpc.smartoffices.light.SmartLightGrpc;
 import com.project.grpc.smartoffices.window.SmartWindowGrpc;
+import com.project.grpc.smartoffices.window.WindowRequest;
+import com.project.grpc.smartoffices.window.WindowResponse;
 import io.grpc.StatusRuntimeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,16 +53,20 @@ public class SmartOfficeAppController {
     private Label temperatureLabel;
 
     @FXML
+    private Label windSpeedLabel;
+
+    @FXML
     private Button getCurrentWindSpeedButton;
+
     @FXML
     private ImageView windowStatusImageView;
+
 
     private SmartHeatingGrpc.SmartHeatingStub heatingStubAsync;
     private SmartLightGrpc.SmartLightStub smartLightStubAsync;
     private StreamObserver<LightRequest> requestObserver;
 
     private ManagedChannel heatingChannel, lightChannel, windowChannel;
-
     private SmartWindowGrpc.SmartWindowStub smartWindowStubAsync;
     private StreamObserver<WindowRequest> windowRequestObserver;
 
@@ -148,7 +154,7 @@ public class SmartOfficeAppController {
             @Override
             public void onNext(LightResponse value) {
                 Platform.runLater(() -> {
-                    numberOfPeopleLabel.setText("Number of people in \n the office: " + value.getNumPeople());
+                    numberOfPeopleLabel.setText("Number of people in office: \n" + value.getNumPeople() + " people.");
 
                     String imagePath = value.getLightStatus() ? "/GUI/images/light_on.png" : "/GUI/images/light_off.png";
                     Image lightImage = new Image(getClass().getResourceAsStream(imagePath));
@@ -176,17 +182,53 @@ public class SmartOfficeAppController {
         });
     }
 
+    @FXML
+    private void getCurrentWindSpeedButton(ActionEvent event) {
+        // Prepare a simple request, which could be empty if the server does not need specific data to start streaming
+        WindowRequest request = WindowRequest.newBuilder()
+                .build();
 
+        // Start server-side streaming call
+        smartWindowStubAsync.streamWindowStatus(request, new StreamObserver<WindowResponse>() {
+            @Override
+            public void onNext(WindowResponse response) {
+                Platform.runLater(() -> {
+                    // Update the wind speed label with the actual wind speed from the response
+//                    System.out.println("Received wind speed: " + response.getWindSpeed()); // Add this line for debugging
 
+                    windSpeedLabel.setText("Current Wind Speed is: \n" + response.getWindSpeed() + " km/h");
+
+                    // Update the window status image
+                    String windowStatusImage = response.getWindowStatus() ? "/GUI/images/window_close.png" : "/GUI/images/window_open.png";
+                    windowStatusImageView.setImage(new Image(getClass().getResourceAsStream(windowStatusImage)));
+                });
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                Platform.runLater(() -> {
+                    // Handle any error here
+                    windSpeedLabel.setText("Error fetching wind speed: " + t.getMessage());
+                });
+            }
+
+            @Override
+            public void onCompleted() {
+                Platform.runLater(() -> {
+                    // Handle stream completion here if needed
+                    System.out.println("Stream completed.");
+                });
+            }
+        });
+    }
 
 
 
     /////////////////////////////////
-    public void shutdown() {
-        heatingChannel.shutdownNow();
-        lightChannel.shutdownNow();
-//        windowChannel.shutdownNow();
-    }
-
+        public void shutdown() {
+            heatingChannel.shutdownNow();
+            lightChannel.shutdownNow();
+            windowChannel.shutdownNow();
+        }
 
 }

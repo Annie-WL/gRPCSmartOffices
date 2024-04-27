@@ -60,7 +60,7 @@ public class OccupancySensorDevice {
                         .setNumPeople(reading.getNumPeople())
                         .build();
                 requestObserver.onNext(request);
-                TimeUnit.SECONDS.sleep(5); // Sleep for some time before sending the next reading
+                TimeUnit.SECONDS.sleep(15); // Sleep for some time before sending the next reading
             }
         } catch (InterruptedException e) {
             System.err.println("Thread interrupted: " + e.getMessage());
