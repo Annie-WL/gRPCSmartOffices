@@ -21,6 +21,7 @@ import static com.project.dataReader.OccupancyCSVReader.occupancyReadings;
 public class OccupancySensorDevice {
     private final ManagedChannel channel;
     private final SmartLightGrpc.SmartLightStub asyncStub;
+
 //    private final List<OccupancyReading> occupancyReadings;
 
     public OccupancySensorDevice(String host, int port) {

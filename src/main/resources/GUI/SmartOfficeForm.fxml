@@ -23,7 +23,7 @@
                </font>
             </Label>
       
-              <ImageView fx:id="heatingStatusImageView" fitHeight="49.0" fitWidth="43.0" layoutX="80.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" />
+              <ImageView fx:id="heatingStatusImageView" fitHeight="49.0" fitWidth="43.0" layoutX="78.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true" />
       
       
               <Label layoutX="21.0" layoutY="61.0" text="Heating Status:" />
@@ -46,8 +46,8 @@
                   <Font size="14.0" />
                </font>
             </Label>
-             <ImageView fx:id="lightStatusImageView" fitHeight="49.0" fitWidth="43.0" layoutX="76.0" layoutY="94.0" />
-            <Label fx:id="numberOfPeopleLabel" layoutX="29.0" layoutY="224.0" text="Number of People:" />
+             <ImageView fx:id="lightStatusImageView" fitHeight="49.0" fitWidth="43.0" layoutX="79.0" layoutY="93.0" />
+            <Label fx:id="numberOfPeopleLabel" layoutX="14.0" layoutY="225.0" text="Number of People:" />
          </children>
       </AnchorPane>
 

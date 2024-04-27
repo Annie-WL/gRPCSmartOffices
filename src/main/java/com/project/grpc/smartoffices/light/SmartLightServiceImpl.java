@@ -36,11 +36,13 @@ public final class SmartLightServiceImpl {
       "\n\020SmartLight.proto\022\014SmartOffices\"!\n\014Ligh" +
       "tRequest\022\021\n\tnumPeople\030\001 \001(\005\"7\n\rLightResp" +
       "onse\022\023\n\013lightStatus\030\001 \001(\010\022\021\n\tnumPeople\030\002" +
-      " \001(\0052X\n\nSmartLight\022J\n\rControlLights\022\032.Sm" +
-      "artOffices.LightRequest\032\033.SmartOffices.L" +
-      "ightResponse(\001B>\n#com.project.grpc.smart" +
-      "offices.lightB\025SmartLightServiceImplP\001b\006" +
-      "proto3"
+      " \001(\0052\253\001\n\nSmartLight\022J\n\rControlLights\022\032.S" +
+      "martOffices.LightRequest\032\033.SmartOffices." +
+      "LightResponse(\001\022Q\n\024streamNumberOfPeople\022" +
+      "\032.SmartOffices.LightRequest\032\033.SmartOffic" +
+      "es.LightResponse0\001B>\n#com.project.grpc.s" +
+      "martoffices.lightB\025SmartLightServiceImpl" +
+      "P\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

@@ -46,6 +46,37 @@ public final class SmartLightGrpc {
     return getControlLightsMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.project.grpc.smartoffices.light.LightRequest,
+      com.project.grpc.smartoffices.light.LightResponse> getStreamNumberOfPeopleMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "streamNumberOfPeople",
+      requestType = com.project.grpc.smartoffices.light.LightRequest.class,
+      responseType = com.project.grpc.smartoffices.light.LightResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<com.project.grpc.smartoffices.light.LightRequest,
+      com.project.grpc.smartoffices.light.LightResponse> getStreamNumberOfPeopleMethod() {
+    io.grpc.MethodDescriptor<com.project.grpc.smartoffices.light.LightRequest, com.project.grpc.smartoffices.light.LightResponse> getStreamNumberOfPeopleMethod;
+    if ((getStreamNumberOfPeopleMethod = SmartLightGrpc.getStreamNumberOfPeopleMethod) == null) {
+      synchronized (SmartLightGrpc.class) {
+        if ((getStreamNumberOfPeopleMethod = SmartLightGrpc.getStreamNumberOfPeopleMethod) == null) {
+          SmartLightGrpc.getStreamNumberOfPeopleMethod = getStreamNumberOfPeopleMethod =
+              io.grpc.MethodDescriptor.<com.project.grpc.smartoffices.light.LightRequest, com.project.grpc.smartoffices.light.LightResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "streamNumberOfPeople"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.project.grpc.smartoffices.light.LightRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.project.grpc.smartoffices.light.LightResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new SmartLightMethodDescriptorSupplier("streamNumberOfPeople"))
+              .build();
+        }
+      }
+    }
+    return getStreamNumberOfPeopleMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -104,6 +135,16 @@ public final class SmartLightGrpc {
         io.grpc.stub.StreamObserver<com.project.grpc.smartoffices.light.LightResponse> responseObserver) {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getControlLightsMethod(), responseObserver);
     }
+
+    /**
+     * <pre>
+     *Server-side RPC for the GUI:
+     * </pre>
+     */
+    default void streamNumberOfPeople(com.project.grpc.smartoffices.light.LightRequest request,
+        io.grpc.stub.StreamObserver<com.project.grpc.smartoffices.light.LightResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getStreamNumberOfPeopleMethod(), responseObserver);
+    }
   }
 
   /**
@@ -144,6 +185,17 @@ public final class SmartLightGrpc {
       return io.grpc.stub.ClientCalls.asyncClientStreamingCall(
           getChannel().newCall(getControlLightsMethod(), getCallOptions()), responseObserver);
     }
+
+    /**
+     * <pre>
+     *Server-side RPC for the GUI:
+     * </pre>
+     */
+    public void streamNumberOfPeople(com.project.grpc.smartoffices.light.LightRequest request,
+        io.grpc.stub.StreamObserver<com.project.grpc.smartoffices.light.LightResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
+          getChannel().newCall(getStreamNumberOfPeopleMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -160,6 +212,17 @@ public final class SmartLightGrpc {
     protected SmartLightBlockingStub build(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new SmartLightBlockingStub(channel, callOptions);
+    }
+
+    /**
+     * <pre>
+     *Server-side RPC for the GUI:
+     * </pre>
+     */
+    public java.util.Iterator<com.project.grpc.smartoffices.light.LightResponse> streamNumberOfPeople(
+        com.project.grpc.smartoffices.light.LightRequest request) {
+      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
+          getChannel(), getStreamNumberOfPeopleMethod(), getCallOptions(), request);
     }
   }
 
@@ -180,7 +243,8 @@ public final class SmartLightGrpc {
     }
   }
 
-  private static final int METHODID_CONTROL_LIGHTS = 0;
+  private static final int METHODID_STREAM_NUMBER_OF_PEOPLE = 0;
+  private static final int METHODID_CONTROL_LIGHTS = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -199,6 +263,10 @@ public final class SmartLightGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_STREAM_NUMBER_OF_PEOPLE:
+          serviceImpl.streamNumberOfPeople((com.project.grpc.smartoffices.light.LightRequest) request,
+              (io.grpc.stub.StreamObserver<com.project.grpc.smartoffices.light.LightResponse>) responseObserver);
+          break;
         default:
           throw new AssertionError();
       }
@@ -227,6 +295,13 @@ public final class SmartLightGrpc {
               com.project.grpc.smartoffices.light.LightRequest,
               com.project.grpc.smartoffices.light.LightResponse>(
                 service, METHODID_CONTROL_LIGHTS)))
+        .addMethod(
+          getStreamNumberOfPeopleMethod(),
+          io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+            new MethodHandlers<
+              com.project.grpc.smartoffices.light.LightRequest,
+              com.project.grpc.smartoffices.light.LightResponse>(
+                service, METHODID_STREAM_NUMBER_OF_PEOPLE)))
         .build();
   }
 
@@ -276,6 +351,7 @@ public final class SmartLightGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new SmartLightFileDescriptorSupplier())
               .addMethod(getControlLightsMethod())
+              .addMethod(getStreamNumberOfPeopleMethod())
               .build();
         }
       }

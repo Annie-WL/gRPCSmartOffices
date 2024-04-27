@@ -23,7 +23,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ScheduledFuture;
 
-
 public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
     private Server server;
     private boolean isLightOn = false;
@@ -94,8 +93,6 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
      * Schedules to turn the light off after a delay if no people are detected.
      * Cancels any pending off task if people are detected before the delay expires.
      *
-     * @param hasPeople boolean indicating if people are currently detected in the room
-     * @param numPeople
      */
     private void updateLightStatus(boolean hasPeople, int numPeople, StreamObserver<LightResponse> responseObserver) {
         boolean previousStatus = isLightOn;
@@ -114,7 +111,7 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
 
         LightResponse response = LightResponse.newBuilder()
                 .setLightStatus(isLightOn)
-                .setNumPeople(numPeople) // Add this line
+                .setNumPeople(numPeople)
                 .build();
 
         responseObserver.onNext(response);
@@ -141,6 +138,26 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
             lightOffTask = null; // Reset the future since it's no longer valid
         }
     }
+
+    @Override
+    public void streamNumberOfPeople(LightRequest request, StreamObserver<LightResponse> responseObserver) {
+        occupancyReadings.forEach(reading -> {
+            LightResponse response = LightResponse.newBuilder()
+                    .setNumPeople(reading.getNumPeople())
+                    .setLightStatus(reading.getNumPeople() > 0)
+                    .build();
+            responseObserver.onNext(response);
+
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+
+        responseObserver.onCompleted();
+    }
+
 
 
 

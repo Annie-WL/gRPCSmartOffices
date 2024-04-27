@@ -50,19 +50,26 @@ public class SmartOfficeAppController {
     @FXML
     private Label temperatureLabel;
 
+    @FXML
+    private Button getCurrentWindSpeedButton;
+    @FXML
+    private ImageView windowStatusImageView;
+
     private SmartHeatingGrpc.SmartHeatingStub heatingStubAsync;
     private SmartLightGrpc.SmartLightStub smartLightStubAsync;
     private StreamObserver<LightRequest> requestObserver;
 
-
     private ManagedChannel heatingChannel, lightChannel, windowChannel;
+
+    private SmartWindowGrpc.SmartWindowStub smartWindowStubAsync;
+    private StreamObserver<WindowRequest> windowRequestObserver;
 
 
 
     public void initialize() {
         setupHeatingService();
         setupLightService();
-//        setupWindowService();
+        setupWindowService();
     }
 
     private void setupHeatingService() {
@@ -77,10 +84,15 @@ public class SmartOfficeAppController {
         lightChannel = ManagedChannelBuilder.forAddress("localhost", 50082)
                 .usePlaintext()
                 .build();
-        // Initialize the async stub here
         smartLightStubAsync = SmartLightGrpc.newStub(lightChannel);
     }
 
+    private void setupWindowService() {
+        windowChannel = ManagedChannelBuilder.forAddress("localhost", 50084)
+                .usePlaintext()
+                .build();
+        smartWindowStubAsync = SmartWindowGrpc.newStub(windowChannel);
+    }
 
     //
 
@@ -94,6 +106,7 @@ public class SmartOfficeAppController {
 
         // Use the asynchronous stub for streaming temperature updates
         heatingStubAsync.streamTemperatureUpdates(request, new StreamObserver<TemperatureStreamResponse>() {
+
             @Override
             public void onNext(TemperatureStreamResponse value) {
                 Platform.runLater(() -> {
@@ -123,19 +136,22 @@ public class SmartOfficeAppController {
         });
     }
 
-
-
-    //Smart Light
     @FXML
     private void getNumberOfPeopleButton(ActionEvent event) {
-        requestObserver = smartLightStubAsync.controlLights(new StreamObserver<LightResponse>() {
+        // Prepare the request (if there are any parameters to set, do it here)
+        LightRequest request = LightRequest.newBuilder()
+                .build();
+
+        // Start server-side streaming call
+        smartLightStubAsync.streamNumberOfPeople(request, new StreamObserver<LightResponse>() {
+
             @Override
             public void onNext(LightResponse value) {
                 Platform.runLater(() -> {
-                    numberOfPeopleLabel.setText("Number of people in the office:\n" +value.getNumPeople());
+                    numberOfPeopleLabel.setText("Number of people in \n the office: " + value.getNumPeople());
 
-                    boolean lightStatus = value.getLightStatus();
-                    Image lightImage = new Image(getClass().getResourceAsStream(lightStatus ? "/GUI/images/light_on.png" : "/GUI/images/light_off.png"));
+                    String imagePath = value.getLightStatus() ? "/GUI/images/light_on.png" : "/GUI/images/light_off.png";
+                    Image lightImage = new Image(getClass().getResourceAsStream(imagePath));
                     lightStatusImageView.setImage(lightImage);
                 });
             }
@@ -147,21 +163,18 @@ public class SmartOfficeAppController {
                     lightStatusImageView.setImage(null);
                     numberOfPeopleLabel.setText("Error");
                 });
+//                t.printStackTrace();
             }
 
             @Override
             public void onCompleted() {
-                System.out.println("Stream is completed.");
+                Platform.runLater(() -> {
+                    System.out.println("Stream is completed.");
+                    // Handle stream completion here if needed
+                });
             }
         });
-
-        // Send a request to the server
-        LightRequest request = LightRequest.newBuilder().build();
-        requestObserver.onNext(request);
-        // Note: If you're expecting a stream of requests, do not complete it immediately
-        // requestObserver.onCompleted(); // Only call this when you are done sending all requests
     }
-
 
 
 
