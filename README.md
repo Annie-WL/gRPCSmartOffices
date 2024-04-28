@@ -3,21 +3,15 @@ Smart devices/services: Light, Heating, Window
 
 # HOW TO RUN:
 
-For the Server and Sensor Device:
+***For the Server and Sensor Device:
 Run the "SmartOfficeServer.java" first, then can run the 3 SensorDevice separately.
 
-For the GUI part:
+***For the GUI part:
 Run the "SmartOfficeServer.java" first, then run the "SmartOfficeApp.java", the UI will appear.
 (because I have the 'module-info.java', so I can directly run the 'SmartOfficeApp')
 
 
-
 ==================================================================================================
-
-mvn clean install
-mvn clean compile
-1 server -  3 clients - 3 services (serviceImpl)
-
 
 Design details:
 1. Smart Light - Occupancy Sensor
@@ -44,3 +38,9 @@ Get Current Temperature
 Get Number of People
 Get Current Wind Speed
 
+
+==================================================================================================
+
+mvn clean install
+mvn clean compile
+1 server -  3 clients - 3 services (serviceImpl)
