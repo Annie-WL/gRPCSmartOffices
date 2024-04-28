@@ -17,18 +17,15 @@ public class OccupancySensorDevice {
     private final ManagedChannel channel;
     private final SmartLightGrpc.SmartLightStub asyncStub;
 
-//    private final List<OccupancyReading> occupancyReadings;
 
     public OccupancySensorDevice(String host, int port) {
         this.channel = ManagedChannelBuilder.forAddress(host, port).usePlaintext().build();
         this.asyncStub = SmartLightGrpc.newStub(channel);
         ArrayList<OccupancyReading> occupancyReadings = OccupancyCSVReader.loadOccupancyData();
-//        this.occupancyReadings = OccupancyCSVReader.loadOccupancyData(); // load data from the CSV
     }
 
     // Method to start sending occupancy data
     public void startSendingOccupancyData() {
-//        List<OccupancyReading> occupancyReadings = OccupancyCSVReader.loadOccupancyData();
         StreamObserver<LightRequest> requestObserver = asyncStub.controlLights(new StreamObserver<LightResponse>() {
             @Override
             public void onNext(LightResponse value) {
@@ -55,7 +52,7 @@ public class OccupancySensorDevice {
                         .setNumPeople(reading.getNumPeople())
                         .build();
                 requestObserver.onNext(request);
-                TimeUnit.SECONDS.sleep(15); // Sleep for some time before sending the next reading
+                TimeUnit.SECONDS.sleep(15); // Sleep for 15s before sending the next reading
             }
         } catch (InterruptedException e) {
             System.err.println("Thread interrupted: " + e.getMessage());
@@ -84,17 +81,13 @@ public class OccupancySensorDevice {
         OccupancySensorDevice device = new OccupancySensorDevice(consulHost, consulPort);
         device.startSendingOccupancyData();
 
-        ///
-        // Wait for user input to stop
+        // Wait for input to stop
         System.out.println("Press 'Q' to stop");
         Scanner scanner = new Scanner(System.in);
         while (!scanner.nextLine().equalsIgnoreCase("Q")) {
-            // Loop until 'Q' is entered
         }
 
-        // Shutdown the channel and clean up
         device.shutdownChannel();
         scanner.close();
     }
-        ////
 }

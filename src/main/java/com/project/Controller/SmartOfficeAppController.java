@@ -50,11 +50,9 @@ public class SmartOfficeAppController {
     @FXML
     private ImageView windowStatusImageView;
 
-
     private SmartHeatingGrpc.SmartHeatingStub heatingStubAsync;
     private SmartLightGrpc.SmartLightStub smartLightStubAsync;
     private StreamObserver<LightRequest> requestObserver;
-
     private ManagedChannel heatingChannel, lightChannel, windowChannel;
     private SmartWindowGrpc.SmartWindowStub smartWindowStubAsync;
     private StreamObserver<WindowRequest> windowRequestObserver;
@@ -88,12 +86,10 @@ public class SmartOfficeAppController {
         smartWindowStubAsync = SmartWindowGrpc.newStub(windowChannel);
     }
 
-    //
 
     //Smart Heating
     @FXML
     private void getCurrentTemperatureButton(ActionEvent event) {
-        // Assuming TemperatureStreamRequest gets the current status and temperature
         TemperatureStreamRequest request = TemperatureStreamRequest.newBuilder()
                 .setClientId("ClientGUI")
                 .build();
@@ -130,9 +126,9 @@ public class SmartOfficeAppController {
         });
     }
 
+    // Smart Light
     @FXML
     private void getNumberOfPeopleButton(ActionEvent event) {
-        // Prepare the request (if there are any parameters to set, do it here)
         LightRequest request = LightRequest.newBuilder()
                 .build();
 
@@ -157,22 +153,20 @@ public class SmartOfficeAppController {
                     lightStatusImageView.setImage(null);
                     numberOfPeopleLabel.setText("Error");
                 });
-//                t.printStackTrace();
             }
 
             @Override
             public void onCompleted() {
                 Platform.runLater(() -> {
                     System.out.println("Stream is completed.");
-                    // Handle stream completion here if needed
                 });
             }
         });
     }
 
+    //Smart Window
     @FXML
     private void getCurrentWindSpeedButton(ActionEvent event) {
-        // Prepare a simple request, which could be empty if the server does not need specific data to start streaming
         WindowRequest request = WindowRequest.newBuilder()
                 .build();
 
@@ -181,8 +175,7 @@ public class SmartOfficeAppController {
             @Override
             public void onNext(WindowResponse response) {
                 Platform.runLater(() -> {
-                    // Update the wind speed label with the actual wind speed from the response
-//                    System.out.println("Received wind speed: " + response.getWindSpeed()); // Add this line for debugging
+//                    System.out.println("Received wind speed: " + response.getWindSpeed()); // for debugging
 
                     windSpeedLabel.setText("Current Wind Speed is: \n" + response.getWindSpeed() + " km/h");
 
@@ -195,7 +188,6 @@ public class SmartOfficeAppController {
             @Override
             public void onError(Throwable t) {
                 Platform.runLater(() -> {
-                    // Handle any error here
                     windSpeedLabel.setText("Error fetching wind speed: " + t.getMessage());
                 });
             }
@@ -203,16 +195,12 @@ public class SmartOfficeAppController {
             @Override
             public void onCompleted() {
                 Platform.runLater(() -> {
-                    // Handle stream completion here if needed
                     System.out.println("Stream completed.");
                 });
             }
         });
     }
 
-
-
-    /////////////////////////////////
         public void shutdown() {
             heatingChannel.shutdownNow();
             lightChannel.shutdownNow();

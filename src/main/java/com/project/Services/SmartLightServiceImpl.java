@@ -10,6 +10,8 @@ import com.project.grpc.smartoffices.light.LightRequest;
 import com.project.grpc.smartoffices.light.LightResponse;
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.agent.model.NewService;
+import javafx.fxml.FXML;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -30,7 +32,7 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
 
 
     private void start() throws IOException {
-        int port = 50082; // Unique port for the Light service
+        int port = 50082;
 
         server = ServerBuilder.forPort(port)
                 .addService(this)
@@ -50,19 +52,16 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
     private void stop() {
         if (server != null) {
             server.shutdown();
-//            System.err.println("*** server shut down");
         }
     }
 
 
     @Override
+    // method for the Occupancy Sensor Device
     public StreamObserver<LightRequest> controlLights(StreamObserver<LightResponse> responseObserver) {
         return new StreamObserver<LightRequest>() {
             @Override
             public void onNext(LightRequest request) {
-//                System.out.println("Light status updated: " + (isLightOn ? "ON" : "OFF"));
-//                boolean hasPeople = request.getNumPeople() > 0;
-//                updateLightStatus(hasPeople, responseObserver);
                 System.out.println("Received request with number of people: " + request.getNumPeople());
                 boolean hasPeople = request.getNumPeople() > 0;
                 updateLightStatus(hasPeople, request.getNumPeople(), responseObserver);
@@ -87,10 +86,8 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
 
     /**
      * Updates the light status based on the presence of people.
-     * Turns the light on immediately if people are detected (hasPeople = true).
+     * Turn on the light immediately if people are detected (hasPeople = true).
      * Schedules to turn the light off after a delay if no people are detected.
-     * Cancels any pending off task if people are detected before the delay expires.
-     *
      */
     private void updateLightStatus(boolean hasPeople, int numPeople, StreamObserver<LightResponse> responseObserver) {
         boolean previousStatus = isLightOn;
@@ -100,8 +97,7 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
             cancelScheduledLightOff();
             responseObserver.onNext(LightResponse.newBuilder().setLightStatus(isLightOn).build());
         } else if (!hasPeople && isLightOn) {
-            // If no people are detected and the light is currently on,
-            // schedule to turn the light off after a delay, if not already scheduled.
+
             if (lightOffTask == null || lightOffTask.isDone() || lightOffTask.isCancelled()) {
                 scheduleLightOff();
             }
@@ -124,20 +120,19 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
         lightOffTask = scheduler.schedule(() -> {
             isLightOn = false;
             System.out.println("Lights turned OFF after delay");
-            // Since this runs in a different thread, we must ensure we're not closing over the responseObserver
-            // from the gRPC thread. If you need to send a response when the light turns off, you'll have to
-            // rethink this logic to make it thread-safe and to not use the responseObserver directly here.
+
         }, 5, TimeUnit.SECONDS);
     }
 
     private void cancelScheduledLightOff() {
         if (lightOffTask != null && !lightOffTask.isDone()) {
-            lightOffTask.cancel(false); // May interrupt if running
-            lightOffTask = null; // Reset the future since it's no longer valid
+            lightOffTask.cancel(false);
+            lightOffTask = null;
         }
     }
 
     @Override
+    // method for the GUI part
     public void streamNumberOfPeople(LightRequest request, StreamObserver<LightResponse> responseObserver) {
         occupancyReadings.forEach(reading -> {
             LightResponse response = LightResponse.newBuilder()
@@ -157,9 +152,6 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
     }
 
 
-
-
-    ////
     private void registerToConsul() {
 
         System.out.println("Registering server to Consul...");
@@ -198,20 +190,12 @@ public class SmartLightServiceImpl extends SmartLightGrpc.SmartLightImplBase {
         newService.setPort(servicePort);
         newService.setAddress(hostAddress); // Set host address
 
-//        // Set up HTTP check pointing to the HealthCheckServer
-//        NewService.Check serviceCheck = new NewService.Check();
-//        serviceCheck.setHttp("http://" + hostAddress + ":" + healthPort + "/health");
-//        serviceCheck.setInterval(healthCheckInterval);
-//        newService.setCheck(serviceCheck);
-
         // Register service with Consul
         consulClient.agentServiceRegister(newService);
 
         // Print registration success message
         System.out.println("Server registered to Consul successfully. Host: " + hostAddress);
     }
-
-
 
     public static void main(String[] args) throws IOException, InterruptedException {
         final SmartLightServiceImpl server = new SmartLightServiceImpl();

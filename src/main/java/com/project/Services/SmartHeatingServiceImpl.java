@@ -22,11 +22,10 @@ import com.project.grpc.smartoffices.heating.TemperatureStreamResponse;
 
 public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
     private Server server;
-//    private final AtomicReference<Double> currentTemperature = new AtomicReference<>(20.0);
     private AtomicBoolean heatingStatus = new AtomicBoolean(false);
 
     private void start() throws IOException {
-        int port = 50083; // Unique port for the Heating service
+        int port = 50083;
 
         server = ServerBuilder.forPort(port)
                 .addService(this)
@@ -46,7 +45,6 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
     private void stop() {
         if (server != null) {
             server.shutdown();
-//            System.err.println("*** server shut down");
         }
     }
 
@@ -65,7 +63,7 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
 
             HeatingAdjustmentResponse response = HeatingAdjustmentResponse.newBuilder()
                     .setHeatingStatus(heatingStatus.get())
-                    .setMessage(message) // Add the message to the response
+                    .setMessage(message)
                     .build();
 
             responseObserver.onNext(response);
@@ -80,6 +78,8 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
 
 
     @Override
+    // method for the Environment Sensor Device
+    // read the temperature data and to adjust the heating
     public void streamTemperatureUpdates(TemperatureStreamRequest request, StreamObserver<TemperatureStreamResponse> responseObserver) {
         try {
             while (!Thread.currentThread().isInterrupted()) {
@@ -92,7 +92,6 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
                 // Decide the heating status based on temperature
                 boolean currentStatus = temperature < 19.0; // Heating is ON if temperature is below 19°C
 
-                // Update the AtomicBoolean heatingStatus
                 heatingStatus.set(currentStatus);
 
                 TemperatureStreamResponse response = TemperatureStreamResponse.newBuilder()
@@ -102,7 +101,7 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
                         .build();
 
                 responseObserver.onNext(response);
-                Thread.sleep(15000); // Simulate data stream delay
+                Thread.sleep(15000);
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -114,7 +113,8 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
 
         responseObserver.onCompleted();
     }
-    ////////////////
+
+    // use random to generate the temperature data
     private double generateRandomTemperature() {
         Random randomTemp = new Random();
         double low = 10.0;
@@ -140,7 +140,7 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
     }
 
 
-    ////////////////////
+
     private void registerToConsul() {
 
         System.out.println("Registering server to Consul...");
@@ -179,12 +179,6 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
         newService.setPort(servicePort);
         newService.setAddress(hostAddress); // Set host address
 
-//        // Set up HTTP check pointing to the HealthCheckServer
-//        NewService.Check serviceCheck = new NewService.Check();
-//        serviceCheck.setHttp("http://" + hostAddress + ":" + healthPort + "/health");
-//        serviceCheck.setInterval(healthCheckInterval);
-//        newService.setCheck(serviceCheck);
-
         // Register service with Consul
         consulClient.agentServiceRegister(newService);
 
@@ -197,8 +191,6 @@ public class SmartHeatingServiceImpl extends SmartHeatingImplBase {
     public static void main(String[] args) throws IOException, InterruptedException {
         final SmartHeatingServiceImpl server = new SmartHeatingServiceImpl();
         server.start();
-//        server.server.awaitTermination();
-//        server.blockUntilShutdown();
         try {
             server.server.awaitTermination();
         } catch (InterruptedException e) {

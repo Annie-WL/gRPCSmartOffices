@@ -16,7 +16,7 @@ service SmartLight {
 }
 
 message LightRequest {
-  int32 numPeople = 1; // Number of people detected
+  int32 numPeople = 1;
 }
 
 message LightResponse {

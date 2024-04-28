@@ -55,10 +55,10 @@ public class WindSensorDevice {
                 requestObserver.onNext(request);
                 Thread.sleep(15000);  // Simulate time delay between sends
             }
-            requestObserver.onCompleted(); // Signal completion after all data is sent
+            requestObserver.onCompleted();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            requestObserver.onError(e);  // Signal error if interrupted
+            requestObserver.onError(e);
         }
     }
 

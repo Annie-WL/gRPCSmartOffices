@@ -1,6 +1,5 @@
 package com.project.Services;
 
-import com.project.dataReader.WindCSVReader;
 import com.project.dataReader.WindReading;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -8,11 +7,8 @@ import io.grpc.stub.StreamObserver;
 import com.project.grpc.smartoffices.window.WindowRequest;
 import com.project.grpc.smartoffices.window.WindowResponse;
 import com.project.grpc.smartoffices.window.SmartWindowGrpc.SmartWindowImplBase;
-
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.agent.model.NewService;
-import javafx.application.Platform;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -20,7 +16,6 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import java.util.Timer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -30,13 +25,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SmartWindowServiceImpl extends SmartWindowImplBase {
     private Server server;
 
-    private boolean isWindowOpen = true; // Track Window state, assuming window starts open
+    private boolean isWindowOpen = true;
     private final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     private ScheduledExecutorService executor;
 
 
     private void start() throws IOException {
-        int port = 50084; // Unique port for the Window service
+        int port = 50084;
         server = ServerBuilder.forPort(port)
                 .addService(this)
                 .build()
@@ -60,6 +55,7 @@ public class SmartWindowServiceImpl extends SmartWindowImplBase {
 
 
     @Override
+    // method for the Wind Sensor Device
     public StreamObserver<WindowRequest> controlWindows(StreamObserver<WindowResponse> responseObserver) {
         return new StreamObserver<WindowRequest>() {
             @Override
@@ -67,6 +63,7 @@ public class SmartWindowServiceImpl extends SmartWindowImplBase {
                 double windSpeed = request.getWindSpeed();
                 double windTemperature = request.getWindTemperature();
 
+                // the conditions to determine the window status
                 boolean shouldCloseWindow = windTemperature < 9.0 || windSpeed > 64.0;
                 if (shouldCloseWindow) {
                     isWindowOpen = false;
@@ -95,8 +92,9 @@ public class SmartWindowServiceImpl extends SmartWindowImplBase {
     }
 
     @Override
+    // for the GUI part, the wind readings was use an ArrayList
     public void streamWindowStatus(WindowRequest request, StreamObserver<WindowResponse> responseObserver) {
-        // Predefined list of wind readings
+
         List<WindReading> readings = Arrays.asList(
                 new WindReading("SE", 21.6, 14.0),
                 new WindReading("NW", 26.7, 6.3),
@@ -118,7 +116,7 @@ public class SmartWindowServiceImpl extends SmartWindowImplBase {
 
         ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         scheduledExecutorService.scheduleAtFixedRate(() -> {
-            // Only proceed if the current index is within the bounds of the readings list
+
             if (index.get() < readings.size()) {
                 WindReading reading = readings.get(index.getAndIncrement());
                 boolean shouldCloseWindow = shouldWindowBeClosed(reading);
@@ -129,18 +127,15 @@ public class SmartWindowServiceImpl extends SmartWindowImplBase {
                         .build();
                 responseObserver.onNext(response);
             } else {
-                // Reset the index to loop over the readings again or stop the executor if done
-                index.set(0); // Or if you want to stop sending: scheduledExecutorService.shutdown();
+                // Reset the index to loop over the readings again
+                index.set(0);
             }
         }, 0, 15, TimeUnit.SECONDS); // Sends an update every 15 seconds.
 
-        // It's important to manage the lifecycle of your executor service
-        // Add your shutdown logic here if necessary
     }
 
     // This method determines whether the window should be closed.
     private boolean shouldWindowBeClosed(WindReading reading) {
-        // Example logic: close the window if the wind speed is too high or temperature is too low
         return reading.getWindTemperature() < 9.0 || reading.getWindSpeed() > 64.0;
     }
 

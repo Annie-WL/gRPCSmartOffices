@@ -64,7 +64,6 @@ public class EnvironmentSensorDevice {
                             ".\n*Message: " + response.getMessage());
                 }
 
-
                 @Override
                 public void onError(Throwable t) {
                     System.err.println("Stream failed: " + t.getMessage());
@@ -78,16 +77,13 @@ public class EnvironmentSensorDevice {
 
             asyncStub.streamTemperatureUpdates(request, responseObserver);
             try {
-                // Await termination of the stream. This blocks forever typically in a real application.
+                // Await termination of the stream.
                 Thread.currentThread().join();
             } catch (InterruptedException e) {
                 System.err.println("Thread interrupted: " + e.getMessage());
             }
-            responseObserver.onCompleted(); // Complete the call properly
+            responseObserver.onCompleted();
         }
-        /////////
-
-
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -97,7 +93,7 @@ public class EnvironmentSensorDevice {
 
         EnvironmentSensorDevice client = new EnvironmentSensorDevice(consulHost, consulPort);
 
-        // Do not to shut down immediately since server-side streaming is asynchronous
+        // Do not shut down immediately cuz server-side streaming is asynchronous
         // device.channel.shutdownNow();
         try {
             client.adjustHeating();
